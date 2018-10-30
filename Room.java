@@ -3,17 +3,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Class Room - a room in an adventure game.
- *
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
+ * Class Room - a room in the Spy game.
  *
  * A "Room" represents one location in the scenery of the game.  It is 
  * connected to other rooms via exits.  For each existing exit, the room 
  * stores a reference to the neighboring room.
  * 
- * @author  Michael Kolling and David J. Barnes
- * @version 2008.03.30
+ * @author  Michael Kolling and David J. Barnes, adapted by Lena Schmidt
+ * @version 30.10.2018
  */
 
 public class Room 
@@ -37,6 +34,7 @@ public class Room
      * Define an exit from this room.
      * @param direction The direction of the exit.
      * @param neighbor  The room to which the exit leads.
+     * @return void
      */
     public void setExit(String direction, Room neighbor) 
     {
@@ -44,6 +42,7 @@ public class Room
     }
 
     /**
+     * @param none
      * @return The short description of the room
      * (the one that was defined in the constructor).
      */
@@ -56,6 +55,7 @@ public class Room
      * Return a description of the room in the form:
      *     You are in the kitchen.
      *     Exits: north west
+     * @param none    
      * @return A long description of this room
      */
     public String getLongDescription()
@@ -66,6 +66,7 @@ public class Room
     /**
      * Return a string describing the room's exits, for example
      * "Exits: north west".
+     * @param void
      * @return Details of the room's exits.
      */
     private String getExitString()

@@ -19,7 +19,9 @@
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
+    private RoomManager roomMan; //for access to the map
+    private ColleagueManager collMan; // for access to the colleagues
+    
         
     /**
      * Class constructor
@@ -29,60 +31,13 @@ public class Game
      */
     public Game() 
     {
-        createRooms();
+        //instantiates objects used to control gameflow
         parser = new Parser();
+        roomMan = new RoomManager();
+        collMan = new ColleagueManager();
     }
 
-    /**
-     * Create all the rooms and link their exits together.
-     */
-    private void createRooms()
-    {
-        Room reception, loo, cafe, groundHallway, firstHallway, office1, office2, officeBoss, staffRoom, lab, safeRoom;
-      
-        // create the rooms
-        reception = new Room("at the reception");
-        loo = new Room("in the loo");
-        cafe = new Room("in the cafe");
-        groundHallway = new Room("in the ground floor hallway");
-        firstHallway = new Room("in the first floor hallway");
-        office1 = new Room("in some person's office");
-        office2 = new Room("in some person's office");
-        officeBoss = new Room("in the office of your boss");
-        staffRoom = new Room("in the staff room");
-        lab = new Room("in the secret screwdriver lab");
-        safeRoom = new Room("in the safe room where they store the blueprints");
-        
-        // initialise room exits
-        reception.setExit("east", cafe);
-        reception.setExit("west", loo);
-        reception.setExit("north", groundHallway);
-        
-        loo.setExit("east", reception);
-        cafe.setExit("west", reception);
-        
-        groundHallway.setExit("south", reception);
-        groundHallway.setExit("east", office1);
-        groundHallway.setExit("west", office2);
-        groundHallway.setExit("up the stairs", firstHallway);
-        groundHallway.setExit("down the stairs", lab);
-        
-        firstHallway.setExit("down the stairs", groundHallway);
-        firstHallway.setExit("east", officeBoss);
-        firstHallway.setExit("west", staffRoom);
-        
-        office1.setExit("west", groundHallway);
-        office2.setExit("east", groundHallway);
-        
-        officeBoss.setExit("west", firstHallway);
-        staffRoom.setExit("east", firstHallway);
-        
-        lab.setExit("up the stairs", firstHallway);
-        lab.setExit("east", safeRoom);
-        safeRoom.setExit("west", lab);
-        
-        currentRoom = reception;  // start game outside
-    }
+    
 
     /**
      *  Main play routine.  Loops until end of play.
@@ -101,13 +56,14 @@ public class Game
             
             
             if (lunchbreak % 8 == 0){                        // if lunchbreak counter reaches 8 the user is warned
-                System.out.println("Soon everybody will come out of their offices for lunch! Beware");
+                System.out.println("----Soon everybody will come out of their offices for lunch! Beware!----");
                 lunchbreak = 0;
                 
                 Command command = parser.getCommand();
                 finished = processCommand(command);
-            } else if (lunchbreak == 0 || lunchbreak == 1){
-                System.out.println("It's lunchtime");
+            } else if (lunchbreak == 0 || lunchbreak == 1){ //it is lunchtime, so there is a risk to encounter a colleague
+                System.out.println("----It's lunchtime!----");
+                collMan.interrogate();
                 Command command = parser.getCommand();
                 finished = processCommand(command);
             } else {                                    //people are working now
@@ -136,7 +92,7 @@ public class Game
         System.out.println("At lunchtime, they swarm out of their offices, so be prepared (or lock yourself in the loo...)\n");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(roomMan.getCurrentRoomDesc());
     }
 
     /**
@@ -159,7 +115,7 @@ public class Game
             printHelp();
         }
         else if (commandWord == CommandWord.GO) {
-            goRoom(command);
+            roomMan.goRoom(command);
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
@@ -182,31 +138,7 @@ public class Game
         parser.showCommands();
     }
 
-    /** 
-     * Try to go to one direction. If there is an exit, enter the new
-     * room, otherwise print an error message.
-     */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        }
-        else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
-        }
-    }
+    
 
     /** 
      * "Quit" was entered. Check the rest of the command to see
