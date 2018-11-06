@@ -1,9 +1,7 @@
 
 /**
-1. no gui, first version
-2. peer review
-3. presentation
-4. final version
+*syntax of txt document line:
+*?/nA)./nB)./nC)./nD).%%Very good, you are not as bad as I expected%No, it means that
  */
 public class notes
 {

@@ -28,9 +28,28 @@ public class RoomManager
      * @params none
      * @return String long description of the current room
      */
-    public String getCurrentRoomDesc(){
+    public String getCurrentRoomLong(){
         return currentRoom.getLongDescription();
     }
+    
+    /**
+     * Accessor to the current room name's long description.
+     * @params none
+     * @return String long description of the current room
+     */
+    public String getCurrentRoomShort(){
+        return currentRoom.getShortDescription();
+    }
+    
+    /**
+     * Accessor to the loo's short description.
+     * @params none
+     * @return String short description of the loo
+     */
+    public String getLooShort(){
+        return loo.getShortDescription();
+    }
+    
     /**
      * Create all links between the rooms.
      * @params none

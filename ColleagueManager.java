@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.IOException;
 /**
  * The Colleague class manages the colleague's interaction with the game. Here the colleagues are interacting
  * with the questions in order to present challenges in the game.
@@ -17,19 +18,20 @@ public class ColleagueManager
     private ArrayList<Colleague> colleagueList;
     private int nrOfColleagues;
     private Colleague colleague;
+    private QuestionManager questionMan;
     
     private Random rand = new Random();
 
     /**
      * Constructor for objects of class ColleagueManager
      */
-    public ColleagueManager()
+    public ColleagueManager() throws IOException
     {
         colleagueList = new ArrayList<Colleague>();
         //calling method to create the colleagues.
         makeColleagues();
         nrOfColleagues = colleagueList.size();
-        
+        questionMan = new QuestionManager();
     }
 
     /**
@@ -49,19 +51,27 @@ public class ColleagueManager
         
     }
     
-    public void interrogate(){
-        
-        //to choose a colleague from list: generates random int in the range of colleagueList's size and 
-        //picks the colleague defined by index at this random int.
-        colleague = colleagueList.get(rand.nextInt(nrOfColleagues)); 
-        
-        
-        if (colleague.isFemale()){
-            System.out.println("----Your colleague " +colleague.getName() + " spotted you. She is coming your way...----");
-        } else {
-            System.out.println("----Your colleague " + colleague.getName() + " spotted you. He is coming your way...----");
+    /**
+     * Method that creates a potential encounter with a random colleague from the list
+     * @param none
+     * @return void
+     */
+    public void meetColleague(){
+        if (rand.nextInt(5) < 3){//this gives a 3/5 chance to encounter a colleague. Nothing happens if the int is 3 or 4
+            //to choose a colleague from list: generates random int in the range of colleagueList's size and 
+            //picks the colleague defined by index at this random int.
+            colleague = colleagueList.get(rand.nextInt(nrOfColleagues));
+            if (colleague.isFemale()){      //next output is depending on random colleague's gender
+                System.out.println("----Your colleague " +colleague.getName() + " spotted you. She is coming your way...\nShe asks:");
+            } else {
+                System.out.println("----Your colleague " + colleague.getName() + " spotted you. He is coming your way...\nHe asks:");
+            }
+            questionMan.ask();
         }
         
         
+        
     }
+    
+   
 }

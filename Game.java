@@ -1,3 +1,4 @@
+import java.io.IOException;
 /**
  *  This class is the main class of the Spy game application. 
  *  It is a very simple, text based adventure game.  where do they walk and whats the point?
@@ -20,7 +21,7 @@ public class Game
 {
     private Parser parser;
     private RoomManager roomMan; //for access to the map
-    private ColleagueManager collMan; // for access to the colleagues
+    private ColleagueManager colleagueMan; // for access to the colleagues
     
         
     /**
@@ -29,12 +30,13 @@ public class Game
      * 
      * @param none
      */
-    public Game() 
+    public Game() throws IOException
     {
         //instantiates objects used to control gameflow
         parser = new Parser();
         roomMan = new RoomManager();
-        collMan = new ColleagueManager();
+        colleagueMan = new ColleagueManager();
+        
     }
 
     
@@ -50,26 +52,30 @@ public class Game
         // execute them until the game is over.
                 
         boolean finished = false;                       //booolean to see if user wants to exit game
-        int lunchbreak = 3;                              //counter to determine if it is lunchtime
+        int lunchbreak = 5;                              //counter to determine if it is lunchtime
         
         while (! finished) {
             
             
             if (lunchbreak % 8 == 0){                        // if lunchbreak counter reaches 8 the user is warned
                 System.out.println("----Soon everybody will come out of their offices for lunch! Beware!----");
-                lunchbreak = 0;
+                lunchbreak = 0;                              // resets lunchbreak counter 
                 
-                Command command = parser.getCommand();
-                finished = processCommand(command);
-            } else if (lunchbreak == 0 || lunchbreak == 1){ //it is lunchtime, so there is a risk to encounter a colleague
-                System.out.println("----It's lunchtime!----");
-                collMan.interrogate();
-                Command command = parser.getCommand();
-                finished = processCommand(command);
-            } else {                                    //people are working now
-                Command command = parser.getCommand();
-                finished = processCommand(command);
-            }
+            } else if (lunchbreak == 1 || lunchbreak == 2){ //it is lunchtime, so there is a risk to encounter a colleague
+                
+                //if (roomMan.getCurrentRoomShort().equals(roomMan.getLooShort())){//if the user is currently hiding in the loo there is no encounter
+                    //System.out.println("You are hiding in the loo to escape you's colleagues questions.");
+                //} else{
+                    colleagueMan.meetColleague();                 //there is a potential (3/5) interaction with a colleague before the next move defined in this method
+                
+                //}
+                
+                
+            }                                   //people are working now, so there is no chance of meeting a colleague
+            
+            Command command = parser.getCommand();
+            finished = processCommand(command);
+            
             
             lunchbreak ++;
         }
@@ -92,7 +98,7 @@ public class Game
         System.out.println("At lunchtime, they swarm out of their offices, so be prepared (or lock yourself in the loo...)\n");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        System.out.println(roomMan.getCurrentRoomDesc());
+        System.out.println(roomMan.getCurrentRoomLong());
     }
 
     /**

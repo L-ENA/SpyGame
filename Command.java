@@ -16,7 +16,7 @@
  * @author  Michael Kolling and David J. Barnes
  * @version 2008.03.30
  */
-//test
+
 public class Command
 {
     private CommandWord commandWord;
