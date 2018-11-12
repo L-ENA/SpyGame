@@ -30,7 +30,7 @@ public class Game
      * 
      * @param none
      */
-    public Game() throws IOException
+    public Game()
     {
         //instantiates objects used to control gameflow
         parser = new Parser();

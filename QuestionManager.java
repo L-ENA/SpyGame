@@ -21,9 +21,10 @@ public class QuestionManager
     /**
      * Constructor for objects of class QuestionManager
      */
-    public QuestionManager() throws IOException
+    public QuestionManager()
     {
-        String[] parts = new String[4];
+        String[] parts;
+        int counter = 0;
         try {
 
             questionList = new ArrayList<Question>();
@@ -31,19 +32,33 @@ public class QuestionManager
             BufferedReader b = new BufferedReader(new FileReader(f));   //creates buffered reader object to access the file
             String currentLine = "";                                    //empty String that is going to store a line of the file 
             while ((currentLine = b.readLine()) != null) {              //as long as there are new lines in the file 
-                parts = currentLine.split("%");                         //make a question from each line by first splitting info in 4 parts (% is used in txt file to divide)
-                questionList.add(new Question(parts[0],parts[1],parts[2],parts[3]));
+                counter++;
+                try{
+                    parts = currentLine.split("%");                         //make a question from each line by first splitting info in 4 parts (% is used in txt file to divide)
+                    
+                    if(parts.length != 4){
+                        throw new QuestionException(currentLine, counter);//throws potential question parsing exception and describes line with error plus line number
+                    } else{
+                        questionList.add(new Question(parts[0],parts[1],parts[2],parts[3]));//builds new question and adds it to the list
+                    }
+                    
+                } catch (QuestionException qestEx){//catches custom question exception
+                    qestEx.describeError();
+                }
+                
+                
             }
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Game was interrupted while trying to access questions file.");
         }
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Asking a question
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  none
+     * @return    void
      */
     public void ask()
     {
@@ -52,5 +67,6 @@ public class QuestionManager
         thisQuestion = questionList.get(randomQuestionIndex);               //get random question
         thisQuestion.printQuestion();
         
+        questionList.remove(randomQuestionIndex);
     }
 }

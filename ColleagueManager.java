@@ -25,13 +25,16 @@ public class ColleagueManager
     /**
      * Constructor for objects of class ColleagueManager
      */
-    public ColleagueManager() throws IOException
+    public ColleagueManager()
     {
         colleagueList = new ArrayList<Colleague>();
         //calling method to create the colleagues.
         makeColleagues();
         nrOfColleagues = colleagueList.size();
+        
         questionMan = new QuestionManager();
+        
+        
     }
 
     /**
