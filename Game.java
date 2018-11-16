@@ -1,4 +1,5 @@
-import java.io.IOException;
+
+import java.util.Random;
 /**
  *  This class is the main class of the Spy game application. 
  *  It is a very simple, text based adventure game.  where do they walk and whats the point?
@@ -22,8 +23,9 @@ public class Game
     private Parser parser;
     private RoomManager roomMan; //for access to the map
     private ColleagueManager colleagueMan; // for access to the colleagues
+    private Random rand = new Random();
     
-        
+    private int lifes = 3;
     /**
      * Class constructor
      * Create the game and initialise its internal map.
@@ -54,7 +56,7 @@ public class Game
         boolean finished = false;                       //booolean to see if user wants to exit game
         int lunchbreak = 5;                              //counter to determine if it is lunchtime
         
-        while (! finished) {
+        while (! finished && lifes>0) {
             
             
             if (lunchbreak % 8 == 0){                        // if lunchbreak counter reaches 8 the user is warned
@@ -66,8 +68,13 @@ public class Game
                 //if (roomMan.getCurrentRoomShort().equals(roomMan.getLooShort())){//if the user is currently hiding in the loo there is no encounter
                     //System.out.println("You are hiding in the loo to escape you's colleagues questions.");
                 //} else{
-                    colleagueMan.meetColleague();                 //there is a potential (3/5) interaction with a colleague before the next move defined in this method
-                
+                    if (rand.nextInt(5) < 3){//there is a potential (3/5) interaction with a colleague before the next move defined in this method
+                    if(colleagueMan.meetColleague()==false){
+                        lifes--;
+                        System.out.println("You have " + lifes + " lifes left.");
+                    }
+                    System.out.println(roomMan.getCurrentRoomLong());//for re-orientation after the questioning. will be unncecessary one there is a GUI
+                }
                 //}
                 
                 
@@ -79,7 +86,12 @@ public class Game
             
             lunchbreak ++;
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        if(lifes ==0){
+            colleagueMan.endGame();
+        } else{
+            System.out.println("Thank you for playing.  Good bye.");
+        }
+        
     }
 
     /**

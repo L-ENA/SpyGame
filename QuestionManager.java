@@ -4,8 +4,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
- * Questions represent the challenges in this game. This class is responsible for creating the questions list by reading info 
+ * Questions represent the challenges in this game. This class is responsible for asking questions by reading info 
  * from a text file and creating/storing question objects from that in a list. Instructions for file reading from: https://www.mkyong.com/java/java-read-a-text-file-line-by-line/
  *
  * @author LS
@@ -15,14 +18,20 @@ import java.util.Random;
 public class QuestionManager
 {
     // instance variables - replace the example below with your own
+    public static int lifes = 3;//in case that question lists to different topics are introduced this allows to deduce from same pool of lifes
     private ArrayList<Question> questionList;
     private Question thisQuestion;
-
+    private Pattern p;
+    private Scanner reader;
+    
     /**
      * Constructor for objects of class QuestionManager
      */
     public QuestionManager()
     {
+        reader = new Scanner(System.in);//to evaluate the user's answers
+        p = Pattern.compile("[abcd]");//regex to evaluate input
+        
         String[] parts;
         int counter = 0;
         try {
@@ -55,18 +64,57 @@ public class QuestionManager
     }
 
     /**
-     * Asking a question
+     * Asking a question: random question from question list. Uses evaluate() method to determine if the answer is correct and delets the question after use
      *
      * @param  none
-     * @return    void
+     * @return   boolean false if question was answered wrong. This is determined by the evaluate() method
      */
-    public void ask()
+    public boolean ask()
     {
         Random rand = new Random();
-        int randomQuestionIndex = rand.nextInt(questionList.size());        //Create random index for questions currently in the list.
-        thisQuestion = questionList.get(randomQuestionIndex);               //get random question
-        thisQuestion.printQuestion();
         
-        questionList.remove(randomQuestionIndex);
+        if(questionList.size()>0){
+            int randomQuestionIndex = rand.nextInt(questionList.size());        //Create random index for questions currently in the list.
+            thisQuestion = questionList.get(randomQuestionIndex);               //get random question
+            questionList.remove(randomQuestionIndex);
+            thisQuestion.printQuestion();                                       //asks question
+            return evaluate(10);
+            
+        } else{
+            System.out.println("Never mind");
+            return(true);
+        }
+        
+    }
+    
+    /**
+     * Evaluating a question: if user input matches the right answer, true is returned. If answer is wrong, false is returned. Recursion is used until the user enters a valid input, and terminated after 10 trys. in this case, false is returned 
+     *
+     * @param  none
+     * @return   boolean false if question was answered wrong. This is determined by the evaluate() method
+     */
+    public boolean evaluate(int counter){
+        if (counter>0){
+            String inputLine = reader.nextLine().toLowerCase();
+            Matcher m = p.matcher(inputLine);
+            if (m.find()) {
+                if(inputLine.equals(thisQuestion.getAnswer())){
+                    System.out.println(thisQuestion.getPosComment());
+                    return true;
+                } else{
+                    System.out.println(thisQuestion.getNegComment());
+                    System.out.println("You lost 1 life!");
+                    return false;
+                }
+                
+                
+            } else{
+                System.out.println("Please enter either a, b, c, or d to answer this question!");//user gave invalid input. Therefore, they get instructions
+                return evaluate(counter-1);//user gets another chance to enter a valid input
+            }
+        } else{
+            return false;
+        }
+        
     }
 }

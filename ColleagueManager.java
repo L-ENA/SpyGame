@@ -57,10 +57,10 @@ public class ColleagueManager
     /**
      * Method that creates a potential encounter with a random colleague from the list
      * @param none
-     * @return void
+     * @return boolean information whether question was answered correctly. 
      */
-    public void meetColleague(){
-        if (rand.nextInt(5) < 3){//this gives a 3/5 chance to encounter a colleague. Nothing happens if the int is 3 or 4
+    public boolean meetColleague(){
+        //player meets a colleague and gets interrogated
             //to choose a colleague from list: generates random int in the range of colleagueList's size and 
             //picks the colleague defined by index at this random int.
             colleague = colleagueList.get(rand.nextInt(nrOfColleagues));
@@ -69,12 +69,19 @@ public class ColleagueManager
             } else {
                 System.out.println("----Your colleague " + colleague.getName() + " spotted you. He is coming your way...\nHe asks:");
             }
-            questionMan.ask();
-        }
+            return questionMan.ask();
+        
         
         
         
     }
     
+    public void endGame(){
+        if (colleague.isFemale()){      //next output is depending on random colleague's gender
+                System.out.println(colleague.getName() + " looks very suspicious. She walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
+            } else {
+                System.out.println(colleague.getName() + " looks very suspicious. He walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
+            }
+    }
    
 }

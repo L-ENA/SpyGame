@@ -1,13 +1,4 @@
 This%problematic line
-What does 'loose coupling' mean?+a)Units inside a program are heavily depending on each other.+b)Two methods of the same class use the same attribute.+c)Units inside a program do not share many links.+d)Strange, I can't remember...%C%Very good, you are not as bad as I expected%No, it means that Units inside a program do not share many links. That's what you should aim for in programming.
-Which of these is not a primitive data type in Java?+a)float.+b)boolean.+c)long.+d)String.%D%Very good, you are not as bad as I expected.%No, String would be the right answer. It's a class!   
+What does 'loose coupling' mean?+a)Units inside a program are heavily depending on each other.+b)Two methods of the same class use the same attribute.+c)Units inside a program do not share many links.+d)Strange, I can't remember...%c%Very good, you are not as bad as I expected%No, it means that Units inside a program do not share many links. That's what you should aim for in programming.
+Which of these is not a primitive data type in Java?+a)float.+b)boolean.+c)long.+d)String.%d%Very good, you are not as bad as I expected.%No, String would be the right answer. It's a class!   
 This$is%another%prob%line%too%many%tokens
-Questa%a%c1%C2
-Questb%a%c1%C2
-Questc%a%c1%C2
-Questd%a%c1%C2
-Queste%a%c1%C2
-
-Questf%a%c1%C2
-Questg%a%c1%C2
-Questh%a%c1%C2
