@@ -60,7 +60,7 @@ public class Game
         int teabreak = 3;                              //counter to determine if it is lunchtime
         int timeUntilFinished = 0;                          //increments every step until game is over
         
-        while (! finished && lifes>0) {
+        while (! finished) {
             
             
             if (teabreak % 6 == 0){                        // if teabreak counter reaches 8 the user is warned
@@ -73,6 +73,9 @@ public class Game
                     if(colleagueMan.meetColleague()==false){//the colleague asks a question. if user answers wrong they loose a life
                         lifes--;
                         System.out.println("You have " + lifes + " left.");
+                        if(lifes == 0){//game over
+                            break;
+                        }    
                     }
                     System.out.println(roomMan.getCurrentRoomLong());//for re-orientation after the questioning. will be unncecessary once there is a GUI
                 }
@@ -106,8 +109,8 @@ public class Game
         System.out.println("Your objective is to steal blueprints for the world's first sonic screwdriver made by humans. ");
         System.out.println("You were hired as a java developer in the company that produces it. ");
         System.out.println("But your colleagues are suspicios.\nIf you meet one  of them, they might ask questions to check if you really are who you pretend to be.... ");
-        System.out.println("If you get the wrong answer with the same colleague too often, they might raise an alarm and your cover is gone.");
-        System.out.println("At lunchtime, they swarm out of their offices, so be prepared (or lock yourself in the loo...)\n");
+        System.out.println("If you get the wrong answer too often, they might raise an alarm and your cover is gone.");
+        System.out.println("At teatime, they swarm out of their offices, so be prepared (or lock yourself in the loo...)\n");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(roomMan.getCurrentRoomLong());

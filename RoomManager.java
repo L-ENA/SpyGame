@@ -9,8 +9,8 @@ public class RoomManager
 {
     // instance variables - replace the example below with your own
     private Room currentRoom;
-    private ArrayList<Room> rooms;
-    private Room reception, loo, cafe, groundHallway, firstHallway, office1, office2, officeBoss, staffRoom, lab, safeRoom;
+    
+    private Room reception, loo, cafe, groundHallway, firstHallway, office1, office2, officeBoss, kitchen, lab, safeRoom;
     
 
     /**
@@ -58,36 +58,36 @@ public class RoomManager
      */
     private void initialiseRooms(){
         // initialise room exits
-        reception.setExit("east", cafe);
-        reception.setExit("west", loo);
-        reception.setExit("north", groundHallway);
+        reception.setExit("cafe", cafe);
+        reception.setExit("loo", loo);
+        reception.setExit("hallway", groundHallway);
         
+        loo.setExit("reception", reception);
+        cafe.setExit("reception", reception);
         
-        loo.setExit("east", reception);
-        cafe.setExit("west", reception);
-        
-        groundHallway.setExit("south", reception);
-        groundHallway.setExit("east", office1);
-        groundHallway.setExit("west", office2);
+        groundHallway.setExit("reception", reception);
+        groundHallway.setExit("office", office1);
+        groundHallway.setExit("office", office2);
         groundHallway.setExit("upstairs", firstHallway);
-        groundHallway.setExit("downstairs", lab);
+        groundHallway.setExit("lab", lab);
         
         firstHallway.setExit("downstairs", groundHallway);
-        firstHallway.setExit("east", officeBoss);
-        firstHallway.setExit("west", staffRoom);
-        firstHallway.initLocks();//adds option to lock or unlock doors in this room
+        firstHallway.setExit("office", officeBoss);
+        firstHallway.getDoors().addLock("office", false);//sets access for this room: player can't enter
+        firstHallway.setExit("kitchen", kitchen);
         
-        office1.setExit("west", groundHallway);
-        office2.setExit("east", groundHallway);
+        office1.setExit("hallway", groundHallway);
+        office2.setExit("hallway", groundHallway);
         
-        officeBoss.setExit("west", firstHallway);
-        staffRoom.setExit("east", firstHallway);
+        officeBoss.setExit("hallway", firstHallway);
+        officeBoss.setExit("elevator", safeRoom);
+        kitchen.setExit("hallway", firstHallway);
         
-        lab.setExit("upstairs", firstHallway);
+        lab.setExit("upstairs", groundHallway);
         lab.setExit("east", safeRoom);
-        lab.initLocks();// for locking doors
+        lab.getDoors().addLock("east", false);  
         
-        safeRoom.setExit("west", lab);
+        safeRoom.setExit("lab", lab);
     
     }
 
@@ -109,7 +109,7 @@ public class RoomManager
         office1 = new Room("in some person's office");
         office2 = new Room("in some person's office");
         officeBoss = new Room("in the office of your boss");
-        staffRoom = new Room("in the staff room");
+        kitchen = new Room("in the staff kitchen");
         lab = new Room("in the secret screwdriver lab");
         safeRoom = new Room("in the safe room where they store the blueprints");
         
@@ -139,8 +139,9 @@ public class RoomManager
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
-        }
-        else {
+        } else if(currentRoom.getDoors().checkStatus(direction) == false){//if the room is locked
+            System.out.println("This door is locked...");
+        } else {//player can move to the new room
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }

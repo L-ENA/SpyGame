@@ -17,7 +17,6 @@ public class Doors
      */
     public Doors()
     {
-        
         exits = new HashMap<String, Boolean>();
     }
 
@@ -28,8 +27,13 @@ public class Doors
      * @param Boolean locked status
      * @return void
      */
-    public void addDoor(String description, Boolean status)
+    public void addLock(String description, Boolean status)
     {
         exits.put(description, status);
     }
+    
+    public boolean checkStatus(String description){//returns access status, as stored in the hashmap value
+        return exits.get(description);
+    }
+    
 }

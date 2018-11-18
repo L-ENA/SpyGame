@@ -31,10 +31,12 @@ public class Room
         this.doors = new Doors();
     }
     
-    public void initLocks(){//default initialisation to have open doors for all exits of the room
-        for(String exit:exits.keySet()){
-            doors.addDoor(exit, true);
-        }
+    /**Accessor for doors attribute
+     * @param none
+     * @return The doors hashmap for access to locked status
+     */
+    public Doors getDoors(){
+        return doors;
     }
 
     /**
@@ -45,7 +47,8 @@ public class Room
      */
     public void setExit(String direction, Room neighbor) 
     {
-        exits.put(direction, neighbor);
+        exits.put(direction, neighbor);//adds an exit
+        doors.addLock(direction, true);//adds access status for this exit. defaults to open but can be changed in the course of the game
     }
 
     /**
