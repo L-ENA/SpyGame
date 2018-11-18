@@ -9,6 +9,7 @@ public class RoomManager
 {
     // instance variables - replace the example below with your own
     private Room currentRoom;
+    private ArrayList<Room> rooms;
     private Room reception, loo, cafe, groundHallway, firstHallway, office1, office2, officeBoss, staffRoom, lab, safeRoom;
     
 
@@ -61,6 +62,7 @@ public class RoomManager
         reception.setExit("west", loo);
         reception.setExit("north", groundHallway);
         
+        
         loo.setExit("east", reception);
         cafe.setExit("west", reception);
         
@@ -73,6 +75,7 @@ public class RoomManager
         firstHallway.setExit("downstairs", groundHallway);
         firstHallway.setExit("east", officeBoss);
         firstHallway.setExit("west", staffRoom);
+        firstHallway.initLocks();//adds option to lock or unlock doors in this room
         
         office1.setExit("west", groundHallway);
         office2.setExit("east", groundHallway);
@@ -82,6 +85,8 @@ public class RoomManager
         
         lab.setExit("upstairs", firstHallway);
         lab.setExit("east", safeRoom);
+        lab.initLocks();// for locking doors
+        
         safeRoom.setExit("west", lab);
     
     }

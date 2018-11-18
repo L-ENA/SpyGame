@@ -17,7 +17,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
-
+    private Doors doors;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -27,7 +27,14 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
-        exits = new HashMap<String, Room>();
+        this.exits = new HashMap<String, Room>();
+        this.doors = new Doors();
+    }
+    
+    public void initLocks(){//default initialisation to have open doors for all exits of the room
+        for(String exit:exits.keySet()){
+            doors.addDoor(exit, true);
+        }
     }
 
     /**
