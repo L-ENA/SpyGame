@@ -2,7 +2,8 @@
 import java.util.Random;
 /**
  *  This class is the main class of the Spy game application. 
- *  It is a very simple, text based adventure game.  where do they walk and whats the point?
+ *  It is a very simple, text based adventure game about a spy in a software development company. The player is a spy who has to find some blueprints
+ *  while his suspicions colleagues interrogate them.
  * 
  *  To play this game, create an instance of this class and call the "play"
  *  method.
@@ -11,11 +12,13 @@ import java.util.Random;
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
+ *  Available on GitHub: https://github.com/L-ENA/SpyGame.git
+ *  
  * @author  Lena Schmidt, based on code developed by Michael Kolling and David J. Barnes
  * @version 0.1
  * @param
  * @return void
- * test for git push
+ * 
  */
 //test
 public class Game 
@@ -28,7 +31,7 @@ public class Game
     private int lifes = 3;
     /**
      * Class constructor
-     * Create the game and initialise its internal map.
+     * Create the game and initialise the room manager and the colleague manager (access to the quiz functionalities)
      * 
      * @param none
      */
@@ -54,42 +57,39 @@ public class Game
         // execute them until the game is over.
                 
         boolean finished = false;                       //booolean to see if user wants to exit game
-        int lunchbreak = 5;                              //counter to determine if it is lunchtime
+        int teabreak = 3;                              //counter to determine if it is lunchtime
+        int timeUntilFinished = 0;                          //increments every step until game is over
         
         while (! finished && lifes>0) {
             
             
-            if (lunchbreak % 8 == 0){                        // if lunchbreak counter reaches 8 the user is warned
-                System.out.println("----Soon everybody will come out of their offices for lunch! Beware!----");
-                lunchbreak = 0;                              // resets lunchbreak counter 
+            if (teabreak % 6 == 0){                        // if teabreak counter reaches 8 the user is warned
+                System.out.println("----Soon everybody will come out of their offices for a tea break! Beware!----");
+                teabreak = 0;                              // resets teabreak counter 
                 
-            } else if (lunchbreak == 1 || lunchbreak == 2){ //it is lunchtime, so there is a risk to encounter a colleague
+            } else if (teabreak == 1 || teabreak == 2){ //it is teatime, so there is a risk to encounter a colleague
                 
-                //if (roomMan.getCurrentRoomShort().equals(roomMan.getLooShort())){//if the user is currently hiding in the loo there is no encounter
-                    //System.out.println("You are hiding in the loo to escape you's colleagues questions.");
-                //} else{
                     if (rand.nextInt(5) < 3){//there is a potential (3/5) interaction with a colleague before the next move defined in this method
-                    if(colleagueMan.meetColleague()==false){
+                    if(colleagueMan.meetColleague()==false){//the colleague asks a question. if user answers wrong they loose a life
                         lifes--;
-                        System.out.println("You have " + lifes + " lifes left.");
+                        System.out.println("You have " + lifes + " left.");
                     }
-                    System.out.println(roomMan.getCurrentRoomLong());//for re-orientation after the questioning. will be unncecessary one there is a GUI
+                    System.out.println(roomMan.getCurrentRoomLong());//for re-orientation after the questioning. will be unncecessary once there is a GUI
                 }
-                //}
-                
                 
             }                                   //people are working now, so there is no chance of meeting a colleague
             
             Command command = parser.getCommand();
             finished = processCommand(command);
             
-            
-            lunchbreak ++;
+            teabreak ++;
+            timeUntilFinished++;
         }
         if(lifes ==0){
             colleagueMan.endGame();
+            System.out.println("You survived for " + timeUntilFinished + " steps.");
         } else{
-            System.out.println("Thank you for playing.  Good bye.");
+            System.out.println("Thank you for playing. Good bye.");
         }
         
     }

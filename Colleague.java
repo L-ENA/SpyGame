@@ -5,25 +5,23 @@
  * 
  * Its attributes are:
  *      - String name for identification
- *      - int counter for counting wrong answers
  *      - boolean gender for gender
  * 
  *
  * @author LS
  * @version 30.10.18
  * 
- * @param 
- * @param
+ * @param String name of colleague
+ * @param boolean gender for printing output describing  the colleague's actions
  * 
  * 
  */
 public class Colleague
 {
-    // instance variables - replace the example below with your own
+    
     private String name;
     private boolean gender;
-    private int counter;
-
+    
     /**
      * Constructor for objects of class Colleague. 
      * @param name - a String object representing this colleague's name
@@ -31,10 +29,9 @@ public class Colleague
      */
     public Colleague(String name, boolean gender)
     {
-        // initialise instance variables
         this.name = name;
         this.gender = gender;
-        counter = 0;
+        
     }
     
     /**

@@ -15,11 +15,10 @@ public class ColleagueManager
 {
     // declaration of colleagues
     
-    private ArrayList<Colleague> colleagueList;
+    private ArrayList<Colleague> colleagueList;//stores instances of colleagues
     private int nrOfColleagues;
-    private Colleague colleague;
-    private QuestionManager questionMan;
-    
+    private Colleague colleague;//specific colleague that is used
+    private QuestionManager questionMan;//access to the question list and functionalities
     private Random rand = new Random();
 
     /**
@@ -31,21 +30,18 @@ public class ColleagueManager
         //calling method to create the colleagues.
         makeColleagues();
         nrOfColleagues = colleagueList.size();
-        
         questionMan = new QuestionManager();
-        
         
     }
 
     /**
      * Method to instantiate the colleagues and storing them in the colleagueList for further usage
-     * The more colleagues, the easier the game!
      * @param none
      * @return void
      */
     public void makeColleagues()
     {
-        // makes new colleagues by adding new Colleague instances to the List
+        // makes new colleagues by adding new Colleague instances to the List. Params are name and gender
         colleagueList.add(new Colleague("Tom", false));
         colleagueList.add(new Colleague("Mr. Brown", false));
         colleagueList.add(new Colleague("Lucy", true));
@@ -60,7 +56,7 @@ public class ColleagueManager
      * @return boolean information whether question was answered correctly. 
      */
     public boolean meetColleague(){
-        //player meets a colleague and gets interrogated
+            //player meets a colleague and gets interrogated
             //to choose a colleague from list: generates random int in the range of colleagueList's size and 
             //picks the colleague defined by index at this random int.
             colleague = colleagueList.get(rand.nextInt(nrOfColleagues));
@@ -69,13 +65,15 @@ public class ColleagueManager
             } else {
                 System.out.println("----Your colleague " + colleague.getName() + " spotted you. He is coming your way...\nHe asks:");
             }
-            return questionMan.ask();
-        
-        
-        
+            return questionMan.ask();//asks a question, returns boolean true if answered correctly, false if not
         
     }
     
+    /**
+     * Method that is called after the player lost their final life. Cover is blown by the colleague who asked last question
+     * @param none
+     * @return void 
+     */
     public void endGame(){
         if (colleague.isFemale()){      //next output is depending on random colleague's gender
                 System.out.println(colleague.getName() + " looks very suspicious. She walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");

@@ -3,7 +3,7 @@
  * Write a description of class QuestionException here.
  *
  * @author Lena Schmidt
- * @version 12.11.2018
+ * @version 18.11.2018
  */
 public class QuestionException extends Exception
 {
@@ -13,6 +13,9 @@ public class QuestionException extends Exception
 
     /**
      * Constructor for objects of class QuestionException
+     * @param String The line of the text field where the parsing exception occurred
+     * @param int The line number where the exception ocurred
+     * 
      */
     public QuestionException(String line, int nr)
     {
@@ -24,17 +27,17 @@ public class QuestionException extends Exception
     /**
      * This method describes potential errors in the process of parsing a question from the questions input file
      *
-     * @param  none
-     * @return    void
+     * @param none
+     * @return void
      */
     public void describeError()
     {
-         System.out.println("------------------------------Parsing Error nr "+errorCounter+"---------------------------------------");
+         System.out.println("----------------------------Parsing Error nr "+errorCounter+"-------------------------------------");
         System.out.println("There was a problem while parsing line "+ nr +" from the questions input file:");
         System.out.println(">>> "+line);
         System.out.println("Make sure this line contains exactly 3 delimiters in the form of % signs");
         System.out.println("The line with the error was ignored. You can start the game anyway. ");
         System.out.println("-----------------------------------------------------------------------------------");
-        errorCounter++;
+        errorCounter++;//increment to print correct number for next exception
     }
 }

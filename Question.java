@@ -9,33 +9,31 @@
  * A String comment if anser given is wrong
  *
  * @author LS
- * @version 30.10.18
+ * @version 18.11.18
  */
 public class Question
 {
-    // instance variables - replace the example below with your own
-    private String question;
     
+    private String question;
     private String answer;
     private String posComment;
     private String negComment;
 
     /**
      * Constructor for objects of class Question
-     * Attributes:
-     *  - String question
-     *  - char answer
-     *  - String positive comment - if user answers right
-     *  - String negative comment - if user answers wrong
+     * 
+     * @param String question
+     * @param String answer
+     * @param String positive comment - if user answers right
+     * @param String negative comment - if user answers wrong
      * 
      */
     public Question(String question, String answer, String posComment, String negComment)
     {
-        // initialise instance variables
-        this.question = question;
-        this.answer = answer;
-        this.posComment = posComment;
-        this.negComment = negComment;
+        this.question = question;//question String with answer options
+        this.answer = answer;//correct ansewer: a,b,c, or d
+        this.posComment = posComment;//comment user gets when they answer correctly
+        this.negComment = negComment;//comment they get if they answer wrong
     }
     
     /**
@@ -44,11 +42,17 @@ public class Question
      * @param none
      */
     public void printQuestion(){
-        String [] questionParts = question.split("[+]");    //splits at + - I have problems reading and displaying newline characters directly from text files
+        String [] questionParts = question.split("[+]");    //splits at + for linebreaks - 
         for(String part : questionParts){
             System.out.println(part);
         }
     }
+    
+    /**
+     * access to a queston object
+     * @return void
+     * @param none
+     */
     public String getQuestion(){
         return question;
     }
