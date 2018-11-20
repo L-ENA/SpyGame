@@ -70,7 +70,7 @@ public class Game
             } else if (teabreak == 1 || teabreak == 2){ //it is teatime, so there is a risk to encounter a colleague
                 
                     if (rand.nextInt(5) < 3){//there is a potential (3/5) interaction with a colleague before the next move defined in this method
-                    if(colleagueMan.meetColleague()==false){//the colleague asks a question. if user answers wrong they loose a life
+                    if(colleagueMan.encounter()==false){//random colleague asks a question. if user answers wrong they loose a life
                         lifes--;
                         System.out.println("You have " + lifes + " left.");
                         if(lifes == 0){//game over

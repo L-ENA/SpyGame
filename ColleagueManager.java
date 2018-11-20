@@ -31,15 +31,16 @@ public class ColleagueManager
         makeColleagues();
         nrOfColleagues = colleagueList.size();
         questionMan = new QuestionManager();
+        colleague = colleagueList.get(rand.nextInt(nrOfColleagues));//making sure its never null, since some methods depent on the fact that a colleague was chosen before
         
     }
 
     /**
-     * Method to instantiate the colleagues and storing them in the colleagueList for further usage
+     * Private method to instantiate the colleagues and storing them in the colleagueList for further usage
      * @param none
      * @return void
      */
-    public void makeColleagues()
+    private void makeColleagues()
     {
         // makes new colleagues by adding new Colleague instances to the List. Params are name and gender
         colleagueList.add(new Colleague("Tom", false));
@@ -55,7 +56,7 @@ public class ColleagueManager
      * @param none
      * @return boolean information whether question was answered correctly. 
      */
-    public boolean meetColleague(){
+    public boolean encounter(){
             //player meets a colleague and gets interrogated
             //to choose a colleague from list: generates random int in the range of colleagueList's size and 
             //picks the colleague defined by index at this random int.
@@ -75,6 +76,7 @@ public class ColleagueManager
      * @return void 
      */
     public void endGame(){
+        
         if (colleague.isFemale()){      //next output is depending on random colleague's gender
                 System.out.println(colleague.getName() + " looks very suspicious. She walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
             } else {
