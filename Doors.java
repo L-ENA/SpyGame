@@ -1,7 +1,7 @@
 import java.util.HashMap;
 /**
  * Doors represents exits of a room. It has a hashmap attribute that
- * stores a descriptive String and a boolean value for the status of locking of every exit in this room.
+ * stores a descriptive String (name of the exit) and a boolean value for the status of locking of every exit in this room. A door object is created by default when an instance of Room is created.
  *
  * @author LS
  * @version 30.10.18
@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class Doors
 {
-    // instance variables - replace the example below with your own
+    // storing the locking status of each exit
     private HashMap<String, Boolean> exits;
 
     /**
@@ -32,6 +32,13 @@ public class Doors
         exits.put(description, status);
     }
     
+    /**
+     * Returns entry for specific hashmap entry
+     *
+     * @param String description
+     * 
+     * @return boolean
+     */
     public boolean checkStatus(String description){//returns access status, as stored in the hashmap value
         return exits.get(description);
     }

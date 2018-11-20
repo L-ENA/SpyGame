@@ -1,26 +1,25 @@
 
-
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * The test class ColleagueTester.
+ * The test class ColleagueTester. Tests quiz functionalities
  *
  * @author  (your name)
  * @version (a version number or a date)
  */
 public class ColleagueTester
 {
-    //private RoomManager roomMan; //for access to the map
+    
     private ColleagueManager colleagueMan; // for access to the colleagues
     /**
      * Default constructor for test class ColleagueTester
      */
     public ColleagueTester()
     {
-        //roomMan = new RoomManager();
+        
         colleagueMan = new ColleagueManager();
     }
     
