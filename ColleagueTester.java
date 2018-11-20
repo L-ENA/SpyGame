@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * The test class ColleagueTester. Tests quiz functionalities
+ * The test class ColleagueTester. Tests quiz functionalities by parsing and printing quiz questions on the terminal or printing the end game info on terminal
  *
  * @author  (your name)
  * @version (a version number or a date)

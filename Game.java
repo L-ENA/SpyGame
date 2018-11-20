@@ -29,6 +29,7 @@ public class Game
     private Random rand = new Random();
     
     private int lifes = 3;
+    private int rightAnswers = 0;
     /**
      * Class constructor
      * Create the game and initialise the room manager and the colleague manager (access to the quiz functionalities)
@@ -76,6 +77,8 @@ public class Game
                         if(lifes == 0){//game over
                             break;
                         }    
+                    } else {
+                        rightAnswers++;//number of correct answers is incremented correctly
                     }
                     System.out.println(roomMan.getCurrentRoomLong());//for re-orientation after the questioning. will be unncecessary once there is a GUI
                 }
@@ -90,7 +93,7 @@ public class Game
         }
         if(lifes ==0){
             colleagueMan.endGame();
-            System.out.println("You survived for " + timeUntilFinished + " steps.");
+            System.out.println("You survived for " + timeUntilFinished + " steps and answered "+ rightAnswers + " questions correctly.");
         } else{
             System.out.println("Thank you for playing. Good bye.");
         }
