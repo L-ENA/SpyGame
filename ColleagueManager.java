@@ -18,6 +18,7 @@ public class ColleagueManager
     private ArrayList<Colleague> colleagueList;//stores instances of colleagues
     private int nrOfColleagues;
     private Colleague colleague;//specific colleague that is used
+    private Colleague boss;
     private QuestionManager questionMan;//access to the question list and functionalities
     private Random rand = new Random();
 
@@ -33,6 +34,7 @@ public class ColleagueManager
         questionMan = new QuestionManager();
         colleague = colleagueList.get(rand.nextInt(nrOfColleagues));//making sure its never null, since some methods depent on the fact that a colleague was chosen before
         
+        
     }
 
     /**
@@ -47,7 +49,7 @@ public class ColleagueManager
         colleagueList.add(new Colleague("Mr. Brown", false));
         colleagueList.add(new Colleague("Lucy", true));
         colleagueList.add(new Colleague("Emily", true));
-        
+        boss = new Colleague("Your boss", false);//make the boss object that interacts with the player in the future. Could ask some final quiz questions etc or interact in a specific room
         
     }
     
@@ -68,6 +70,21 @@ public class ColleagueManager
             }
             return questionMan.ask();//asks a question, returns boolean true if answered correctly, false if not
         
+    }
+    
+    /**
+     * Method that is called after the player answered some questions correctly
+     * @param none
+     * @return void 
+     */
+    public void task(){
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+        if (colleague.isFemale()){      //next output is depending on random colleague's gender
+                System.out.println(colleague.getName() + " approaches you. She seems to have something on her mind. \nShe says: Hi! I have to leave early today, could you do me a favour and drop these documents in the offic of the boss?\nThanks!!!!\nYou take the documents and she leaves...");
+            } else {
+                System.out.println(colleague.getName() + " approaches you. He seems to have something on his mind. \nHe says: Hi! I have to leave early today, could you do me a favour and drop these documents in the offic of the boss?\nThanks!!!!\nYou take the documents and he leaves...");
+            }
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");    
     }
     
     /**

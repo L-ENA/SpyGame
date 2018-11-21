@@ -29,7 +29,8 @@ public class Game
     private Random rand = new Random();
     
     private int lifes = 3;
-    private int rightAnswers = 0;
+    private int trust = 0;
+    private int teabreak = 4;    //counter to determine if it is teabreak
     /**
      * Class constructor
      * Create the game and initialise the room manager and the colleague manager (access to the quiz functionalities)
@@ -58,19 +59,19 @@ public class Game
         // execute them until the game is over.
                 
         boolean finished = false;                       //booolean to see if user wants to exit game
-        int teabreak = 3;                              //counter to determine if it is lunchtime
+        
         int timeUntilFinished = 0;                          //increments every step until game is over
         
         while (! finished) {
+            storyLine();//applies the storyline method. Actions are performed if the right answers attribute if this class reaches 4
             
-            
-            if (teabreak % 6 == 0){                        // if teabreak counter reaches 8 the user is warned
+            if (teabreak % 6 == 0){                        // if teabreak counter reaches 6 the user is warned
                 System.out.println("----Soon everybody will come out of their offices for a tea break! Beware!----");
                 teabreak = 0;                              // resets teabreak counter 
                 
-            } else if (teabreak == 1 || teabreak == 2){ //it is teatime, so there is a risk to encounter a colleague
+            } else if (teabreak == 1 || teabreak == 2|| teabreak ==3){ //it is teatime, so there is a risk to encounter a colleague
                 
-                    if (rand.nextInt(5) < 3){//there is a potential (3/5) interaction with a colleague before the next move defined in this method
+                    if (rand.nextInt(4) == 1){//there is a potential interaction with a colleague before the next move defined in this method
                     if(colleagueMan.encounter()==false){//random colleague asks a question. if user answers wrong they loose a life
                         lifes--;
                         System.out.println("You have " + lifes + " left.");
@@ -78,7 +79,8 @@ public class Game
                             break;
                         }    
                     } else {
-                        rightAnswers++;//number of correct answers is incremented correctly
+                        trust++;//number of correct answers is incremented correctly
+                        
                     }
                     System.out.println(roomMan.getCurrentRoomLong());//for re-orientation after the questioning. will be unncecessary once there is a GUI
                 }
@@ -91,15 +93,27 @@ public class Game
             teabreak ++;
             timeUntilFinished++;
         }
+        
         if(lifes ==0){
             colleagueMan.endGame();
-            System.out.println("You survived for " + timeUntilFinished + " steps and answered "+ rightAnswers + " questions correctly.");
+            System.out.println("You survived for " + timeUntilFinished + " steps and answered "+ trust + " questions correctly.");
         } else{
             System.out.println("Thank you for playing. Good bye.");
         }
         
     }
-
+    
+    /**
+     * Applying the storyline. Depending on how many questions the player answered right/wrong, actions that change the settings in the game are performed 
+     */
+    private void storyLine(){//////look for potential not showing up
+        if(trust == 4){
+            colleagueMan.task();//get the task to leave docs in the office of the boss
+            roomMan.gainAccess();//unlocks the door to the office
+            trust++;
+        }
+    }
+    
     /**
      * Print out the opening message for the player.
      */
@@ -139,7 +153,7 @@ public class Game
             printHelp();
         }
         else if (commandWord == CommandWord.GO) {
-            roomMan.goRoom(command);
+            roomMan.goRoom(command, teabreak);
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);

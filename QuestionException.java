@@ -19,6 +19,7 @@ public class QuestionException extends Exception
      */
     public QuestionException(String line, int nr)
     {
+        super();
         this.line = line;
         this.nr = nr;
         

@@ -34,9 +34,9 @@ public class RoomManager
     }
     
     /**
-     * Accessor to the current room name's long description.
+     * Accessor to the current room name's short description.
      * @params none
-     * @return String long description of the current room
+     * @return String short description of the current room
      */
     public String getCurrentRoomShort(){
         return currentRoom.getShortDescription();
@@ -49,6 +49,15 @@ public class RoomManager
      */
     public String getLooShort(){
         return loo.getShortDescription();
+    }
+    
+    /**
+     * Unlocks the office
+     * @params none
+     * @return void
+     */
+    public void gainAccess(){
+        firstHallway.getDoors().addLock("office", true);//sets access for this room: player can now enter the office
     }
     
     /**
@@ -111,7 +120,7 @@ public class RoomManager
         officeBoss = new Room("in the office of your boss");
         kitchen = new Room("in the staff kitchen");
         lab = new Room("in the secret screwdriver lab");
-        safeRoom = new Room("in the safe room where they store the blueprints");
+        safeRoom = new Room("in the safe room where they store the blueprints. You grab the documents and leave!");
         
         
         
@@ -124,7 +133,7 @@ public class RoomManager
      * @param Command - a command that is evaluated in this method
      * @return void
      */
-    protected void goRoom(Command command) 
+    protected void goRoom(Command command, int teabreak) 
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
@@ -135,12 +144,41 @@ public class RoomManager
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
+        if(teabreak!=1 && teabreak!=2&& teabreak!=3){//it is not breaktime. Therefore, the player won't be able to sneak into offices
+            noBreaktimeMoving(direction);
+        } else{//it is breaktime, so there are no restrictions for offices
+            enterRoom(direction);
+        }
+        
 
+        
+    }
+    
+    /** 
+     * It is not breaktime. Therefore, only non-offices are accessible
+     * @param String - the exit that the user tries to use
+     * @return void
+     */
+    private void noBreaktimeMoving(String direction){
+        Room nextRoom = currentRoom.getExit(direction);
+        if(direction.equals("office")){
+            System.out.println("Looks like there is a meeting "+nextRoom.getShortDescription()+". It won't be smart to go in there now..");
+        } else{
+            enterRoom(direction);
+        }
+    }
+    
+    /** 
+     * General method to enter a room
+     * @param String - the exit that the user tries to use
+     * @return void
+     */
+    private void enterRoom(String direction){
+        Room nextRoom = currentRoom.getExit(direction);
         if (nextRoom == null) {
             System.out.println("There is no door!");
         } else if(currentRoom.getDoors().checkStatus(direction) == false){//if the room is locked
-            System.out.println("This door is locked...");
+            System.out.println("You can't be "+nextRoom.getShortDescription()+". This door is locked...");
         } else {//player can move to the new room
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
