@@ -4,12 +4,12 @@
  * represent one question.
  * There are 4 attributes to this class: 
  * A String to store the question,
- * A String to store the answer
- * A String comment if answer given is right
- * A String comment if anser given is wrong
+ * a String to store the answer,
+ * a String comment if answer given is right,
+ * a String comment if anser given is wrong.
  *
- * @author LS
- * @version 18.11.18
+ * @author 21821570
+ * @version 0.1, 22.11.18
  */
 public class Question
 {
@@ -20,7 +20,7 @@ public class Question
     private String negComment;
 
     /**
-     * Constructor for objects of class Question
+     * Constructor for objects of class Question. Assigning the parameters to the attributes of this class.
      * 
      * @param String question
      * @param String answer
@@ -49,13 +49,14 @@ public class Question
     }
     
     /**
-     * access to a queston object
+     * Access to a queston object
      * @return void
      * @param none
      */
     public String getQuestion(){
         return question;
     }
+    
     /**
      * Accessor for the answer String
      * @return String the answer

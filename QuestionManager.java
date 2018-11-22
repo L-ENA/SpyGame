@@ -9,23 +9,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
  * Questions represent the challenges in this game. This class is responsible for asking questions by reading info 
- * from a text file and creating/storing question objects from that in a list. Instructions for file reading from: https://www.mkyong.com/java/java-read-a-text-file-line-by-line/
+ * from a text file and creating/storing question objects from that in a list.
  *
- * @author LS
- * @version 30.10.18
- * @throws IOException
- * @throws QuestionException
+ * @author 21821570
+ * @version 0.1, 22.11.18
  */
 public class QuestionManager
 {
-    // instance variables - replace the example below with your own
+    // instance variables
     private ArrayList<Question> questionList;
     private Question thisQuestion;
-    private Pattern p;
-    private Scanner reader;
+    private Pattern p;//for input validation
+    private Scanner reader;//to get user input
     
     /**
-     * Constructor for objects of class QuestionManager
+     * Constructor for objects of class QuestionManager. Parses the question file and adds questions. Initialises the reader and pattern objects. 
      */
     public QuestionManager()
     {

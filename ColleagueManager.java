@@ -8,13 +8,11 @@ import java.io.IOException;
  *      - of type ArrayList<Colleague> to store the colleague instances. 
  *      - of type int to store amount of colleagues
  *      - of type Colleague to represent one instance of Colleague to interact
- * @author LS
- * @version 30.10.18
+ * @author 21821570
+ * @version 0.1, 22.11.18
  */
 public class ColleagueManager
 {
-    // declaration of colleagues
-    
     private ArrayList<Colleague> colleagueList;//stores instances of colleagues
     private int nrOfColleagues;
     private Colleague colleague;//specific colleague that is used
@@ -23,7 +21,7 @@ public class ColleagueManager
     private Random rand = new Random();
 
     /**
-     * Constructor for objects of class ColleagueManager
+     * Constructor for objects of class ColleagueManager. Makes the colleagueList and chooses a random colleague to start with.
      */
     public ColleagueManager()
     {
@@ -33,7 +31,6 @@ public class ColleagueManager
         nrOfColleagues = colleagueList.size();
         questionMan = new QuestionManager();
         colleague = colleagueList.get(rand.nextInt(nrOfColleagues));//making sure its never null, since some methods depent on the fact that a colleague was chosen before
-        
         
     }
 
@@ -45,10 +42,12 @@ public class ColleagueManager
     private void makeColleagues()
     {
         // makes new colleagues by adding new Colleague instances to the List. Params are name and gender
-        colleagueList.add(new Colleague("Tom", false));
-        colleagueList.add(new Colleague("Mr. Brown", false));
-        colleagueList.add(new Colleague("Lucy", true));
-        colleagueList.add(new Colleague("Emily", true));
+        colleagueList.add(new Colleague("Bill", true));
+        colleagueList.add(new Colleague("Rory", false));
+        colleagueList.add(new Colleague("Martha", true));
+        colleagueList.add(new Colleague("Graham", false));
+        colleagueList.add(new Colleague("Clara", true));
+        colleagueList.add(new Colleague("Rose", true));
         boss = new Colleague("Your boss", false);//make the boss object that interacts with the player in the future. Could ask some final quiz questions etc or interact in a specific room
         
     }
@@ -62,6 +61,7 @@ public class ColleagueManager
             //player meets a colleague and gets interrogated
             //to choose a colleague from list: generates random int in the range of colleagueList's size and 
             //picks the colleague defined by index at this random int.
+            nrOfColleagues = colleagueList.size();
             colleague = colleagueList.get(rand.nextInt(nrOfColleagues));
             if (colleague.isFemale()){      //next output is depending on random colleague's gender
                 System.out.println("----Your colleague " +colleague.getName() + " spotted you. She is coming your way...\nShe asks:");
@@ -80,11 +80,21 @@ public class ColleagueManager
     public void task(){
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
         if (colleague.isFemale()){      //next output is depending on random colleague's gender
-                System.out.println(colleague.getName() + " approaches you. She seems to have something on her mind. \nShe says: Hi! I have to leave early today, could you do me a favour and drop these documents in the offic of the boss?\nThanks!!!!\nYou take the documents and she leaves...");
+                System.out.println(colleague.getName() + " approaches you. She seems to have something on her mind. \nShe says: Hi! I have to leave early today, could you do me a favour and drop these documents in the office of the boss?\nThanks!!!!\nYou take the documents and she leaves...");
             } else {
-                System.out.println(colleague.getName() + " approaches you. He seems to have something on his mind. \nHe says: Hi! I have to leave early today, could you do me a favour and drop these documents in the offic of the boss?\nThanks!!!!\nYou take the documents and he leaves...");
+                System.out.println(colleague.getName() + " approaches you. He seems to have something on his mind. \nHe says: Hi! I have to leave early today, could you do me a favour and drop these documents in the office of the boss?\nThanks!!!!\nYou take the documents and he leaves...");
             }
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------");    
+        ////////////////deleting the colleague that presented this task, since they are leving the office
+        Colleague col;
+        int delete = 0;
+        for(int i =0; i<colleagueList.size();i++){
+            col = colleagueList.get(i);
+            if(col.getName().equals(colleague.getName())){
+                delete = i;//
+            }
+        }
+        colleagueList.remove(delete);//deletes this colleague
     }
     
     /**

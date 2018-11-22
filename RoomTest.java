@@ -1,5 +1,3 @@
-
-
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
@@ -8,8 +6,8 @@ import org.junit.Test;
 /**
  * The test class RoomTest. It tests functionalities such as locking doors and returning the status of locking.
  *
- * @LS
- * @20/11/2018
+ * @author 21821570
+ * @version 0.1, 22.11.18
  */
 public class RoomTest
 {
@@ -25,6 +23,9 @@ public class RoomTest
         firstHallway.setExit("office", officeBoss);
     }
     
+    /**
+     * Testing the locking status of a room
+     */
     @Test
     public void doStatusTest(){
         assertEquals(firstHallway.getDoors().checkStatus("office"), true);//should be unlocked by default

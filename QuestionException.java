@@ -1,9 +1,9 @@
 
 /**
- * Write a description of class QuestionException here.
+ * This is an exception designed to handle parsing errors related to the question parsing tasks specific to this game.
  *
- * @author Lena Schmidt
- * @version 18.11.2018
+ * @author 21821570
+ * @version 0.1, 22.11.18
  */
 public class QuestionException extends Exception
 {
@@ -12,7 +12,7 @@ public class QuestionException extends Exception
     private int nr;//line nr where error occurred
 
     /**
-     * Constructor for objects of class QuestionException
+     * Constructor for objects of class QuestionException. 
      * @param String The line of the text field where the parsing exception occurred
      * @param int The line number where the exception ocurred
      * 

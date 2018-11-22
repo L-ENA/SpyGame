@@ -8,11 +8,8 @@
  *      - boolean gender for gender
  * 
  *
- * @author LS
- * @version 30.10.18
- * 
- * @param String name of colleague
- * @param boolean gender for printing output describing  the colleague's actions
+ * @author 21821570
+ * @version 0.1, 22.11.18
  * 
  * 
  */
@@ -23,7 +20,7 @@ public class Colleague
     private boolean gender;
     
     /**
-     * Constructor for objects of class Colleague. 
+     * Constructor for objects of class Colleague. Assigns parameters to attributes.
      * @param name - a String object representing this colleague's name
      * @param female - represents the colleague's gender -> true for femle, false for male
      */

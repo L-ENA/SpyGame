@@ -7,10 +7,10 @@ import java.util.Iterator;
  *
  * A "Room" represents one location in the scenery of the game.  It is 
  * connected to other rooms via exits.  For each existing exit, the room 
- * stores a reference to the neighboring room.
+ * stores a reference to the neighboring room. It owns a door object, which stores information about locks on the room's exits
  * 
- * @author  Michael Kolling and David J. Barnes, adapted by Lena Schmidt
- * @version 30.10.2018
+ * @author 21821570
+ * @version 0.1, 22.11.18
  */
 
 public class Room 
@@ -31,7 +31,8 @@ public class Room
         this.doors = new Doors();
     }
     
-    /**Accessor for doors attribute
+    /**
+     * Accessor for doors attribute
      * @param none
      * @return The doors hashmap for access to locked status
      */
@@ -52,9 +53,9 @@ public class Room
     }
 
     /**
+     * Returns the short description of this room
      * @param none
      * @return The short description of the room
-     * (the one that was defined in the constructor).
      */
     public String getShortDescription()
     {
