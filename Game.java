@@ -45,15 +45,15 @@ public class Game
         parser = new Parser();
         roomMan = new RoomManager();
         colleagueMan = new ColleagueManager();
-        
+        /////////////////////////////////////////////initial setup
         lifes = 3;//lifes a player has left
-        trust = 0;//trust level
-        rightAnswers = 0;//correct answers
+        trust = 0;//trust level the player gained
+        rightAnswers = 0;//correct answers given in quizzes so far
         teabreak = 4;    //counter to determine teabreak cycle
         isBreak = false;//is it breaktime?
-        won = false;//did the player satisfy the winninc condition?
+        won = false;//did the player satisfy the winning condition?
         timeUntilFinished = 0;//increments every step until game is over
-        task1 = false;
+        task1 = false;//task 1 was not given yet
     }
     
     /**
@@ -74,13 +74,15 @@ public class Game
         won = false;//did the player satisfy the winninc condition?
         timeUntilFinished = 0;//increments every step until game is over
         boolean finished = false;//booolean to see if user wants to exit game
-        task1 = false;
+        task1 = false;//not given yet
+        //other tasks are entered here
+        
+        
+       
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
-       
         
-        while (!finished) {//Loops until end of play: breaks if all lifes are lost, if the player wins or if they quit.
+        while (!finished) {//Loops until end of play: breaks if all lifes are lost, if the player wins, or if they quit.
             storyLine();//applies the storyline method. Actions are performed if the right answers attribute if this class reaches 4
             /////////////////////////////////////////winning condition
             if(winGame() == true){
@@ -93,8 +95,11 @@ public class Game
                 teabreak = 0;                              // resets teabreak counter for new cycle
                 
             } else if (teabreak == 1 || teabreak == 2|| teabreak ==3){ //it is teatime, so there is a risk to encounter a colleague
-                isBreak = true;//its breaktime, so there are potential encounters + some rooms can be accessed.
-                breaktimeActions();//executes potential quiz activities    
+                if (testLoo() == false){
+                    isBreak = true;//its breaktime, so there are potential encounters + some rooms can be accessed.
+                    breaktimeActions();//executes potential quiz activities
+                }
+                    
                 if(lifes == 0){//game over
                     break;
                 }
@@ -120,6 +125,13 @@ public class Game
         }
         
         
+    }
+    private boolean testLoo(){
+        if (roomMan.getCurrentRoomShort().equals(roomMan.getLooShort())){
+        return true;
+        } else {
+            return false;
+        }
     }
     
     /**
@@ -191,7 +203,7 @@ public class Game
         System.out.println("You were hired as a java developer in the company that produces it. ");
         System.out.println("But your colleagues are suspicios.\nIf you meet one  of them, they might ask questions to check if you really are who you pretend to be.... ");
         System.out.println("If you get the wrong answer too often, they might raise an alarm and your cover is gone.");
-        System.out.println("At teatime, they swarm out of their offices, so be prepared.\n");
+        System.out.println("At teatime, they swarm out of their offices, so be prepared  ( or hide in the loo).\n");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(roomMan.getCurrentRoomLong());//orientation for the player: where are they and what are exit options

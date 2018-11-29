@@ -49,6 +49,15 @@ public class RoomManager
     }
     
     /**
+     * Accessor to the loo room's short description.
+     * @params none
+     * @return String short description of the loo
+     */
+    public String getLooShort(){
+        return loo.getShortDescription();
+    }
+    
+    /**
      * Unlocks the office
      * @params none
      * @return void
