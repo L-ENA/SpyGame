@@ -28,7 +28,7 @@ public class QuestionManager
     public QuestionManager()
     {
         reader = new Scanner(System.in);//to evaluate the user's answers
-        p = Pattern.compile("[abcd]");//regex to evaluate input - matches single a,b,c, or d.
+        p = Pattern.compile("^[abcd]$");//regex to evaluate input - matches single a,b,c, or d.
         
         String[] parts;//holds input line from text file after it was split in its 4 parts
         int counter = 0;//param for parsing exception
