@@ -1,4 +1,4 @@
-
+import javax.swing.*;
 /**
  * This is an exception designed to handle parsing errors related to the question parsing tasks specific to this game.
  *
@@ -33,12 +33,16 @@ public class QuestionException extends Exception
      */
     public void describeError()
     {
-         System.out.println("----------------------------Parsing Error nr "+errorCounter+"-------------------------------------");
-        System.out.println("There was a problem while parsing line "+ nr +" from the questions input file:");
-        System.out.println(">>> "+line);
-        System.out.println("Make sure this line contains exactly 3 delimiters in the form of % signs");
-        System.out.println("The line with the error was ignored. You can start the game anyway. ");
-        System.out.println("-----------------------------------------------------------------------------------");
+        
+        JOptionPane.showMessageDialog(null, "<html>Parsing Error "+errorCounter+//displays warning message to user
+        "<br>There was a problem while parsing line "+ nr +" from the questions input file:"+
+        "<br>>>> "+line +
+        "<br>Make sure this line contains exactly 3 delimiters in the form of % signs"+
+        "<br>The line with the error was ignored. You can start the game anyway.</html>"
+        , 
+        "Exception while parsing input pile",
+        JOptionPane.WARNING_MESSAGE);//type warning message, could also be error message, etc.
+        
         errorCounter++;//increment to print correct number for next exception
     }
 }

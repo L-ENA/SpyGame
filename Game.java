@@ -95,7 +95,7 @@ public class Game
                 teabreak = 0;                              // resets teabreak counter for new cycle
                 
             } else if (teabreak == 1 || teabreak == 2|| teabreak ==3){ //it is teatime, so there is a risk to encounter a colleague
-                if (testLoo() == false){
+                if (testRoom() == false){
                     isBreak = true;//its breaktime, so there are potential encounters + some rooms can be accessed.
                     breaktimeActions();//executes potential quiz activities
                 }
@@ -126,16 +126,23 @@ public class Game
         
         
     }
-    private boolean testLoo(){
-        if (roomMan.getCurrentRoomShort().equals(roomMan.getLooShort())){
-        return true;
+    
+    /**
+     * This method is called at breaktime, it returns true if the player is in the safe room or the loo.
+     * @param none
+     * @return boolean The information if player is in one of the spcified rooms or not
+     */
+    private boolean testRoom(){
+        if (roomMan.getCurrentRoomShort().equals(roomMan.getLooShort()) || //comparing room descriptions 
+            roomMan.getCurrentRoomShort().equals(roomMan.getSafeShort())){
+        return true;//descriptions match, therefore it returns true
         } else {
-            return false;
+            return false;//player is somewhere else
         }
     }
     
     /**
-     * This mthod is called at breaktime, it introduces a potential for meeting colleagues who ask quiz questions.
+     * This method is called at breaktime, it introduces a potential for meeting colleagues who ask quiz questions.
      * @param none
      * @return void
      */
