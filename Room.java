@@ -15,6 +15,7 @@ import java.util.Iterator;
 
 public class Room 
 {
+    //Add some compiled image as attribute by giving path as constructor argument
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
     private Doors doors;
