@@ -6,6 +6,7 @@ What is the point of abstraction?+a)It's the ability on an object to take the fo
 What does 'Polymorphism mean'?+a)Two methods of the same class use the same attribute.+b)It's the ability on an object to take the form of another object.+c)Two variables can point to the same object.+d)Programs written in Java can be executed on different operating systems.%b%True! Very good.%No, b would be the right answer. It means that e.g. a child class can use a reference to a parent class.
 How would you initialise an ArrayList that contains Strings?+a)ArrayList<String> list = new ArrayList<String>;+b)wordList = new List<StringArray>();+c)wordList = [];+d)ArrayList<String> wordList = new ArrayList<String>();.%d%Excellent!%Take a closer look. It's 'ArrayList<String> list = new ArrayList<String>();'
 This%problematic line does not have enouth tokens!
+
 How would you change the value of a private attribute from outside?+a)Define and call an accessor method.+b)Change it in its parent class.+c)Define and call a mutator method.+d)The only way is to declare it as public.%c%Nice!%Almost...To change its value you can add a mutator method! 
 Which of the following is not a valid structure  for a loop?+a) for(int i = 10;i > 0; i--){...}.+b) while(someInt >0 && simpleBoolean = false){...}.+c)for (String a : someStringArray){...}.+d) while(!someBoolean){...}.%b%It is impossible to fool you!% No. B is wrong, to compare boolean, one would use '==', or even the '!' operator.
 This%%problematic %%line% has% too% many
