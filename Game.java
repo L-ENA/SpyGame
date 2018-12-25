@@ -235,7 +235,7 @@ public class Game
             printHelp();
         }
         else if (commandWord == CommandWord.GO) {//player wants to change rooms. Since access depends on both locked doors and
-            roomMan.goRoom(command, isBreak);   //time within the game, the teabreak boolean is passed.
+            goRoom(command);   
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
@@ -259,7 +259,29 @@ public class Game
         parser.showCommands();
     }
 
-    
+    /** 
+     * Try to go to one direction. If there is an exit, enter the new
+     * room, otherwise print an error message.
+     * @param Command - a command that is evaluated in this method
+     * @return void
+     */
+    protected void goRoom(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Go where?");
+            return;
+        }
+
+        String direction = command.getSecondWord();//exit name where player wants to go
+
+        // Try to leave current room.
+        if(isBreak==false){//it is not breaktime. Therefore, the player won't be able to sneak into offices.
+            roomMan.noBreaktimeMoving(direction);
+        } else{//it is breaktime, so there are no restrictions for offices (unless the door of the office is locked)
+            roomMan.enterRoom(direction);
+        }
+    }
 
     /** 
      * "Quit" was entered. Check the rest of the command to see
