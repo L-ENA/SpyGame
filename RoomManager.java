@@ -1,4 +1,3 @@
-
 /**
  * The RoomManager class manages the room structure of the game. Here rooms are initialised and given purpose
  *
@@ -19,24 +18,6 @@ public class RoomManager
         createRooms();
         initialiseRooms();
         currentRoom = reception;  // start game in reception room
-    }
-    
-    /**
-     * Accessor to the current room object.
-     * @params none
-     * @return Room The crrent room.
-     */
-    public Room getCurrentRoom(){
-        return currentRoom;
-    }
-    
-    /**
-     * Mutator for the current room object. When the player is moving, the current room needs to be updated.
-     * @params Room The new room object
-     * @return void
-     */
-    public void setCurrentRoom(Room someRoom){
-        this.currentRoom = someRoom;
     }
     
     /**
@@ -149,5 +130,62 @@ public class RoomManager
         
     }
     
+    /** 
+     * Try to go to one direction. If there is an exit, enter the new
+     * room, otherwise print an error message.
+     * @param Command - a command that is evaluated in this method
+     * @return void
+     */
+    protected void goRoom(Command command, boolean teabreak) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Go where?");
+            return;
+        }
+
+        String direction = command.getSecondWord();//exit name where player wants to go
+
+        // Try to leave current room.
+        if(teabreak==false){//it is not breaktime. Therefore, the player won't be able to sneak into offices.
+            noBreaktimeMoving(direction);
+        } else{//it is breaktime, so there are no restrictions for offices (unless the door of the office is locked)
+            enterRoom(direction);
+        }
+    }
     
+    /** 
+     * It is not breaktime. Therefore, only non-offices are accessible
+     * @param String - the exit that the user tries to use
+     * @return void
+     */
+    private void noBreaktimeMoving(String direction){
+        Room nextRoom = currentRoom.getExit(direction);//the room that is attempted.
+        if(direction.equals("office")){//check if this room is an office. If it is, the user gets some message, but can't enter
+            System.out.println("Looks like there is somebody working "+nextRoom.getShortDescription()+". It won't be smart to disturb them...");
+        } else{
+            enterRoom(direction);
+        }
+    }
+    
+    /** 
+     * General method to enter a room
+     * @param String - the exit that the user tries to use
+     * @return void
+     */
+    private void enterRoom(String direction){
+        Room nextRoom = currentRoom.getExit(direction);
+        if (nextRoom == null) {
+            System.out.println("There is no door!");
+        } else if(currentRoom.getDoors().checkStatus(direction) == false){//if the room is locked
+            System.out.println("You can't be "+nextRoom.getShortDescription()+". This door is locked...");
+        } else {//player can move to the new room
+            currentRoom = nextRoom;
+            if(currentRoom.equals(safeRoom)){//unless the player is in the final room the description is displayed
+                System.out.println("You take the elevator. There are no buttons...\nThe elevator takes you down and when the door opens you realise that you are in the strongroom.\nThe blueprints are on the table!\nYou grab them and leave the building without attracting any attention.");
+            } else {
+                System.out.println(currentRoom.getLongDescription());
+            }    
+        }
+    }
 }
