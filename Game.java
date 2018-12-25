@@ -236,13 +236,78 @@ public class Game
             printHelp();
         }
         else if (commandWord == CommandWord.GO) {//player wants to change rooms. Since access depends on both locked doors and
-            roomMan.goRoom(command, isBreak);   //time within the game, the teabreak boolean is passed.
+            goRoom(command, isBreak);   //time within the game, the teabreak boolean is passed.
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
         // else command not recognised.
         return wantToQuit;
+    }
+    
+    /** 
+     * Try to go to one direction. If there is an exit, enter the new
+     * room, otherwise print an error message.
+     * @param Command - a command that is evaluated in this method
+     * @return void
+     */
+    protected void goRoom(Command command, boolean teabreak) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Go where?");
+            return;
+        }
+
+        String direction = command.getSecondWord();//exit name where player wants to go
+
+        // Try to leave current room.
+        if(teabreak==false){//it is not breaktime. Therefore, the player won't be able to sneak into offices.
+            noBreaktimeMoving(direction);
+        } else{//it is breaktime, so there are no restrictions for offices (unless the door of the office is locked)
+            enterRoom(direction);
+        }
+    }
+    
+    /** 
+     * It is not breaktime. Therefore, only non-offices are accessible
+     * @param String - the exit that the user tries to use
+     * @return void
+     */
+    private void noBreaktimeMoving(String direction){
+        System.out.println("1");
+        Room nextRoom = roomMan.getCurrentRoom().getExit(direction);//the room that is attempted.
+        System.out.println("2");
+        if(direction.equals("office")){//check if this room is an office. If it is, the user gets some message, but can't enter
+            System.out.println("3");
+            System.out.println("Looks like there is somebody working "+nextRoom.getShortDescription()+". It won't be smart to disturb them...");//nullpointer
+            
+        } else{
+            enterRoom(direction);
+            System.out.println("4");
+        }
+    }
+    
+    /** 
+     * General method to enter a room
+     * @param String - the exit that the user tries to use
+     * @return void
+     */
+    private void enterRoom(String direction){
+        Room currentRoom = roomMan.getCurrentRoom();
+        Room nextRoom = currentRoom.getExit(direction);
+        if (nextRoom == null) {
+            System.out.println("There is no door!");
+        } else if(currentRoom.getDoors().checkStatus(direction) == false){//if the room is locked
+            System.out.println("You can't be "+nextRoom.getShortDescription()+". This door is locked...");
+        } else {//player can move to the new room
+            currentRoom = nextRoom;
+            if(roomMan.getCurrentRoomShort().equals(roomMan.getSafeShort())){//unless the player is in the final room the description is displayed
+                System.out.println("You take the elevator. There are no buttons...\nThe elevator takes you down and when the door opens you realise that you are in the strongroom.\nThe blueprints are on the table!\nYou grab them and leave the building without attracting any attention.");
+            } else {
+                System.out.println(currentRoom.getLongDescription());
+            }    
+        }
     }
 
 
