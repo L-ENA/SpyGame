@@ -21,8 +21,8 @@ import java.util.Random;
 //test
 public class Game 
 {
-    private Parser parser;//parsing user input
-    private RoomManager roomMan; //for access to the map
+    private CommandManager comMan;
+    protected RoomManager roomMan; //for access to the map
     private ColleagueManager colleagueMan; // for access to the colleagues
     private Random rand = new Random();//introduce some variation for quiz functions
     private int lifes;////////////////////////////game stats and loop contols
@@ -41,7 +41,7 @@ public class Game
     public Game()
     {
         //instantiates objects used to control gameflow
-        parser = new Parser();
+        
         roomMan = new RoomManager();
         colleagueMan = new ColleagueManager();
         /////////////////////////////////////////////initial setup
@@ -53,6 +53,8 @@ public class Game
         won = false;//did the player satisfy the winning condition?
         timeUntilFinished = 0;//increments every step until game is over
         task1 = false;//task 1 was not given yet
+        
+        Gui testGui = new Gui();
     }
     
     /**
@@ -105,9 +107,9 @@ public class Game
             } else{//people are working now, so there is no chance of meeting a colleague
                 isBreak = false;
             }                                   
-            
-            Command command = parser.getCommand();//new move
-            finished = processCommand(command);//analyse input
+            comMan = new CommandManager(isBreak, roomMan);//the commandManager is responsible for handling user input.
+            roomMan = comMan.analyseInput();//this method calls functionalities of the Command Manager: process commands and figure out if the user wishes to quit. It returns the updated map in form of the roomMnager
+            finished = comMan.getQuit();//checks if the user wanted to quit the game
             teabreak ++;//increment teabreak counter 
             timeUntilFinished++;//counts steps that the player took
         }
@@ -215,88 +217,5 @@ public class Game
         System.out.println(roomMan.getCurrentRoomLong());//orientation for the player: where are they and what are exit options
     }
 
-    /**
-     * Given a command, process (that is: execute) the command.
-     * @param command The command to be processed.
-     * @return true If the command ends the game, false otherwise.
-     */
-    private boolean processCommand(Command command) 
-    {
-        boolean wantToQuit = false;
-
-        CommandWord commandWord = command.getCommandWord();//to determine which action needs to be taken. 
-
-        if(commandWord == CommandWord.UNKNOWN) {
-            System.out.println("I don't know what you mean... ");
-            return false;
-        }
-
-        if (commandWord == CommandWord.HELP) {
-            printHelp();
-        }
-        else if (commandWord == CommandWord.GO) {//player wants to change rooms. Since access depends on both locked doors and
-            goRoom(command);   
-        }
-        else if (commandWord == CommandWord.QUIT) {
-            wantToQuit = quit(command);
-        }
-        // else command not recognised.
-        return wantToQuit;
-    }
-
-
-    /**
-     * Print out some help information.
-     * Here we print some stupid, cryptic message and a list of the 
-     * command words.
-     * @param none
-     * @return void
-     */
-    private void printHelp() 
-    {
-        System.out.println("Be careful, they are on to you!\n");//printing some sentences + available commands
-        System.out.println("Your command words are:");
-        parser.showCommands();
-    }
-
-    /** 
-     * Try to go to one direction. If there is an exit, enter the new
-     * room, otherwise print an error message.
-     * @param Command - a command that is evaluated in this method
-     * @return void
-     */
-    protected void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();//exit name where player wants to go
-
-        // Try to leave current room.
-        if(isBreak==false){//it is not breaktime. Therefore, the player won't be able to sneak into offices.
-            roomMan.noBreaktimeMoving(direction);
-        } else{//it is breaktime, so there are no restrictions for offices (unless the door of the office is locked)
-            roomMan.enterRoom(direction);
-        }
-    }
-
-    /** 
-     * "Quit" was entered. Check the rest of the command to see
-     * whether we really quit the game.
-     * @param Command to evaluate if player wants to quit the game
-     * @return boolean true, if this command quits the game, false otherwise.
-     */
-    private boolean quit(Command command) 
-    {
-        if(command.hasSecondWord()) {//since there is no second word expected for quitting the game.
-            System.out.println("Quit what?");
-            return false;
-        }
-        else {
-            return true;  // signal that they want to quit
-        }
-    }
+    
 }
