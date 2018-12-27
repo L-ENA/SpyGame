@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.awt.image.BufferedImage;
 /**
  *  This class is the main class of the Spy game application. 
  *  It is a very simple, text based adventure game about a spy in a software development company. The player is a spy who has to find some blueprints
@@ -33,6 +34,7 @@ public class Game
     private boolean won;//did the player satisfy the winninc condition?
     private int timeUntilFinished;//increments every step until game is over
     private boolean task1;////////////////////////////////for task status
+    private Gui testGui;//The graphical user interface
     /**
      * Class constructor
      * Create the game and initialise the room manager(map),the colleague manager (access to the quiz functionalities), and the parser instance.
@@ -54,7 +56,7 @@ public class Game
         timeUntilFinished = 0;//increments every step until game is over
         task1 = false;//task 1 was not given yet
         
-        Gui testGui = new Gui();
+        testGui = new Gui();
     }
     
     /**
@@ -84,6 +86,10 @@ public class Game
         // execute them until the game is over.
         
         while (!finished) {//Loops until end of play: breaks if all lifes are lost, if the player wins, or if they quit.
+            
+            int[] stats = {timeUntilFinished,trust,lifes};//following lines are for updating the GUI.
+            testGui.updateMain(stats, roomMan.getCurrentRoomImg());
+            
             storyLine();//applies the storyline method. Actions are performed if the right answers attribute if this class reaches 4
             /////////////////////////////////////////winning condition
             if(winGame() == true){
@@ -112,6 +118,7 @@ public class Game
             finished = comMan.getQuit();//checks if the user wanted to quit the game
             teabreak ++;//increment teabreak counter 
             timeUntilFinished++;//counts steps that the player took
+            
         }
         
         if(lifes ==0){//player answered too many questions wrong

@@ -1,13 +1,17 @@
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
-
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.io.IOException;
 /**
  * Class Room - a room in the Spy game.
  *
  * A "Room" represents one location in the scenery of the game.  It is 
  * connected to other rooms via exits.  For each existing exit, the room 
- * stores a reference to the neighboring room. It owns a door object, which stores information about locks on the room's exits
+ * stores a reference to the neighboring room. It owns a door object, which stores information about locks on the room's exits.
+ * Each room also has an associated picture for the GUI.
  * 
  * @author 21821570
  * @version 0.1, 22.11.18
@@ -19,17 +23,35 @@ public class Room
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
     private Doors doors;
+    private BufferedImage img;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, String pathToPic) 
     {
         this.description = description;
         this.exits = new HashMap<String, Room>();
         this.doors = new Doors();
+        try{//loading the image file for this room and adjusting its size
+            img = ImageIO.read(new File(pathToPic));
+            
+        } catch (IOException ex){
+            System.out.println(pathToPic+ " is not available. Please make sure that it exists in this directory.");
+            ex.printStackTrace();
+        }
+        
+    }
+    
+    /**
+     * Accessor for the image.
+     * @param none
+     * @return BufferedImage The image describing this room.
+     */
+    public BufferedImage getImg(){
+        return img;
     }
     
     /**

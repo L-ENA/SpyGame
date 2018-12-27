@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 /**
  * The RoomManager class manages the room structure of the game. Here rooms are initialised and given purpose
  *
@@ -36,6 +37,15 @@ public class RoomManager
      */
     public String getCurrentRoomShort(){
         return currentRoom.getShortDescription();
+    }
+    
+    /**
+     * Accessor to the current room's image object.
+     * @params none
+     * @return BufferedImage The currrent room's image for GUI.
+     */
+    public BufferedImage getCurrentRoomImg(){
+        return currentRoom.getImg();
     }
     
     /**
@@ -116,18 +126,26 @@ public class RoomManager
     {
         
         // create the rooms with a descriptive String as parameter
-        reception = new Room("at the reception");
-        loo = new Room("in the loo");
-        cafe = new Room("in the cafe");
-        groundHallway = new Room("in the ground floor hallway");
-        firstHallway = new Room("in the first floor hallway");
-        office1 = new Room("in Jack's office");
-        office2 = new Room("in Bill's office");
-        officeBoss = new Room("in the office of your boss");
-        kitchen = new Room("in the staff kitchen");
-        lab = new Room("in the secret screwdriver lab");
-        safeRoom = new Room("in the strongroom where they store all sorts of secret items.");
+        reception = new Room("at the reception", "reception.jpg");
+        loo = new Room("in the loo", "loo.jpg");
+        cafe = new Room("in the cafe", "cafe.jpg");
+        groundHallway = new Room("in the ground floor hallway", "hallway.jpg");
+        firstHallway = new Room("in the first floor hallway", "hallway.jpg");
+        office1 = new Room("in Jack's office", "office.jpg");
+        office2 = new Room("in Bill's office", "office.jpg");
+        officeBoss = new Room("in the office of your boss","officeBoss.jpg");
+        kitchen = new Room("in the staff kitchen", "kitchen.jpg");
+        lab = new Room("in the secret screwdriver lab", "lab.jpg");
+        safeRoom = new Room("in the strongroom where they store all sorts of secret items.", "safe.jpg");
         
+        //<a href="https://www.freepik.com/free-photos-vectors/paper">Paper image created by Freepik</a>
+        //<a href="https://www.freepik.com/free-photos-vectors/food">Food image created by Yanalya - Freepik.com</a>
+        //<a href="https://www.freepik.com/free-photos-vectors/background">Background image created by Nikitabuida - Freepik.com</a>
+        //<a href="https://www.freepik.com/free-photos-vectors/business">Business image created by Peoplecreations - Freepik.com</a>
+        //<a href="https://www.freepik.com/free-photos-vectors/business">Business image created by Rawpixel.com - Freepik.com</a>
+        //<a href='https://www.freepik.com/free-photo/restaurant_3563675.htm'>Designed by Freepik</a>
+        //<a href='https://www.freepik.com/free-photo/public-toilet_1278624.htm'>Designed by 4045</a>
+        //<a href="https://www.freepik.com/free-photos-vectors/business">Business image created by Katemangostar - Freepik.com</a>
     }
     
     
@@ -139,11 +157,16 @@ public class RoomManager
      */
     protected void noBreaktimeMoving(String direction){
         Room nextRoom = currentRoom.getExit(direction);//the room that is attempted.
-        if(direction.equals("office")){//check if this room is an office. If it is, the user gets some message, but can't enter
-            System.out.println("Looks like there is somebody working "+nextRoom.getShortDescription()+". It won't be smart to disturb them...");
-        } else{
-            enterRoom(direction);
+        if (nextRoom!=null){//if there is an actual room for the specified exit
+            if(direction.equals("office")){//check if this room is an office. If it is, the user gets some message, but can't enter
+                System.out.println("Looks like there is somebody working "+nextRoom.getShortDescription()+". It won't be smart to disturb them...");
+            } else{
+                enterRoom(direction);
+            } 
+        } else {//some mistake was made when entering the room
+            System.out.println("There is no door!");
         }
+        
     }
     
     /** 

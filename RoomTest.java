@@ -18,8 +18,8 @@ public class RoomTest
      */
     public RoomTest()
     {
-        officeBoss = new Room("in the office of your boss");
-        firstHallway = new Room("in the hallway");
+        officeBoss = new Room("in the office of your boss", "office.jpg");
+        firstHallway = new Room("in the hallway", "hallway.jpg");
         firstHallway.setExit("office", officeBoss);
     }
     
