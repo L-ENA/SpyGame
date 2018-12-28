@@ -88,8 +88,8 @@ public class Game
         while (!finished) {//Loops until end of play: breaks if all lifes are lost, if the player wins, or if they quit.
             
             int[] stats = {timeUntilFinished,trust,lifes};//following lines are for updating the GUI.
-            testGui.updateMain(stats, roomMan.getCurrentRoomImg());
-            
+            testGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet());
+            System.out.println("Exits1: " +roomMan.getCurrentExitSet().toString());
             storyLine();//applies the storyline method. Actions are performed if the right answers attribute if this class reaches 4
             /////////////////////////////////////////winning condition
             if(winGame() == true){

@@ -5,7 +5,9 @@ import java.awt.Color;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.border.BevelBorder;
 import java.awt.image.BufferedImage;
+import java.util.Set;
 /**
  * Write a description of class Gui here.
  *
@@ -18,11 +20,10 @@ public class Gui
     protected MyMainPane contentPaneMain;
     protected JPanel contentPaneQuiz;
     
+    protected Border standardBorder;//border style used for all titled borders
+    private Border contentBorder;
     
-    
-    protected Border standardBorder;
-    
-    JMenuBar menuBar;
+    MyMenuBar menuBar;
     
     /**
      * Constructor for objects of class Gui
@@ -42,17 +43,14 @@ public class Gui
     {
         mainFrame = new JFrame("SpyGame");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//what happens if the x is pressed: exit the game
-        menuBar = new MyMenuBar();
+        menuBar = new MyMenuBar(mainFrame);
         mainFrame.setJMenuBar(menuBar);
         
         standardBorder = new LineBorder(Color.GREEN);//Customizes the line colour for the following TitledBorder instances
-        contentPaneMain = new MyMainPane(standardBorder);
+        contentBorder = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.BLACK);//border for all content
+        
+        contentPaneMain = new MyMainPane(standardBorder, contentBorder);
         contentPaneQuiz = new JPanel(new GridBagLayout());//a panel that covers the frame
-        
-        
-        
-       
-        
         
         mainFrame.add(contentPaneMain);
         mainFrame.pack();
@@ -60,9 +58,9 @@ public class Gui
         
     }
     
-    protected void updateMain(int[] stats, BufferedImage img){
-        //protected void updateMain(BufferedImage roomPicture, int[] stats){
-        contentPaneMain.updating(stats, img);
+    protected void updateMain(int[] stats, BufferedImage img, Set<String> exits){
+        contentPaneMain.updating(stats, img, exits);
+        System.out.println("Exits2: " +exits.toString());
     }
     
     

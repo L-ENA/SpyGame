@@ -123,5 +123,17 @@ public class Room
     {
         return exits.get(direction);
     }
+    
+    ////////////////////////////////////////////////for gui methods
+    /**
+     * Return a string set for all exits of this room
+     * @param void
+     * @return Set<String>.
+     */
+    public Set<String> getExitSet()
+    {
+        return exits.keySet();
+    }
 }
+///////////////////////////////////////////
 

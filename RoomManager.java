@@ -1,4 +1,5 @@
 import java.awt.image.BufferedImage;
+import java.util.Set;
 /**
  * The RoomManager class manages the room structure of the game. Here rooms are initialised and given purpose
  *
@@ -188,5 +189,15 @@ public class RoomManager
                 System.out.println(currentRoom.getLongDescription());
             }    
         }
+    }
+    ////////////////////////////////////////7
+    /**
+     * Return a string set for all exits of the current room
+     * @param void
+     * @return Set<String>.
+     */
+    public Set<String> getCurrentExitSet()
+    {
+        return currentRoom.getExitSet();
     }
 }
