@@ -13,13 +13,21 @@ import org.junit.Test;
  */
 public class GameTest
 {
+    public Game game;
     /**
      * Default constructor for test class GameTest
      */
     public GameTest()
     {
+        game = new Game();
     }
-
+    
+    @Test//to check how the initial GUI setup looks like
+    public void playtest(){
+        game.play();
+    }
+    
+    
     /**
      * Sets up the test fixture.
      *

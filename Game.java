@@ -88,8 +88,7 @@ public class Game
         while (!finished) {//Loops until end of play: breaks if all lifes are lost, if the player wins, or if they quit.
             
             int[] stats = {timeUntilFinished,trust,lifes};//following lines are for updating the GUI.
-            testGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet());
-            System.out.println("Exits1: " +roomMan.getCurrentExitSet().toString());
+            testGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort());
             storyLine();//applies the storyline method. Actions are performed if the right answers attribute if this class reaches 4
             /////////////////////////////////////////winning condition
             if(winGame() == true){
@@ -114,7 +113,8 @@ public class Game
                 isBreak = false;
             }                                   
             comMan = new CommandManager(isBreak, roomMan);//the commandManager is responsible for handling user input.
-            roomMan = comMan.analyseInput();//this method calls functionalities of the Command Manager: process commands and figure out if the user wishes to quit. It returns the updated map in form of the roomMnager
+            
+            roomMan = comMan.analyseInput(testGui.getDirection());//this method calls functionalities of the Command Manager: process commands and figure out if the user wishes to quit. It returns the updated map in form of the roomMnager
             finished = comMan.getQuit();//checks if the user wanted to quit the game
             teabreak ++;//increment teabreak counter 
             timeUntilFinished++;//counts steps that the player took

@@ -23,7 +23,8 @@ public class Gui
     protected Border standardBorder;//border style used for all titled borders
     private Border contentBorder;
     
-    MyMenuBar menuBar;
+    private MyMenuBar menuBar;
+    
     
     /**
      * Constructor for objects of class Gui
@@ -56,11 +57,16 @@ public class Gui
         mainFrame.pack();
         mainFrame.setVisible(true);
         
+        
     }
     
-    protected void updateMain(int[] stats, BufferedImage img, Set<String> exits){
-        contentPaneMain.updating(stats, img, exits);
-        System.out.println("Exits2: " +exits.toString());
+    
+    public String getDirection(){
+        return contentPaneMain.getDirection();
+    }
+    
+    protected void updateMain(int[] stats, BufferedImage img, Set<String> exits, String currentShort){
+        contentPaneMain.updating(stats, img, exits, currentShort);
     }
     
     

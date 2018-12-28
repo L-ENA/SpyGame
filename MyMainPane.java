@@ -26,7 +26,8 @@ public class MyMainPane extends JPanel implements ActionListener
     private JLabel infoLabel;
     private JLabel picLabel;
     private JButton navigationButton;
-    
+    private Font font;
+    private String direction;
 
     /**
      * Constructor for objects of class MyMainPane
@@ -36,6 +37,7 @@ public class MyMainPane extends JPanel implements ActionListener
         super(new GridBagLayout());
         this.standardBorder = standardBorder;//adding the same border style to all titled border components
         this.contentBorder = contentBorder;//adding the same border style to all titled border components
+        font = new Font("Serif", Font.ITALIC, 13);
         c = new GridBagConstraints();//to manage layout
         c.fill = GridBagConstraints.BOTH;//stretch both horizontally and vertically
         c.weighty = 1;//sets size of this panel compared with other panels: they all stretch over the whole height
@@ -43,6 +45,7 @@ public class MyMainPane extends JPanel implements ActionListener
         makeStats();//setup methods for each of the panels
         makePicture();
         makeNavigation();
+        
         
         
     }
@@ -84,13 +87,15 @@ public class MyMainPane extends JPanel implements ActionListener
      */
     protected void makePicture(){
         c.weightx = 0.5;
-        picturePanel = new JPanel(new GridBagLayout());
+        picturePanel = new JPanel();
+        picturePanel.setLayout(new BoxLayout(picturePanel, BoxLayout.Y_AXIS));//this layout is better than gridbag here since the rigid areas prevent the overlapping of the titled borders
         picturePanel.setBackground(Color.white);
-        picturePanel.setBorder(new TitledBorder(standardBorder, "Location: "));
+        picturePanel.setBorder(new TitledBorder(standardBorder, "Location information"));
         
+        picturePanel.add(Box.createRigidArea(new Dimension(0,10)));
         picLabel = new JLabel();//placeholder for now. Will be updated once every move
-        c.anchor = GridBagConstraints.CENTER;//if window is resized
         picLabel.setBorder(contentBorder);
+        picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);//to appear centered if there is enough space
         picturePanel.add(picLabel);
         
         c.gridx = 1;
@@ -110,7 +115,7 @@ public class MyMainPane extends JPanel implements ActionListener
         navigationPanel = new JPanel();
         navigationPanel.setLayout(new BoxLayout(navigationPanel, BoxLayout.Y_AXIS));//here, a box layout makes sense to display labels below each other
         navigationPanel.setBackground(Color.white);
-        navigationPanel.setBorder(new TitledBorder(standardBorder, "Directions"));
+        navigationPanel.setBorder(new TitledBorder(standardBorder, "Choose exit"));
         c.gridx = 2;
         c.gridy = 0;
         c.anchor = GridBagConstraints.FIRST_LINE_END;
@@ -125,31 +130,26 @@ public class MyMainPane extends JPanel implements ActionListener
      * @param  y  a sample parameter for a method
      * @return    the sum of x and y
      */
-    protected void updating(int[] stats, BufferedImage img, Set<String> exits)
+    protected void updating(int[] stats, BufferedImage img, Set<String> exits, String currentShort)
     //public void updateGUI(BufferedImage roomPicture, int[] stats)
     {
         
         picLabel.setIcon(new ImageIcon(img));//updating the room image by using image of the current room
+        picLabel.setBorder(new TitledBorder(contentBorder, "You are " + currentShort, TitledBorder.RIGHT,TitledBorder.ABOVE_TOP, font, Color.black));//updating border title to indicate current location
         statsLabel.setText("<html><br>&nbsp;Steps: "+stats[0]+"&nbsp;<br>&nbsp;Trust: "+stats[1]+"&nbsp;<br>&nbsp;Lifes: "+stats[2]+"<br>&nbsp;</html>");//updating the stat values
         infoLabel.setText("Some blabla fr ");
         
-        //for (Component c: navigationPanel.getComponents()){
-            //if(c instanceof JButton) {
-                //navigationPanel.remove(c);
-               // System.out.println("removed" + c.toString());
-               // navigationPanel.revalidate();
-               // navigationPanel.repaint();
-            //}
-        //}
         navigationPanel.removeAll();
         navigationPanel.revalidate();
         navigationPanel.repaint();
         
-        System.out.println("Exits3: " +exits.toString());
         for(String exit: exits){//add button and functionalities by looping through the exit set of the current room
-            System.out.println("added" + exit);
             navigationPanel.add(Box.createRigidArea(new Dimension(0,15)));
             navigationButton = new JButton(exit);//each butten will display an exit for the room
+            navigationButton.setBorder(contentBorder);
+            navigationButton.setBackground(Color.LIGHT_GRAY);//Black By Default
+            navigationButton.setForeground(Color.BLACK);//Set as a Gray Colour
+            navigationButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             navigationButton.setActionCommand(exit);//each button has its exit string as action command
             navigationButton.addActionListener(this);//adds the action listener
             navigationPanel.add(navigationButton);
@@ -166,7 +166,11 @@ public class MyMainPane extends JPanel implements ActionListener
      * @return    void
      */
     public void actionPerformed(ActionEvent e) {
-        String s = e.getActionCommand();
-        System.out.println("Cliiiiiicked :::: " + s);
+        direction = e.getActionCommand();
+        
+    }
+    
+    public String getDirection(){
+        return direction;
     }
 }
