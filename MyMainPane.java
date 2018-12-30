@@ -14,7 +14,7 @@ import java.awt.event.*;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class MyMainPane extends JPanel implements ActionListener
+public class MyMainPane extends JPanel
 {
     GridBagConstraints c;
     private JPanel statsPanel;
@@ -27,12 +27,14 @@ public class MyMainPane extends JPanel implements ActionListener
     private JLabel picLabel;
     private JButton navigationButton;
     private Font font;
+    
     private String direction;
+    private ActionListener listener;
 
     /**
      * Constructor for objects of class MyMainPane
      */
-    public MyMainPane(Border standardBorder, Border contentBorder) 
+    public MyMainPane(Border standardBorder, Border contentBorder, ActionListener listener) 
     {
         super(new GridBagLayout());
         this.standardBorder = standardBorder;//adding the same border style to all titled border components
@@ -41,6 +43,8 @@ public class MyMainPane extends JPanel implements ActionListener
         c = new GridBagConstraints();//to manage layout
         c.fill = GridBagConstraints.BOTH;//stretch both horizontally and vertically
         c.weighty = 1;//sets size of this panel compared with other panels: they all stretch over the whole height
+        this.listener = listener;
+        
         
         makeStats();//setup methods for each of the panels
         makePicture();
@@ -68,6 +72,7 @@ public class MyMainPane extends JPanel implements ActionListener
         
         infoLabel = new JLabel();
         infoLabel.setBorder(contentBorder);
+        infoLabel.setOpaque(true);//Otherwise the colour can't be changed
         statsPanel.add(Box.createRigidArea(new Dimension(0,15)));
         statsPanel.add(infoLabel);
         
@@ -137,7 +142,7 @@ public class MyMainPane extends JPanel implements ActionListener
         picLabel.setIcon(new ImageIcon(img));//updating the room image by using image of the current room
         picLabel.setBorder(new TitledBorder(contentBorder, "You are " + currentShort, TitledBorder.RIGHT,TitledBorder.ABOVE_TOP, font, Color.black));//updating border title to indicate current location
         statsLabel.setText("<html><br>&nbsp;Steps: "+stats[0]+"&nbsp;<br>&nbsp;Trust: "+stats[1]+"&nbsp;<br>&nbsp;Lifes: "+stats[2]+"<br>&nbsp;</html>");//updating the stat values
-        infoLabel.setText("Some blabla fr ");
+        
         
         navigationPanel.removeAll();
         navigationPanel.revalidate();
@@ -151,26 +156,30 @@ public class MyMainPane extends JPanel implements ActionListener
             navigationButton.setForeground(Color.BLACK);//Set as a Gray Colour
             navigationButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             navigationButton.setActionCommand(exit);//each button has its exit string as action command
-            navigationButton.addActionListener(this);//adds the action listener
+            navigationButton.addActionListener(listener);//adds the action listener
             navigationPanel.add(navigationButton);
         }
         
         navigationPanel.revalidate();
         navigationPanel.repaint();
-    }
-    
-    /**
-     * Overriding the action performed method to carry out actions related to the mainPane.
-     *
-     * @param  ActionEvent e
-     * @return    void
-     */
-    public void actionPerformed(ActionEvent e) {
-        direction = e.getActionCommand();
+        
         
     }
     
-    public String getDirection(){
-        return direction;
+    protected void updateMessages(String s, int importance){
+        infoLabel.setText(s);
+        
+        
+        switch (importance) {
+            case 1:  infoLabel.setBackground(new Color(255, 77, 77));
+                     break;
+            case 2:  infoLabel.setBackground(new Color(255, 255, 102));
+                     break;
+            case 3:  infoLabel.setBackground(new Color(204, 255, 153));
+                     break;
+                    }
+        statsPanel.revalidate();
+        statsPanel.repaint();            
     }
+    
 }

@@ -24,7 +24,7 @@ public class GameTest
     
     @Test//to check how the initial GUI setup looks like
     public void playtest(){
-        game.play();
+        
     }
     
     

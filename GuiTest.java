@@ -24,7 +24,7 @@ public class GuiTest
     
     @Test
     public void testSetup(){//quick testing of how initial gui looks like
-        gui = new Gui();
+       // gui = new Gui();
     }    
 
     /**

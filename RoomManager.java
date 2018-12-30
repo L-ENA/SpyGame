@@ -150,13 +150,30 @@ public class RoomManager
     }
     
     
+        /** 
+     * Try to go to one direction. If there is an exit, enter the new
+     * room, otherwise print an error message.
+     * @param Command - a command that is evaluated in this method
+     * @return void
+     */
+    protected void goRoom(boolean isBreak, String direction) 
+    {
+       
+        // Try to leave current room.
+        if(isBreak==false){//it is not breaktime. Therefore, the player won't be able to sneak into offices.
+            noBreaktimeMoving(direction);
+        } else{//it is breaktime, so there are no restrictions for offices (unless the door of the office is locked)
+            enterRoom(direction);
+        }
+    }
+    
     
     /** 
      * It is not breaktime. Therefore, only non-offices are accessible
      * @param String - the exit that the user tries to use
      * @return void
      */
-    protected void noBreaktimeMoving(String direction){
+    private void noBreaktimeMoving(String direction){
         Room nextRoom = currentRoom.getExit(direction);//the room that is attempted.
         if (nextRoom!=null){//if there is an actual room for the specified exit
             if(direction.equals("office")){//check if this room is an office. If it is, the user gets some message, but can't enter
@@ -175,7 +192,7 @@ public class RoomManager
      * @param String - the exit that the user tries to use
      * @return void
      */
-    protected void enterRoom(String direction){
+    private void enterRoom(String direction){
         Room nextRoom = currentRoom.getExit(direction);
         if (nextRoom == null) {
             System.out.println("There is no door!");

@@ -24,13 +24,14 @@ public class Gui
     private Border contentBorder;
     
     private MyMenuBar menuBar;
-    
+    private ActionListener listener;
     
     /**
      * Constructor for objects of class Gui
      */
-    public Gui()
+    public Gui(ActionListener listener)
     {
+        this.listener = listener;
         setUp();
     }
 
@@ -50,7 +51,7 @@ public class Gui
         standardBorder = new LineBorder(Color.GREEN);//Customizes the line colour for the following TitledBorder instances
         contentBorder = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.BLACK);//border for all content
         
-        contentPaneMain = new MyMainPane(standardBorder, contentBorder);
+        contentPaneMain = new MyMainPane(standardBorder, contentBorder, listener);
         contentPaneQuiz = new JPanel(new GridBagLayout());//a panel that covers the frame
         
         mainFrame.add(contentPaneMain);
@@ -61,14 +62,14 @@ public class Gui
     }
     
     
-    public String getDirection(){
-        return contentPaneMain.getDirection();
-    }
+    
     
     protected void updateMain(int[] stats, BufferedImage img, Set<String> exits, String currentShort){
         contentPaneMain.updating(stats, img, exits, currentShort);
     }
     
-    
+    protected void updateMessageBoard(String message, int importance){
+        contentPaneMain.updateMessages(message, importance);
+    }
     
 }
