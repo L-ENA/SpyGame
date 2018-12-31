@@ -18,7 +18,7 @@ public class Gui
 {
     protected JFrame mainFrame;
     protected MyMainPane contentPaneMain;
-    protected JPanel contentPaneQuiz;
+    protected MyQuizPane contentPaneQuiz;
     
     protected Border standardBorder;//border style used for all titled borders
     private Border contentBorder;
@@ -52,9 +52,13 @@ public class Gui
         contentBorder = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.BLACK);//border for all content
         
         contentPaneMain = new MyMainPane(standardBorder, contentBorder, listener);
-        contentPaneQuiz = new JPanel(new GridBagLayout());//a panel that covers the frame
+        contentPaneQuiz = new MyQuizPane(standardBorder, contentBorder, listener);
         
         mainFrame.add(contentPaneMain);
+        //contentPaneMain.setVisible(true);
+        mainFrame.add(contentPaneQuiz);
+        //contentPaneQuiz.setVisible(false);
+        mainFrame.setContentPane(contentPaneMain);
         mainFrame.pack();
         mainFrame.setVisible(true);
         
@@ -66,10 +70,20 @@ public class Gui
     
     protected void updateMain(int[] stats, BufferedImage img, Set<String> exits, String currentShort){
         contentPaneMain.updating(stats, img, exits, currentShort);
+        mainFrame.setContentPane(contentPaneMain);
+        mainFrame.pack();
+        mainFrame.setVisible(true);
     }
     
     protected void updateMessageBoard(String message, int importance){
         contentPaneMain.updateMessages(message, importance);
+    }
+    
+    protected void updateQuiz(String question){
+        contentPaneQuiz.updateQuiz(question);
+        mainFrame.setContentPane(contentPaneQuiz);
+        mainFrame.pack();
+        mainFrame.setVisible(true);
     }
     
 }

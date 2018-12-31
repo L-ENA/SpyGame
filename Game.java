@@ -63,8 +63,30 @@ public class Game implements ActionListener
         myGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort());
         myGui.updateMessageBoard("Everybody is working now", 3);
     }
+    public Game(boolean testing){
+        //myGui = new Gui(this);
+    }
     
     
+    /**
+     *  This is the main event handler for this game. There are 2 types of action commands in this game and this method 
+     *  decides which actions are performed for each command.
+     *  @param ActionEvent The event with its associated action command which represents the chosen direction.
+     *  @return void
+     */
+    public void actionPerformed(ActionEvent e) {
+            if(e.getActionCommand().matches("[ABCD]")){
+                questionAction(e);
+            } else {
+                roomAction(e);
+            }
+            
+        
+        
+    }
+    private void questionAction(ActionEvent e){
+        System.out.println("Action!");
+    }
     
     /**
      *  This is the substitute of the original play loop. When the playeer chooses to go to another room, an ActionEvent is passed and its associated String 
@@ -72,8 +94,8 @@ public class Game implements ActionListener
      *  @param ActionEvent The event with its associated action command which represents the chosen direction.
      *  @return void
      */
-    public void actionPerformed(ActionEvent e) {
-            String direction = e.getActionCommand();//the exit associated with the clicked button
+    private void roomAction(ActionEvent e){
+        String direction = e.getActionCommand();//the exit associated with the clicked button
             teabreak ++;//increment teabreak counter 
             timeUntilFinished++;//counts steps that the player took
             int[] stats = {timeUntilFinished,trust,lifes};//following lines are for updating the GUI.
@@ -98,7 +120,7 @@ public class Game implements ActionListener
                 myGui.updateMessageBoard("It's teatime!", 1);
                 if (testRoom() == false){//testing if the user is in the saferoom or the loo
                     isBreak = true;//its breaktime, so there are potential encounters + some rooms can be accessed.
-                    //breaktimeActions();//executes potential quiz activities
+                    breaktimeActions();//executes potential quiz activities
                 }
                     
                 
@@ -120,10 +142,7 @@ public class Game implements ActionListener
             } //else{//the player just quit the game without winning or loosing
             //System.out.println("Thank you for playing. Good bye.");
             //}
-        
-        
     }
-    
     /**
      * This method is called at breaktime, it returns true if the player is in the safe room or the loo.
      * @param none
@@ -146,6 +165,8 @@ public class Game implements ActionListener
     private void breaktimeActions()
     {
         if (rand.nextInt(3) == 1){//there is a potential interaction with a colleague before the next move defined in this method
+            myGui.updateQuiz("Have some random question here");
+            /**
             if(colleagueMan.encounter()==false){//random colleague asks a question in the encounter method. If user answers wrong they loose a life
                 lifes--;//looses both a life and general trust
                 trust --;
@@ -155,6 +176,7 @@ public class Game implements ActionListener
                 trust++;//incrementing trust
                 rightAnswers++;//incrementing number of right answers for storyline
             }
+            */
             System.out.println(roomMan.getCurrentRoomLong());//for re-orientation after the questioning. will be unncecessary once there is a GUI
             }
     }

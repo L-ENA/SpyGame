@@ -49,6 +49,22 @@ public class Question
     }
     
     /**
+     * Returns the question String in a JLabel friendly form.
+     * @return String The formatted question String
+     * @param none
+     */
+    public String formatQuestion(){
+        String [] questionParts = question.split("[+]");    //splits at + for linebreaks - 
+        StringBuffer sb = new StringBuffer();
+        sb.append("<html>");
+        for(String part : questionParts){
+            sb.append("<br>&nbsp;"+part+"&nbsp;<br>");
+        }
+        sb.append("</html>");
+        return sb.toString();
+    }
+    
+    /**
      * Access to a queston object
      * @return void
      * @param none
