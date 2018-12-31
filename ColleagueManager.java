@@ -57,19 +57,36 @@ public class ColleagueManager
      * @param none
      * @return boolean information whether question was answered correctly. 
      */
-    public boolean encounter(){
+    public String encounter(){
             //player meets a colleague and gets interrogated
             //to choose a colleague from list: generates random int in the range of colleagueList's size and 
             //picks the colleague defined by index at this random int.
             nrOfColleagues = colleagueList.size();
             colleague = colleagueList.get(rand.nextInt(nrOfColleagues));
             if (colleague.isFemale()){      //next output is depending on random colleague's gender
-                System.out.println("----Your colleague " +colleague.getName() + " spotted you. She is coming your way...\nShe asks:");
+                return("Your colleague " +colleague.getName() + " spotted you. She is coming your way and asks:");
             } else {
-                System.out.println("----Your colleague " + colleague.getName() + " spotted you. He is coming your way...\nHe asks:");
+                return("Your colleague " + colleague.getName() + " spotted you. He is coming your way and asks:");
             }
-            return questionMan.ask();//asks a question, returns boolean true if answered correctly, false if not
-        
+            
+    }
+    
+    /**
+     * Method that returns a random question asked by a colleague.
+     * @param none
+     * @return String The formatted question String. 
+     */
+    public String questionAsk(){
+        return questionMan.ask();//asks a question, returns boolean true if answered correctly, false if not
+    }
+    
+    /**
+     * Method that evaluates the given answer to a question.
+     * @param none
+     * @return String The formatted question String. 
+     */
+    public boolean evaluate(String givenAnswer){
+        return questionMan.evaluate(givenAnswer);//asks a question, returns boolean true if answered correctly, false if not
     }
     
     /**

@@ -58,9 +58,7 @@ public class Gui
         //contentPaneMain.setVisible(true);
         mainFrame.add(contentPaneQuiz);
         //contentPaneQuiz.setVisible(false);
-        mainFrame.setContentPane(contentPaneMain);
-        mainFrame.pack();
-        mainFrame.setVisible(true);
+        switchPanes(1);//switching to the main pane
         
         
     }
@@ -68,22 +66,28 @@ public class Gui
     
     
     
-    protected void updateMain(int[] stats, BufferedImage img, Set<String> exits, String currentShort){
-        contentPaneMain.updating(stats, img, exits, currentShort);
-        mainFrame.setContentPane(contentPaneMain);
-        mainFrame.pack();
-        mainFrame.setVisible(true);
+    protected void updateMain(int[] stats, BufferedImage img, Set<String> exits, String currentShort, String roomMsg){
+        contentPaneMain.updating(stats, img, exits, currentShort, roomMsg);
+        switchPanes(1);//switching to the main pane
     }
     
     protected void updateMessageBoard(String message, int importance){
         contentPaneMain.updateMessages(message, importance);
     }
     
-    protected void updateQuiz(String question){
-        contentPaneQuiz.updateQuiz(question);
-        mainFrame.setContentPane(contentPaneQuiz);
+    protected void updateQuiz(String encounterWith, String question){
+        contentPaneQuiz.updateQuiz(encounterWith, question);
+        switchPanes(2);//switching to the quiz pane
+    }
+    
+    protected void switchPanes(int paneNr){
+        switch (paneNr) {
+            case 1:  mainFrame.setContentPane(contentPaneMain);
+                     break;
+            case 2:  mainFrame.setContentPane(contentPaneQuiz);
+                     break;
+            }
         mainFrame.pack();
         mainFrame.setVisible(true);
     }
-    
 }

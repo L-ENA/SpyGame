@@ -60,7 +60,7 @@ public class Game implements ActionListener
         
         myGui = new Gui(this);//give this as action listener. Therefore, if the direction buttons in the Gui are pressed, the action is performed here. 
         int[] stats = {timeUntilFinished,trust,lifes};//following lines are for updating the GUI. This is the initial setup
-        myGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort());
+        myGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort(), "");
         myGui.updateMessageBoard("Everybody is working now", 3);
     }
     public Game(boolean testing){
@@ -75,8 +75,9 @@ public class Game implements ActionListener
      *  @return void
      */
     public void actionPerformed(ActionEvent e) {
-            if(e.getActionCommand().matches("[ABCD]")){
+            if(e.getActionCommand().matches("[abcd]")){
                 questionAction(e);
+                
             } else {
                 roomAction(e);
             }
@@ -85,7 +86,17 @@ public class Game implements ActionListener
         
     }
     private void questionAction(ActionEvent e){
-        System.out.println("Action!");
+        if(!colleagueMan.evaluate(e.getActionCommand())){//evaluating the given answer. If wrong, lifes etc are taken. If right, trust is gained.
+                lifes--;//looses both a life and general trust
+                trust --;
+                System.out.println("Wrong. Player has " + lifes + " left.");
+                            
+            } else {
+                trust++;//incrementing trust
+                rightAnswers++;//incrementing number of right answers for storyline
+                System.out.println("Correct answer given");
+            }
+        myGui.switchPanes(1);//switching back to the navigation pane    
     }
     
     /**
@@ -95,14 +106,12 @@ public class Game implements ActionListener
      *  @return void
      */
     private void roomAction(ActionEvent e){
-        String direction = e.getActionCommand();//the exit associated with the clicked button
+            String direction = e.getActionCommand();//the exit associated with the clicked button
             teabreak ++;//increment teabreak counter 
             timeUntilFinished++;//counts steps that the player took
             int[] stats = {timeUntilFinished,trust,lifes};//following lines are for updating the GUI.
-            roomMan.goRoom(isBreak, direction);//updating the roomManager by making it try to change the room towards the direction. 
-            myGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort());
-            
-           
+            String roomMsg = roomMan.goRoom(isBreak, direction);//updating the roomManager by making it try to change the room towards the direction. If barriers are encountered they are described in the message. 
+            myGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort(), roomMsg);
             storyLine();//applies the storyline method. Actions are performed if the right answers attribute if this class reaches 4
             /////////////////////////////////////////winning condition
             if(winGame() == true){
@@ -113,7 +122,7 @@ public class Game implements ActionListener
             if (teabreak % 6 == 0){                        // if teabreak counter reaches 6 the user is warned
                 String s = "<html>Soon everybody will come<br>out of their offices<br>for a tea break<br>Beware!!</html>";
                 System.out.println(s);//for the log
-                myGui.updateMessageBoard(s, 2);
+                myGui.updateMessageBoard(s, 2);//changing the breaktime message board. The int stands for a colour scheme.
                 teabreak = 0;                              // resets teabreak counter for new cycle
                 
             } else if (teabreak == 1 || teabreak == 2|| teabreak ==3){ //it is teatime, so there is a risk to encounter a colleague
@@ -165,19 +174,7 @@ public class Game implements ActionListener
     private void breaktimeActions()
     {
         if (rand.nextInt(3) == 1){//there is a potential interaction with a colleague before the next move defined in this method
-            myGui.updateQuiz("Have some random question here");
-            /**
-            if(colleagueMan.encounter()==false){//random colleague asks a question in the encounter method. If user answers wrong they loose a life
-                lifes--;//looses both a life and general trust
-                trust --;
-                System.out.println("You have " + lifes + " left.");
-                            
-            } else {
-                trust++;//incrementing trust
-                rightAnswers++;//incrementing number of right answers for storyline
-            }
-            */
-            System.out.println(roomMan.getCurrentRoomLong());//for re-orientation after the questioning. will be unncecessary once there is a GUI
+            myGui.updateQuiz(colleagueMan.encounter(), colleagueMan.questionAsk());
             }
     }
     

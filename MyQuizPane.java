@@ -82,7 +82,7 @@ public class MyQuizPane extends JPanel
         
         answerPanel.add(new JLabel());
         answerPanel.add(new JLabel());
-        String[] options = {"A","B","C","D"};//////creating the answer buttons
+        String[] options = {"a","b","c","d"};//////creating the answer buttons
         for(String option: options){//add button and functionalities by looping through the exit set of the current room
             quizButton = new JButton(option);//each butten will display a possible answer.
             quizButton.setBorder(contentBorder);
@@ -101,10 +101,10 @@ public class MyQuizPane extends JPanel
         add(answerPanel, c);
     }
     
-    protected void updateQuiz(String quest){
+    protected void updateQuiz(String encounterWith, String quest){
         //picLabel.setIcon(new ImageIcon(img));//updating the room image by using image of the current room
-        //picLabel.setBorder(new TitledBorder(contentBorder, "You are " + currentShort, TitledBorder.RIGHT,TitledBorder.ABOVE_TOP, font, Color.black));//updating border title to indicate current location
-        questionLabel.setText(quest);//updating the question
+        questionLabel.setText(quest);//updating the question and the title below.
+        questionLabel.setBorder(new TitledBorder(contentBorder, encounterWith, TitledBorder.RIGHT,TitledBorder.ABOVE_TOP, font, Color.black));//updating border title to indicate current location
         
         questionPanel.revalidate();
         questionPanel.repaint();

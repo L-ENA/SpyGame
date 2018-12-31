@@ -66,21 +66,22 @@ public class QuestionManager
      * @param none
      * @return boolean false if question was answered wrong. This is determined by the evaluate() method
      */
-    public boolean ask()
+    public String ask()
     {
         Random rand = new Random();
-        
-        if(questionList.size()>0){                                              //if there are questions left
+        try{
             int randomQuestionIndex = rand.nextInt(questionList.size());        //Create random index for questions currently in the list.
             thisQuestion = questionList.get(randomQuestionIndex);               //get random question
             questionList.remove(randomQuestionIndex);
             thisQuestion.printQuestion();                                       //asks question
-            return evaluate(10);//param is numbers of times that user is allowed to pass an invalid input
+            return thisQuestion.formatQuestion();//param is numbers of times that user is allowed to pass an invalid input
             
-        } else{
-            System.out.println("Never mind, I forgot what I wanted to ask...");
-            return(true);//not loosing a life here
+        } catch(NullPointerException nE){
+            System.out.println("Question list is empty. Continue to play or add more questions to the question file and re-start the game.");
+            return("Empty");//not loosing a life here
         }
+        
+        
         
     }
     
@@ -90,27 +91,16 @@ public class QuestionManager
      * @param none
      * @return boolean rturns false if question was answered wrong. This is determined by the evaluate() method
      */
-    public boolean evaluate(int counter){
-        if (counter>0){//user entered invalid input less than 10 times
-            String inputLine = reader.nextLine().toLowerCase();//user can enter A instead of a. All converted to lowercase
-            Matcher m = p.matcher(inputLine);//to match pattern defined above with input line
-            if (m.find()) {//validation of input line
-                if(inputLine.equals(thisQuestion.getAnswer())){//answered correctly since input equals answer string
-                    System.out.println(thisQuestion.getPosComment());
-                    return true;
-                } else{//answered wrongly: false is returned to subtract a life
-                    System.out.println(thisQuestion.getNegComment());
-                    System.out.println("You lost 1 life!");
-                    return false;
-                }
-                
-            } else{//recursion until valid input was entered
-                System.out.println("Please enter either a, b, c, or d to answer this question!");//user gave invalid input. Therefore, they get instructions
-                return evaluate(counter-1);//user gets another chance to enter a valid input
-            }
-        } else{//entered invalid input 10 times, so now they loose a life
+    public boolean evaluate(String givenAnswer){
+        if(givenAnswer.equals(thisQuestion.getAnswer())){//answered correctly since input equals answer string
+            System.out.println("Player answered right");
+            return true;
+        } else{//answered wrongly: false is returned to subtract a life
+            System.out.println("Player answered wrong");
             return false;
         }
+    } 
         
-    }
+        
+    
 }

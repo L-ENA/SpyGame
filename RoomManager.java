@@ -154,16 +154,16 @@ public class RoomManager
      * Try to go to one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      * @param Command - a command that is evaluated in this method
-     * @return void
+     * @return String any description of interest in terms of moving between rooms.
      */
-    protected void goRoom(boolean isBreak, String direction) 
+    protected String goRoom(boolean isBreak, String direction) 
     {
        
         // Try to leave current room.
         if(isBreak==false){//it is not breaktime. Therefore, the player won't be able to sneak into offices.
-            noBreaktimeMoving(direction);
+            return noBreaktimeMoving(direction);
         } else{//it is breaktime, so there are no restrictions for offices (unless the door of the office is locked)
-            enterRoom(direction);
+            return enterRoom(direction);
         }
     }
     
@@ -173,16 +173,18 @@ public class RoomManager
      * @param String - the exit that the user tries to use
      * @return void
      */
-    private void noBreaktimeMoving(String direction){
+    private String noBreaktimeMoving(String direction){
         Room nextRoom = currentRoom.getExit(direction);//the room that is attempted.
         if (nextRoom!=null){//if there is an actual room for the specified exit
             if(direction.equals("office")){//check if this room is an office. If it is, the user gets some message, but can't enter
-                System.out.println("Looks like there is somebody working "+nextRoom.getShortDescription()+". It won't be smart to disturb them...");
+                return "Looks like there is somebody working "+nextRoom.getShortDescription()+". It won't be smart to disturb them...";
             } else{
-                enterRoom(direction);
+                return enterRoom(direction);
             } 
         } else {//some mistake was made when entering the room
-            System.out.println("There is no door!");
+            System.out.println("No door found!");
+            return "There is no door!";
+            
         }
         
     }
@@ -192,18 +194,19 @@ public class RoomManager
      * @param String - the exit that the user tries to use
      * @return void
      */
-    private void enterRoom(String direction){
+    private String enterRoom(String direction){
         Room nextRoom = currentRoom.getExit(direction);
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            return("There is no door!");
         } else if(currentRoom.getDoors().checkStatus(direction) == false){//if the room is locked
-            System.out.println("You can't be "+nextRoom.getShortDescription()+". This door is locked...");
+            return("You can't be "+nextRoom.getShortDescription()+". This door is locked...");
         } else {//player can move to the new room
             currentRoom = nextRoom;
             if(currentRoom.equals(safeRoom)){//unless the player is in the final room the description is displayed
-                System.out.println("You take the elevator. There are no buttons...\nThe elevator takes you down and when the door opens you realise that you are in the strongroom.\nThe blueprints are on the table!\nYou grab them and leave the building without attracting any attention.");
+                return("You take the elevator. There are no buttons...\nThe elevator takes you down and when the door opens you realise that you are in the strongroom.\nThe blueprints are on the table!\nYou grab them and leave the building without attracting any attention.");
             } else {
                 System.out.println(currentRoom.getLongDescription());
+                return("");
             }    
         }
     }

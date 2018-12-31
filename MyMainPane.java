@@ -27,6 +27,7 @@ public class MyMainPane extends JPanel
     private JLabel picLabel;
     private JButton navigationButton;
     private Font font;
+    private JLabel roomInfo;
     
     private String direction;
     private ActionListener listener;
@@ -103,6 +104,14 @@ public class MyMainPane extends JPanel
         picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);//to appear centered if there is enough space
         picturePanel.add(picLabel);
         
+        roomInfo = new JLabel();
+        roomInfo.setOpaque(true);//Otherwise the colour can't be changed
+        roomInfo.setAlignmentX(Component.CENTER_ALIGNMENT);//to appear centered if there is enough space
+        
+        
+        picturePanel.add(Box.createRigidArea(new Dimension(0,15)));
+        picturePanel.add(roomInfo);
+        
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = GridBagConstraints.PAGE_START;
@@ -135,18 +144,31 @@ public class MyMainPane extends JPanel
      * @param  y  a sample parameter for a method
      * @return    the sum of x and y
      */
-    protected void updating(int[] stats, BufferedImage img, Set<String> exits, String currentShort)
+    protected void updating(int[] stats, BufferedImage img, Set<String> exits, String currentShort, String roomMsg)
     //public void updateGUI(BufferedImage roomPicture, int[] stats)
     {
         
         picLabel.setIcon(new ImageIcon(img));//updating the room image by using image of the current room
         picLabel.setBorder(new TitledBorder(contentBorder, "You are " + currentShort, TitledBorder.RIGHT,TitledBorder.ABOVE_TOP, font, Color.black));//updating border title to indicate current location
+        if(!roomMsg.equals("")){//the room message infoboard is optional: it just appears if there is anything of interest
+            
+            roomInfo.setText(roomMsg);
+            roomInfo.setBackground(new Color(255, 77, 77));
+            roomInfo.setBorder(contentBorder);
+            roomInfo.setVisible(true);
+        } else{
+            roomInfo.setVisible(false);
+        }
+        picturePanel.revalidate();
+        picturePanel.repaint();
+        
         statsLabel.setText("<html><br>&nbsp;Steps: "+stats[0]+"&nbsp;<br>&nbsp;Trust: "+stats[1]+"&nbsp;<br>&nbsp;Lifes: "+stats[2]+"<br>&nbsp;</html>");//updating the stat values
         
         
         navigationPanel.removeAll();
         navigationPanel.revalidate();
         navigationPanel.repaint();
+        
         
         for(String exit: exits){//add button and functionalities by looping through the exit set of the current room
             navigationPanel.add(Box.createRigidArea(new Dimension(0,15)));
@@ -159,6 +181,7 @@ public class MyMainPane extends JPanel
             navigationButton.addActionListener(listener);//adds the action listener
             navigationPanel.add(navigationButton);
         }
+        
         
         navigationPanel.revalidate();
         navigationPanel.repaint();
