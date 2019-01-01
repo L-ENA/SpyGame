@@ -81,6 +81,24 @@ public class ColleagueManager
     }
     
     /**
+     * Method that returns the postitve comment for the current question.
+     * @param none
+     * @return String The comment. 
+     */
+    public String getPos(){
+        return questionMan.getPos();
+    }
+    
+    /**
+     * Method that returns the negative comment for the current question.
+     * @param none
+     * @return String The comment. 
+     */
+    public String getNeg(){
+        return questionMan.getNeg();
+    }
+    
+    /**
      * Method that evaluates the given answer to a question.
      * @param none
      * @return String The formatted question String. 
@@ -94,14 +112,14 @@ public class ColleagueManager
      * @param none
      * @return void 
      */
-    public void task(){
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+    public String task(){
+        System.out.println(">>>Player received Task 1 from " + colleague.getName());
+        String returnString = "";
         if (colleague.isFemale()){      //next output is depending on random colleague's gender
-                System.out.println(colleague.getName() + " approaches you. She seems to have something on her mind. \nShe says: Hi! I have to leave early today, could you do me a favour and drop these documents in the office of the boss?\nThanks!!!!\nYou take the documents and she leaves...");
+                returnString = "<html>&nbsp;" + colleague.getName() + " approaches you. She seems to have something on her mind.<br>&nbsp;She says: Hi! I have to leave early today, could you do me a favour and drop these documents in the office of the boss?<br>&nbsp;Thanks!!!!<br>&nbsp;You take the documents and she leaves...</html>";
             } else {
-                System.out.println(colleague.getName() + " approaches you. He seems to have something on his mind. \nHe says: Hi! I have to leave early today, could you do me a favour and drop these documents in the office of the boss?\nThanks!!!!\nYou take the documents and he leaves...");
+                returnString = "<html>&nbsp;" + colleague.getName() + " approaches you. He seems to have something on his mind.<br>&nbsp;He says: Hi! I have to leave early today, could you do me a favour and drop these documents in the office of the boss?<br>&nbsp;Thanks!!!!<br>&nbsp;You take the documents and he leaves...</html>";
             }
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");    
         ////////////////deleting the colleague that presented this task, since they are leving the office
         Colleague col;
         int delete = 0;
@@ -112,6 +130,7 @@ public class ColleagueManager
             }
         }
         colleagueList.remove(delete);//deletes this colleague
+        return returnString;
     }
     
     /**
@@ -119,12 +138,12 @@ public class ColleagueManager
      * @param none
      * @return void 
      */
-    public void endGame(){
+    public String endGame(){
         
         if (colleague.isFemale()){      //next output is depending on random colleague's gender
-                System.out.println(colleague.getName() + " looks very suspicious. She walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
+                return (colleague.getName() + " looks very suspicious. She walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
             } else {
-                System.out.println(colleague.getName() + " looks very suspicious. He walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
+                return (colleague.getName() + " looks very suspicious. He walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
             }
     }
    

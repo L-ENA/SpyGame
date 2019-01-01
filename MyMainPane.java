@@ -66,12 +66,12 @@ public class MyMainPane extends JPanel
         statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));//here, a box layout makes sense to display labels below each other
         statsPanel.setBackground(Color.white);
         statsPanel.setBorder(new TitledBorder(standardBorder, "Information"));//uses the border customized before and adds a title
-        statsLabel = new JLabel();/////label displaying game stats
+        statsLabel = new JLabel("Some stats, updated at runtime");/////label displaying game stats
         statsLabel.setBorder(contentBorder);
         statsPanel.add(Box.createRigidArea(new Dimension(0,15)));//some space between the components
         statsPanel.add(statsLabel);
         
-        infoLabel = new JLabel();
+        infoLabel = new JLabel("Some info");
         infoLabel.setBorder(contentBorder);
         infoLabel.setOpaque(true);//Otherwise the colour can't be changed
         statsPanel.add(Box.createRigidArea(new Dimension(0,15)));
@@ -134,7 +134,7 @@ public class MyMainPane extends JPanel
         c.gridy = 0;
         c.anchor = GridBagConstraints.FIRST_LINE_END;
         
-        navigationButton = new JButton("empty");
+        navigationButton = new JButton("To be updated");
         add(navigationPanel, c);
     }
 

@@ -22,7 +22,7 @@ public class MyQuizPane extends JPanel
     private JPanel questionPanel;
     private JPanel answerPanel;
     private JLabel questionLabel;
-    
+    private JFrame mainFrame;
 
     /**
      * Constructor for objects of class MyQuizPane
@@ -39,6 +39,7 @@ public class MyQuizPane extends JPanel
         this.listener = listener;
         makeQuestionPanel();
         makeAnswerPanel();
+       
     }
 
     /**
@@ -53,7 +54,7 @@ public class MyQuizPane extends JPanel
         questionPanel.setLayout(new BoxLayout(questionPanel, BoxLayout.Y_AXIS));//here, a box layout makes sense to display labels below each other
         questionPanel.setBackground(Color.white);
         questionPanel.setBorder(new TitledBorder(standardBorder, "Question"));//uses the border customized before and adds a title
-        questionLabel = new JLabel( "Hi question");/////label displaying the Question
+        questionLabel = new JLabel( "Some question, to be updated at runtime");/////label displaying the Question
         questionLabel.setBorder(contentBorder);
         questionPanel.add(Box.createRigidArea(new Dimension(0,15)));//some space between the components
         questionPanel.add(questionLabel);
@@ -80,8 +81,7 @@ public class MyQuizPane extends JPanel
         answerPanel.setBackground(Color.white);
         answerPanel.setBorder(new TitledBorder(standardBorder, "Answers"));//uses the border customized before and adds a title
         
-        answerPanel.add(new JLabel());
-        answerPanel.add(new JLabel());
+        
         String[] options = {"a","b","c","d"};//////creating the answer buttons
         for(String option: options){//add button and functionalities by looping through the exit set of the current room
             quizButton = new JButton(option);//each butten will display a possible answer.
@@ -92,8 +92,11 @@ public class MyQuizPane extends JPanel
             quizButton.addActionListener(listener);//adds the action listener
             answerPanel.add(quizButton);
         }
+        answerPanel.add(new JLabel());//for spacing
         answerPanel.add(new JLabel());
         answerPanel.add(new JLabel());
+        answerPanel.add(new JLabel());
+        
         c.weightx = 0.3;//sets size of this panel compared with other panels: this one is slightly bigger in x direction
         c.gridx = 1;//grid coordinates where the panel will sit
         c.gridy = 0;
@@ -109,6 +112,7 @@ public class MyQuizPane extends JPanel
         questionPanel.revalidate();
         questionPanel.repaint();
     }
+    
     
     
 }

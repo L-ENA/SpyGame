@@ -19,16 +19,12 @@ public class QuestionManager
     // instance variables
     private ArrayList<Question> questionList;
     private Question thisQuestion;
-    private Pattern p;//for input validation
-    private Scanner reader;//to get user input
     
     /**
      * Constructor for objects of class QuestionManager. Parses the question file and adds questions. Initialises the reader and pattern objects. 
      */
     public QuestionManager()
     {
-        reader = new Scanner(System.in);//to evaluate the user's answers
-        p = Pattern.compile("^[abcd]$");//regex to evaluate input - matches single a,b,c, or d.
         
         String[] parts;//holds input line from text file after it was split in its 4 parts
         int counter = 0;//param for parsing exception
@@ -101,6 +97,21 @@ public class QuestionManager
         }
     } 
         
-        
+    /**
+     * Method that returns the postitve comment for the current question.
+     * @param none
+     * @return String The comment. 
+     */
+    public String getPos(){
+        return thisQuestion.getPosComment();
+    }    
     
+    /**
+     * Method that returns the negative comment for the current question.
+     * @param none
+     * @return String The comment. 
+     */
+    public String getNeg(){
+        return thisQuestion.getNegComment();
+    } 
 }

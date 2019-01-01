@@ -177,6 +177,7 @@ public class RoomManager
         Room nextRoom = currentRoom.getExit(direction);//the room that is attempted.
         if (nextRoom!=null){//if there is an actual room for the specified exit
             if(direction.equals("office")){//check if this room is an office. If it is, the user gets some message, but can't enter
+                System.out.println(">>>Access to office denied");
                 return "Looks like there is somebody working "+nextRoom.getShortDescription()+". It won't be smart to disturb them...";
             } else{
                 return enterRoom(direction);
@@ -202,8 +203,8 @@ public class RoomManager
             return("You can't be "+nextRoom.getShortDescription()+". This door is locked...");
         } else {//player can move to the new room
             currentRoom = nextRoom;
-            if(currentRoom.equals(safeRoom)){//unless the player is in the final room the description is displayed
-                return("You take the elevator. There are no buttons...\nThe elevator takes you down and when the door opens you realise that you are in the strongroom.\nThe blueprints are on the table!\nYou grab them and leave the building without attracting any attention.");
+            if(currentRoom.equals(safeRoom)){//unless the player is in the final room the description is displayed in the log
+                return("");
             } else {
                 System.out.println(currentRoom.getLongDescription());
                 return("");

@@ -19,7 +19,7 @@ public class Gui
     protected JFrame mainFrame;
     protected MyMainPane contentPaneMain;
     protected MyQuizPane contentPaneQuiz;
-    
+    protected MyInstructionPane contentPaneInstruction;
     protected Border standardBorder;//border style used for all titled borders
     private Border contentBorder;
     
@@ -53,11 +53,13 @@ public class Gui
         
         contentPaneMain = new MyMainPane(standardBorder, contentBorder, listener);
         contentPaneQuiz = new MyQuizPane(standardBorder, contentBorder, listener);
+        contentPaneInstruction = new MyInstructionPane(standardBorder, contentBorder, listener);
         
         mainFrame.add(contentPaneMain);
         //contentPaneMain.setVisible(true);
         mainFrame.add(contentPaneQuiz);
         //contentPaneQuiz.setVisible(false);
+        mainFrame.add(contentPaneInstruction);
         switchPanes(1);//switching to the main pane
         
         
@@ -86,8 +88,23 @@ public class Gui
                      break;
             case 2:  mainFrame.setContentPane(contentPaneQuiz);
                      break;
+            case 3:  mainFrame.setContentPane(contentPaneInstruction);
+                     break;        
             }
         mainFrame.pack();
         mainFrame.setVisible(true);
     }
+    
+    protected void updateInstructionPane(String message, String title){
+        contentPaneInstruction.updateContent(title, message);
+    }
+    
+    protected void exitMessage(String message, String title){
+        JOptionPane.showMessageDialog(mainFrame,
+        message,
+        title,
+        JOptionPane.PLAIN_MESSAGE);
+        System.exit(0);//exits the game
+    }
+    
 }

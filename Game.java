@@ -36,6 +36,7 @@ public class Game implements ActionListener
     private boolean task1;////////////////////////////////for task status
     private Gui myGui;//The graphical user interface
     private String messageToUser;
+    private String roomMessage;
     /**
      * Class constructor
      * Create the game and initialise the room manager(map),the colleague manager (access to the quiz functionalities), and the parser instance.
@@ -43,8 +44,6 @@ public class Game implements ActionListener
      */
     public Game()
     {
-        //instantiates objects used to control gameflow
-        
         roomMan = new RoomManager();
         colleagueMan = new ColleagueManager();
         /////////////////////////////////////////////initial setup
@@ -60,25 +59,53 @@ public class Game implements ActionListener
         
         myGui = new Gui(this);//give this as action listener. Therefore, if the direction buttons in the Gui are pressed, the action is performed here. 
         int[] stats = {timeUntilFinished,trust,lifes};//following lines are for updating the GUI. This is the initial setup
-        myGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort(), "");
-        myGui.updateMessageBoard("Everybody is working now", 3);
+        roomMessage = "";
+        myGui.updateMessageBoard("Everybody is working", 3);//Some initial message
+        
+        String intro = ("<html>&nbsp;You are a secret agent on an undercover mission. "//The info displayed on the first screen
+        +"&nbsp;<br>&nbsp;OBJECTIVE:"
+        +"&nbsp;<br>&nbsp;Your objective is to steal blueprints for the world's first sonic screwdriver made by humans."
+        +"&nbsp;<br>&nbsp;You were hired as a java developer in the company that produces it. "
+        +"&nbsp;<br>&nbsp;But your colleagues are suspicios.&nbsp;<br>&nbsp;If you meet one  of them, they might ask questions to check if you really are who you pretend to be.... "
+        +"&nbsp;<br>&nbsp;If you get the wrong answer too often, they might raise an alarm and your cover is gone."
+        +"&nbsp;<br>&nbsp;At teatime, they swarm out of their offices, so be prepared  (or hide in the loo).");
+        
+        myGui.updateInstructionPane(intro, "Welcome to the Spy Game!");
+        myGui.switchPanes(3);
     }
+    
+    /**
+     * Class constructor
+     * This is an empty constructor that was used by the gui testing classes during the development. It is not of interest
+     * for the actual game.
+     * @param boolean To call the empty constructor
+     */
     public Game(boolean testing){
-        //myGui = new Gui(this);
+        //empty
     }
     
     
     /**
-     *  This is the main event handler for this game. There are 2 types of action commands in this game and this method 
+     *  This is the main event handler for this game. There are 3 types of action commands in this game and this method 
      *  decides which actions are performed for each command.
-     *  @param ActionEvent The event with its associated action command which represents the chosen direction.
+     *  @param ActionEvent The event with its associated action command.
      *  @return void
      */
     public void actionPerformed(ActionEvent e) {
-            if(e.getActionCommand().matches("[abcd]")){
+            if(e.getActionCommand().matches("[abcd]")){//a quiz answer was given
                 questionAction(e);
                 
-            } else {
+            } else if(e.getActionCommand().equals("ok")){//the instruction pane is exited
+                
+                if(lifes ==0){//player answered too many questions wrong, the game ends here
+                    String addedInfo = ("\n\nYou survived for " + timeUntilFinished + " steps and answered "+ rightAnswers + " questions correctly. Your final trust score is "+trust + ".");
+                    myGui.exitMessage(colleagueMan.endGame() + addedInfo, "YOU LOST!");
+                } else {
+                    myGui.updateMain(new int[]{timeUntilFinished,trust,lifes}, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort(), roomMessage);
+                    myGui.switchPanes(1);//switch back to the main pane
+                }
+                
+            } else {//there is a change in rooms, with the new direction as action command
                 roomAction(e);
             }
             
@@ -89,14 +116,19 @@ public class Game implements ActionListener
         if(!colleagueMan.evaluate(e.getActionCommand())){//evaluating the given answer. If wrong, lifes etc are taken. If right, trust is gained.
                 lifes--;//looses both a life and general trust
                 trust --;
-                System.out.println("Wrong. Player has " + lifes + " left.");
-                            
+                System.out.println("Wrong. Player has " + lifes + " lifes left.");
+                myGui.updateInstructionPane(colleagueMan.getNeg(), "Your answer is wrong");
+                
+                
             } else {
                 trust++;//incrementing trust
                 rightAnswers++;//incrementing number of right answers for storyline
                 System.out.println("Correct answer given");
+                myGui.updateInstructionPane(colleagueMan.getPos(), "Your answer is right");
             }
-        myGui.switchPanes(1);//switching back to the navigation pane    
+        
+        
+        myGui.switchPanes(3);//switching to the info pane  
     }
     
     /**
@@ -110,23 +142,24 @@ public class Game implements ActionListener
             teabreak ++;//increment teabreak counter 
             timeUntilFinished++;//counts steps that the player took
             int[] stats = {timeUntilFinished,trust,lifes};//following lines are for updating the GUI.
-            String roomMsg = roomMan.goRoom(isBreak, direction);//updating the roomManager by making it try to change the room towards the direction. If barriers are encountered they are described in the message. 
-            myGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort(), roomMsg);
+            roomMessage = roomMan.goRoom(isBreak, direction);//updating the roomManager by making it try to change the room towards the direction. If barriers are encountered they are described in the message. 
+            myGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort(), roomMessage);
             storyLine();//applies the storyline method. Actions are performed if the right answers attribute if this class reaches 4
             /////////////////////////////////////////winning condition
-            if(winGame() == true){
-                won = true;
-                //break;
+            if(winGame() == true){//player won the game. It ends here.
+                String addedInfo = ("\nYou took " + timeUntilFinished + " steps and answered "+ rightAnswers + " questions correctly. Your final trust score is "+trust + ".");
+                myGui.exitMessage("You take the elevator. There are no buttons...\nThe elevator takes you down and when the door opens you realise that you are in the strongroom.\nThe blueprints are on the table!\nYou grab them and leave the building without attracting any attention."
+                    +addedInfo, "YOU WON!");
             }
             /////////////////////////////////////////
             if (teabreak % 6 == 0){                        // if teabreak counter reaches 6 the user is warned
-                String s = "<html>Soon everybody will come<br>out of their offices<br>for a tea break<br>Beware!!</html>";
+                String s = "It's teatime soon";
                 System.out.println(s);//for the log
                 myGui.updateMessageBoard(s, 2);//changing the breaktime message board. The int stands for a colour scheme.
                 teabreak = 0;                              // resets teabreak counter for new cycle
                 
             } else if (teabreak == 1 || teabreak == 2|| teabreak ==3){ //it is teatime, so there is a risk to encounter a colleague
-                myGui.updateMessageBoard("It's teatime!", 1);
+                myGui.updateMessageBoard("It's teatime now!", 1);
                 if (testRoom() == false){//testing if the user is in the saferoom or the loo
                     isBreak = true;//its breaktime, so there are potential encounters + some rooms can be accessed.
                     breaktimeActions();//executes potential quiz activities
@@ -135,22 +168,11 @@ public class Game implements ActionListener
                 
             } else{//people are working now, so there is no chance of meeting a colleague
                 isBreak = false;
-                myGui.updateMessageBoard("Everybody is working now", 3);
+                myGui.updateMessageBoard("Everybody is working", 3);
             }                                   
             
             
-            // }
-        
-            if(lifes ==0){//player answered too many questions wrong
-            colleagueMan.endGame();//some terminal output. Cover is blown by last colleague that player was in contact with
-            System.out.println("You survived for " + timeUntilFinished + " steps and answered "+ rightAnswers + " questions correctly. Your final trust score is "+trust + ".");
-            } else if(won ==true){//winning condition was satisfied
-            System.out.println("You took " + timeUntilFinished + " steps and answered "+ rightAnswers + " questions correctly. Your final trust score is "+trust+ ".");
-            ///potential for expansion: add method that writes timeUntilFinished, questions correctly answered and trust to some
-            ///highscore text file.
-            } //else{//the player just quit the game without winning or loosing
-            //System.out.println("Thank you for playing. Good bye.");
-            //}
+             
     }
     /**
      * This method is called at breaktime, it returns true if the player is in the safe room or the loo.
@@ -202,35 +224,18 @@ public class Game implements ActionListener
         if(task1 == false){//checks if task was given before. 
             if(trust == 3){//This is the task that unlocks the office of the boss.
             task1 = true;//indicates that the task was given
-            colleagueMan.task();//get the task to leave docs in the office of the boss.
+            myGui.updateInstructionPane(colleagueMan.task(), "New mission received");//get the task to leave docs in the office of the boss.
+            myGui.switchPanes(3);//switching to the info pane 
             roomMan.gainAccess();//unlocks the door to the office.
             trust++;//gain some trust.
-        }
+            }
         }
         
         ////here, more tasks can be added, or actions triggered by items, once items are added to the game
     }
     
-    /**
-     * Print out the opening message for the player.
-     * @param none
-     * @return void
-     */
-    private void printWelcome()
-    {
-        System.out.println();
-        System.out.println("Welcome to the Spy game!");
-        System.out.println("You are a secret agent on an undercover mission. \n");
-        System.out.println("OBJECTIVE:");
-        System.out.println("Your objective is to steal blueprints for the world's first sonic screwdriver made by humans. ");
-        System.out.println("You were hired as a java developer in the company that produces it. ");
-        System.out.println("But your colleagues are suspicios.\nIf you meet one  of them, they might ask questions to check if you really are who you pretend to be.... ");
-        System.out.println("If you get the wrong answer too often, they might raise an alarm and your cover is gone.");
-        System.out.println("At teatime, they swarm out of their offices, so be prepared  ( or hide in the loo).\n");
+    
         
-        System.out.println();
-        System.out.println(roomMan.getCurrentRoomLong());//orientation for the player: where are they and what are exit options
-    }
 
     
 }

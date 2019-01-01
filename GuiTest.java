@@ -6,27 +6,38 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * The test class GameTest.
+ * The test class GuiTest.
  *
  * @author  (your name)
  * @version (a version number or a date)
  */
-public class GameTest
+public class GuiTest
 {
     public Game game;
+    public Gui gui;
     /**
      * Default constructor for test class GameTest
      */
-    public GameTest()
+    public GuiTest()
     {
-        game = new Game();
+        game = new Game(true);//empty constructor. This is only for gui testing
+        gui = new Gui(game);
     }
     
-    @Test//to check how the initial GUI setup looks like
-    public void playtest(){
-        
+    
+    @Test
+    public void instructionPaneTest(){
+        gui.switchPanes(3);
     }
     
+    @Test
+    public void mainPaneTest(){
+        gui.switchPanes(1);
+    }
+    @Test
+    public void quizPaneTest(){
+        gui.switchPanes(2);
+    }
     
     /**
      * Sets up the test fixture.
