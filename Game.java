@@ -44,8 +44,18 @@ public class Game implements ActionListener
      */
     public Game()
     {
-        roomMan = new RoomManager();
         colleagueMan = new ColleagueManager();
+        setGame();
+    }
+    
+    /**
+     * Initialises the room manager(map),the colleague manager (access to the quiz functionalities), the initial game settings such as lifes and displays the objective of the game. This method is used in the constructor and once the game is re-started by the player.
+     * @param none
+     * @return void
+     */
+    private void setGame(){
+        roomMan = new RoomManager();
+        
         /////////////////////////////////////////////initial setup
         lifes = 3;//lifes a player has left
         trust = 0;//trust level the player gained
@@ -99,7 +109,12 @@ public class Game implements ActionListener
                 
                 if(lifes ==0){//player answered too many questions wrong, the game ends here
                     String addedInfo = ("\n\nYou survived for " + timeUntilFinished + " steps and answered "+ rightAnswers + " questions correctly. Your final trust score is "+trust + ".");
-                    myGui.exitMessage(colleagueMan.endGame() + addedInfo, "YOU LOST!");
+                    boolean ret = myGui.exitMessage(colleagueMan.endGame() + addedInfo, "YOU LOST!");
+                    if(ret == true){//restart game
+                    myGui.killGui();
+                    setGame();
+                } 
+                
                 } else {
                     myGui.updateMain(new int[]{timeUntilFinished,trust,lifes}, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort(), roomMessage);
                     myGui.switchPanes(1);//switch back to the main pane
@@ -152,8 +167,12 @@ public class Game implements ActionListener
             /////////////////////////////////////////winning condition
             if(winGame() == true){//player won the game. It ends here.
                 String addedInfo = ("\nYou took " + timeUntilFinished + " steps and answered "+ rightAnswers + " questions correctly. Your final trust score is "+trust + ".");
-                myGui.exitMessage("You take the elevator. There are no buttons...\nThe elevator takes you down and when the door opens you realise that you are in the strongroom.\nThe blueprints are on the table!\nYou grab them and leave the building without attracting any attention."
+                boolean ret = myGui.exitMessage("You take the elevator. There are no buttons...\nThe elevator takes you down and when the door opens you realise that you are in the strongroom.\nThe blueprints are on the table!\nYou grab them and leave the building without attracting any attention."
                     +addedInfo, "YOU WON!");
+                if(ret == true){//restart game
+                    myGui.killGui();
+                    setGame();
+                }    
             }
             /////////////////////////////////////////
             if (teabreak % 6 == 0){                        // if teabreak counter reaches 6 the user is warned

@@ -24,6 +24,9 @@ public class MyQuizPane extends JPanel
     private JPanel answerPanel;
     private JLabel questionLabel;
     private JFrame mainFrame;
+    
+    private static final int wide = 1000;
+    private static final int high = 600;
 
     /**
      * Constructor for objects of class MyQuizPane. The basic layout and style is set up and methods to create sub-panels are called.
@@ -123,6 +126,14 @@ public class MyQuizPane extends JPanel
         questionPanel.repaint();
     }
     
-    
+    /**
+     * Overwriting the preferred size method.
+     * @param  none
+     * @return    void
+     */
+    @Override
+    public Dimension getPreferredSize() {
+       return new Dimension(wide, high);
+    }
     
 }

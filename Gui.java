@@ -130,17 +130,37 @@ public class Gui
     }
     
     /**
-     * Final method in the game: The final stats are given and upon clicking ok the game is ended.
+     * The final stats are given and the player has a choice of ending or playing again.
      * @param  String  the message
      * @param  String  the title
      * @return    void
      */
-    protected void exitMessage(String message, String title){
-        JOptionPane.showMessageDialog(mainFrame,
-        message,
-        title,
-        JOptionPane.PLAIN_MESSAGE);
-        System.exit(0);//exits the game
+    protected boolean exitMessage(String message, String title){
+        String[] options = {"Play again","Exit"};
+
+        int choice = JOptionPane.showOptionDialog(mainFrame, //Component parentComponent
+               message, //Object message,
+               title, //String title
+               JOptionPane.YES_NO_OPTION, //int optionType
+               JOptionPane.INFORMATION_MESSAGE, //int messageType
+               null, //Icon icon,
+               options,
+               options[1]);
+        if(choice == 0 ){
+           return true;
+         }else{
+           System.exit(0);
+         }
+        return false;
+                              
     }
     
+    /**
+     * The player wants to play again, therefore the current main frame is terminated.
+     * @param  none
+     * @return    void
+     */
+    protected void killGui(){
+        mainFrame.dispose();
+    }
 }

@@ -25,6 +25,9 @@ public class MyInstructionPane extends JPanel
     private JLabel infoText;
     private JButton okButton;
     private JPanel contentPanel;
+    
+    private static final int wide = 1000;
+    private static final int high = 600;
    
     /**
      * Constructor for objects of class MyInstructionPane. The standard design and the listener are set from the parameters and a method for the content setup is called.
@@ -79,5 +82,15 @@ public class MyInstructionPane extends JPanel
     protected void updateContent(String title, String message){//setting message and title
         contentPanel.setBorder(new TitledBorder(standardBorder, title, TitledBorder.RIGHT,TitledBorder.BELOW_TOP, font, Color.black));
         infoText.setText(message);
+    }
+    
+    /**
+     * Overwriting the preferred size method.
+     * @param  none
+     * @return    void
+     */
+    @Override
+    public Dimension getPreferredSize() {
+       return new Dimension(wide, high);
     }
 }

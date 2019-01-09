@@ -36,6 +36,9 @@ public class MyMainPane extends JPanel
     
     private String direction;
     private ActionListener listener;
+    
+    private static final int wide = 1000;
+    private static final int high = 600;
 
     /**
      * Constructor for objects of class MyMainPane. It sets the style parameters and initialises the three panels belonging to this class.
@@ -218,4 +221,13 @@ public class MyMainPane extends JPanel
         statsPanel.repaint();            
     }
     
+    /**
+     * Overwriting the preferred size method.
+     * @param  none
+     * @return    void
+     */
+    @Override
+    public Dimension getPreferredSize() {
+       return new Dimension(wide, high);
+    }
 }
