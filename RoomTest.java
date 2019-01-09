@@ -18,7 +18,7 @@ public class RoomTest
     private Room officeBoss;
     private Room firstHallway;
     /**
-     * Default constructor for test class RoomTest
+     * Default constructor for test class RoomTest. Sets up some rooms
      */
     public RoomTest()
     {

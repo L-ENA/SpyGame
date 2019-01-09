@@ -4,10 +4,7 @@ import java.io.IOException;
 /**
  * The Colleague class manages the colleague's interaction with the game. Here the colleagues are interacting
  * with the questions in order to present challenges in the game.
- * Has attributes
- *      - of type ArrayList<Colleague> to store the colleague instances. 
- *      - of type int to store amount of colleagues
- *      - of type Colleague to represent one instance of Colleague to interact
+ * 
  * @205232
  * @08.01.2019
  */
@@ -22,6 +19,7 @@ public class ColleagueManager
 
     /**
      * Constructor for objects of class ColleagueManager. Makes the colleagueList and chooses a random colleague to start with.
+     * @params none
      */
     public ColleagueManager()
     {
@@ -35,7 +33,7 @@ public class ColleagueManager
     }
 
     /**
-     * Private method to instantiate the colleagues and storing them in the colleagueList for further usage
+     * Private method to instantiate the colleagues and storing them in the colleagueList for further usage.
      * @param none
      * @return void
      */
@@ -55,7 +53,7 @@ public class ColleagueManager
     /**
      * Method that creates a potential encounter with a random colleague from the list
      * @param none
-     * @return boolean information whether question was answered correctly. 
+     * @return String a description of how the colleague approaches. 
      */
     public String encounter(){
             //player meets a colleague and gets interrogated
@@ -71,6 +69,46 @@ public class ColleagueManager
             
     }
     
+    /**
+     * Method that is called after the player answered some questions correctly
+     * @param none
+     * @return void 
+     */
+    public String task(){
+        System.out.println(">>>Player received Task 1 from " + colleague.getName());
+        String returnString = "";
+        if (colleague.isFemale()){      //next output is depending on random colleague's gender
+                returnString = "<html>&nbsp;" + colleague.getName() + " approaches you. She seems to have something on her mind.<br>&nbsp;She says: Hi! I have to leave early today, could you do me a favour and drop these documents in the office of the boss?<br>&nbsp;Thanks!!!!<br>&nbsp;You take the documents and she leaves...</html>";
+            } else {
+                returnString = "<html>&nbsp;" + colleague.getName() + " approaches you. He seems to have something on his mind.<br>&nbsp;He says: Hi! I have to leave early today, could you do me a favour and drop these documents in the office of the boss?<br>&nbsp;Thanks!!!!<br>&nbsp;You take the documents and he leaves...</html>";
+            }
+        ////////////////deleting the colleague that presented this task, since they are leving the office
+        Colleague col;
+        int delete = 0;
+        for(int i =0; i<colleagueList.size();i++){
+            col = colleagueList.get(i);
+            if(col.getName().equals(colleague.getName())){
+                delete = i;//
+            }
+        }
+        colleagueList.remove(delete);//deletes this colleague
+        return returnString;
+    }
+    
+    /**
+     * Method that is called after the player lost their final life. Cover is blown by the colleague who asked last question
+     * @param none
+     * @return String some output describing how the player lost. 
+     */
+    public String endGame(){
+        System.out.println(">>>Player was caught. Game over");
+        if (colleague.isFemale()){      //next output is depending on random colleague's gender
+                return (colleague.getName() + " looks very suspicious. She walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
+            } else {
+                return (colleague.getName() + " looks very suspicious. He walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
+            }
+    }
+   
     /**
      * Method that returns a random question asked by a colleague.
      * @param none
@@ -107,44 +145,5 @@ public class ColleagueManager
         return questionMan.evaluate(givenAnswer);//asks a question, returns boolean true if answered correctly, false if not
     }
     
-    /**
-     * Method that is called after the player answered some questions correctly
-     * @param none
-     * @return void 
-     */
-    public String task(){
-        System.out.println(">>>Player received Task 1 from " + colleague.getName());
-        String returnString = "";
-        if (colleague.isFemale()){      //next output is depending on random colleague's gender
-                returnString = "<html>&nbsp;" + colleague.getName() + " approaches you. She seems to have something on her mind.<br>&nbsp;She says: Hi! I have to leave early today, could you do me a favour and drop these documents in the office of the boss?<br>&nbsp;Thanks!!!!<br>&nbsp;You take the documents and she leaves...</html>";
-            } else {
-                returnString = "<html>&nbsp;" + colleague.getName() + " approaches you. He seems to have something on his mind.<br>&nbsp;He says: Hi! I have to leave early today, could you do me a favour and drop these documents in the office of the boss?<br>&nbsp;Thanks!!!!<br>&nbsp;You take the documents and he leaves...</html>";
-            }
-        ////////////////deleting the colleague that presented this task, since they are leving the office
-        Colleague col;
-        int delete = 0;
-        for(int i =0; i<colleagueList.size();i++){
-            col = colleagueList.get(i);
-            if(col.getName().equals(colleague.getName())){
-                delete = i;//
-            }
-        }
-        colleagueList.remove(delete);//deletes this colleague
-        return returnString;
-    }
     
-    /**
-     * Method that is called after the player lost their final life. Cover is blown by the colleague who asked last question
-     * @param none
-     * @return void 
-     */
-    public String endGame(){
-        System.out.println(">>>Player was caught. Game over");
-        if (colleague.isFemale()){      //next output is depending on random colleague's gender
-                return (colleague.getName() + " looks very suspicious. She walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
-            } else {
-                return (colleague.getName() + " looks very suspicious. He walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
-            }
-    }
-   
 }

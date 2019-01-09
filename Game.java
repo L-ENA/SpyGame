@@ -38,8 +38,9 @@ public class Game implements ActionListener
     private String roomMessage;
     /**
      * Class constructor
-     * Create the game and initialise the room manager(map),the colleague manager (access to the quiz functionalities), and the parser instance.
+     * Create the game and initialise the room manager(map),the colleague manager (access to the quiz functionalities), the initial game settings such as lifes and displays the objective of the game.
      * @param none
+     * @return void
      */
     public Game()
     {
@@ -75,12 +76,12 @@ public class Game implements ActionListener
     
     /**
      * Class constructor
-     * This is an empty constructor that was used by the gui testing classes during the development. It is not of interest
+     * This is an empty constructor that was used by the gui testing classes during the development and is not of interest
      * for the actual game.
-     * @param boolean To call the empty constructor
+     * @param boolean To call the modified constructor
      */
     public Game(boolean testing){
-        //empty
+        roomMan = new RoomManager();//for testing purposes
     }
     
     
@@ -113,27 +114,25 @@ public class Game implements ActionListener
     }
     
     /**
-     * 
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * This method carries out the action in response to a given quiz answer. The given answer, indicated by the ActionCommand, is evaluated and the stats and GUI are updated accordingly.
+     * @param  ActionEvent  The action that contains the given answer
+     * @return    void
      */
     private void questionAction(ActionEvent e){
         if(!colleagueMan.evaluate(e.getActionCommand())){//evaluating the given answer. If wrong, lifes etc are taken. If right, trust is gained.
                 lifes--;//looses both a life and general trust
                 trust --;
                 System.out.println("Wrong. Player has " + lifes + " lifes left.");
-                myGui.updateInstructionPane(colleagueMan.getNeg(), "Your answer is wrong");
+                myGui.updateInstructionPane(colleagueMan.getNeg(), "Your answer is wrong");//updating the instruction pane according to the quiz outcome
                 
                 
             } else {
                 trust++;//incrementing trust
                 rightAnswers++;//incrementing number of right answers for storyline
-                System.out.println("Correct answer given");
-                myGui.updateInstructionPane(colleagueMan.getPos(), "Your answer is right");
+                myGui.updateInstructionPane(colleagueMan.getPos(), "Your answer is right");//updating the instruction pane according to the quiz outcome
             }
         
-        
-        myGui.switchPanes(3);//switching to the info pane  
+        myGui.switchPanes(3);//switching to the instruction pane to communicate quiz outcome  
     }
     
     /**
@@ -220,7 +219,7 @@ public class Game implements ActionListener
     }
     
     /**
-     * Applying the storyline. Depending on how many questions the player answered right/wrong, actions that change the settings in the game are performed. 
+     * Applying the storyline. Depending on how many questions the player answered right/wrong, actions that change the settings in the game are performed. For now there is only one task, bit more could be added.
      * @param none
      * @return void
      */
@@ -236,10 +235,17 @@ public class Game implements ActionListener
             }
         }
         
-        ////here, more tasks can be added, or actions triggered by items, once items are added to the game
+        ////here, more tasks can be added, or actions triggered by stats, location, item...
     }
     
-    
+    /**
+     * Accessor for the roomMan. This method is only used by the GUI test class in order to quickly check how the gui looks like.
+     * @param none
+     * @return void
+     */
+    protected RoomManager getRoomMan(){
+        return roomMan;
+    }
         
 
     

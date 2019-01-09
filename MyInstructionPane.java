@@ -7,9 +7,8 @@ import javax.swing.*;
 import java.awt.event.*;
 
 /**
- * This extended JPanel class is used to focus the players attention on one single piece of information. It has a
- * relatively simple design and only displays two Strings: a title and a messsage. The only possible action is a  click on the ok button.
- * It is used to display the initial objective of the game, the solution to the quiz questions and to display the final statistics
+ * This extended JPanel class is used to focus the players attention on one single piece of information. It adopts the standard design set in the GUI class and only displays two Strings: a title and a messsage. The only possible action is a  click on the ok button.
+ * It is used to display the initial objective of the game and the solution to the quiz questions.
  *
  * @205232
  * @08.01.2019
@@ -28,7 +27,7 @@ public class MyInstructionPane extends JPanel
     private JPanel contentPanel;
    
     /**
-     * Constructor for objects of class MyInstructionPane
+     * Constructor for objects of class MyInstructionPane. The standard design and the listener are set from the parameters and a method for the content setup is called.
      */
     public MyInstructionPane(Border standardBorder, Border contentBorder, ActionListener listener)
     {
@@ -46,25 +45,25 @@ public class MyInstructionPane extends JPanel
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Creating this panel's content so that in the future it only needs some very simple content updating.
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  none
+     * @return    void
      */
     private void makeContent()
     {
         contentPanel= new JPanel();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));//here, a box layout makes sense to display labels below each other
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));//here, a box layout makes sense to display contents below each other
         contentPanel.setBackground(Color.white);
         contentPanel.setBorder(new TitledBorder(standardBorder, "To be updated at runtime", TitledBorder.RIGHT,TitledBorder.BELOW_TOP, font, Color.black));
         contentPanel.add(Box.createRigidArea(new Dimension(0,15)));
         infoText = new JLabel("Some info, to be updated at runtime.");
         contentPanel.add(infoText);
         contentPanel.add(Box.createRigidArea(new Dimension(0,15)));
-        okButton = new JButton("Got it!");
+        okButton = new JButton("Got it!");//some custom jbutton
         okButton.setBorder(contentBorder);
-        okButton.setBackground(Color.LIGHT_GRAY);//Black By Default
-        okButton.setForeground(Color.BLACK);//Set as a Gray Colour
+        okButton.setBackground(Color.LIGHT_GRAY);//button design
+        okButton.setForeground(Color.BLACK);
         okButton.setActionCommand("ok");//each button has a string as action command
         okButton.addActionListener(listener);//adds the action listener
         contentPanel.add(okButton);
@@ -72,9 +71,10 @@ public class MyInstructionPane extends JPanel
     }
     
     /**
-     * 
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Updating the panel's content with a title and a message
+     * @param  String  title
+     * @param  String  message
+     * @return    void
      */
     protected void updateContent(String title, String message){//setting message and title
         contentPanel.setBorder(new TitledBorder(standardBorder, title, TitledBorder.RIGHT,TitledBorder.BELOW_TOP, font, Color.black));

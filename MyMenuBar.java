@@ -2,18 +2,16 @@ import javax.swing.*;
 import java.awt.event.*;
 /**
  * This class extends JMenuBar. The constructor returns a menu bar that is customized for the SpyGame. It contains the function to exit
- * the game and functions to provide information to the player.
+ * the game and functions to provide some information to the player.
  *
  * @205232
  * @08.01.2019
  */
 public class MyMenuBar extends JMenuBar implements ActionListener
 {
-    // instance variables - replace the example below with your own
-    JFrame mainFrame;
-
-    /**
-     * Constructor for objects of class MyMenuBar. 
+    private JFrame mainFrame;
+     /**
+     * Constructor for objects of class MyMenuBar. Its submenues and items are created here. 
      */
     public MyMenuBar(JFrame mainFrame)
     {
@@ -50,21 +48,23 @@ public class MyMenuBar extends JMenuBar implements ActionListener
      * @return    void
      */
     public void actionPerformed(ActionEvent e) {
-	if (e.getActionCommand().equals("close")) {//what happens if the exit action is invoked: gives choice.
-		int ret = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to exit? ");
+    if (e.getActionCommand().equals("close")) {//what happens if the exit action is invoked: gives choice.
+        int ret = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to exit? ");
                 if(ret == JOptionPane.YES_OPTION)
                     System.exit(0);//exits the game
-	} else if (e.getActionCommand().equals("source")) {//what happens if the source action is invoked
-		JOptionPane.showMessageDialog(mainFrame, "Picture sources: "
-                        + " \n pic"
-                        + " \n www.picsource.de"
-                        + " \n  rcrettw"
-                        + " \n fghjöolikujhgf"
-                        + " \n  ßßäääääääää"
-                        + " \n hi");
-	} else if (e.getActionCommand().equals("help")){
-	    JOptionPane.showMessageDialog(mainFrame, "This is some help info. Click and do stuff.");
-	   
-	}
+    } else if (e.getActionCommand().equals("source")) {//what happens if the source action is invoked
+        JOptionPane.showMessageDialog(mainFrame, "Picture sources: "
+                + " \n https://www.freepik.com/free-photos-vectors/paper >Paper image created by Freepik"
+                + " \n https://www.freepik.com/free-photos-vectors/food >Food image created by Yanalya - Freepik.com"
+                + " \n https://www.freepik.com/free-photos-vectors/background >Background image created by Nikitabuida - Freepik.com"
+                + " \n https://www.freepik.com/free-photos-vectors/business >Business image created by Peoplecreations - Freepik.com"
+                + " \n https://www.freepik.com/free-photos-vectors/business >Business image created by Rawpixel.com - Freepik.com"
+                + " \n https://www.freepik.com/free-photo/restaurant_3563675.htm >Designed by Freepik"
+                + " \n https://www.freepik.com/free-photo/public-toilet_1278624.htm >Designed by 4045"
+                + " \n https://www.freepik.com/free-photos-vectors/business >Business image created by Katemangostar - Freepik.com");
+    } else if (e.getActionCommand().equals("help")){
+        JOptionPane.showMessageDialog(mainFrame, "This is some help info. Click and do stuff.");
+       
+    }
 }
 }

@@ -10,7 +10,6 @@ public class QuestionException extends Exception
     private static int errorCounter = 1;//static int to indicate how many errors of this type were found
     private String line;//the line with the error
     private int nr;//line nr where error occurred
-
     /**
      * Constructor for objects of class QuestionException. 
      * @param String The line of the text field where the parsing exception occurred
@@ -26,7 +25,7 @@ public class QuestionException extends Exception
     }
 
     /**
-     * This method describes potential errors in the process of parsing a question from the questions input file
+     * This method describes potential errors in the process of parsing a question from the questions input file.
      *
      * @param none
      * @return void

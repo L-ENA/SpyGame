@@ -17,7 +17,7 @@ public class GuiTest
     public Game game;
     public Gui gui;
     /**
-     * Default constructor for test class GameTest
+     * Default constructor for test class GameTest. it creates a gui and a game instance for testing.
      */
     public GuiTest()
     {
@@ -26,9 +26,9 @@ public class GuiTest
     }
     
     /**
+     * To test what the instruction pane looks like.
      * 
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @return    void
      */
     @Test
     public void instructionPaneTest(){
@@ -36,22 +36,20 @@ public class GuiTest
     }
     
     /**
+     * To test what the main pane looks like.
      * 
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @return    void
      */
     @Test
     public void mainPaneTest(){
-        RoomManager roomMan = new RoomManager();
-        
-        gui.updateMain(new int[]{0,0,3}, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort(), "Everybody is working");
+        gui.updateMain(new int[]{0,0,3}, game.getRoomMan().getCurrentRoomImg(), game.getRoomMan().getCurrentExitSet(), game.getRoomMan().getCurrentRoomShort(), "Everybody is working");
         gui.switchPanes(1);
     }
     
     /**
+     *To test what the quiz pane looks like.
      * 
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @return    void
      */
     @Test
     public void quizPaneTest(){

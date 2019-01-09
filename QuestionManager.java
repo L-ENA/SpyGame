@@ -19,19 +19,18 @@ import java.util.Iterator;
  */
 public class QuestionManager
 {
-    // instance variables
     private ArrayList<Question> questionList;
     private ArrayList<Question> backupList;
     private Question thisQuestion;
     
     /**
-     * Constructor for objects of class QuestionManager. Parses the question file and adds questions. Initialises the reader and pattern objects. 
+     * Constructor for objects of class QuestionManager. Parses the question file and adds questions. 
      */
     public QuestionManager()
     {
         questionList = new ArrayList<Question>();//the ArrayList for the question objects
         questionParsing();//parses questions from the file and stores them in the backup list
-        useQuestionBackup();//clones the question backup list and 
+        useQuestionBackup();//clones the question backup list for use in the game
     }
     
     /**
@@ -43,11 +42,12 @@ public class QuestionManager
      * @return void
      */
     private void useQuestionBackup(){
-        Iterator<Question> iterator = backupList.iterator();//to traverse the backuo list
+        Iterator<Question> iterator = backupList.iterator();//to traverse the backup list
         while(iterator.hasNext()){
             questionList.add(iterator.next().clone());//creating a clone so that changes on the clone don't affect the original List
         }
     }
+    
     /**
      * This method parses questions from the questions file. It is called in the constructor of this class.
      * @param none
@@ -97,20 +97,20 @@ public class QuestionManager
             questionList.remove(randomQuestionIndex);                           //remove the question so that it can't be asked again
         } catch(IllegalArgumentException iA){//the questionList is empty. The backup is used and a question from the refilled list is picked.
             System.out.println("------- Exception caught: Question list is empty, old questions are re-used. Continue to play or add more questions to the question file and re-start the game.");
-            useQuestionBackup();
-            int randomQuestionIndex = rand.nextInt(questionList.size());        //Create random index for questions currently in the list.
+            useQuestionBackup();//refill the list by cloning the questions
+            int randomQuestionIndex = rand.nextInt(questionList.size());        //Create random index for questions currently in the list in order to set a current question.
             thisQuestion = questionList.get(randomQuestionIndex);               //get random question
             questionList.remove(randomQuestionIndex);
         }
-        thisQuestion.printQuestion();                                       //asks question
+        thisQuestion.printQuestion();                                       //prints question to terminal for the log
         return thisQuestion.formatQuestion();//param is numbers of times that user is allowed to pass an invalid input
     }
     
     /**
-     * Evaluating a question: if user input matches the right answer, true is returned. If answer is wrong, false is returned. Recursion is used until the user enters a valid input, and terminated after 10 trys. in this case, false is returned 
+     * Evaluating a question: if the given answer matches, true is returned. Otherwise, false.
      *
-     * @param none
-     * @return boolean rturns false if question was answered wrong. This is determined by the evaluate() method
+     * @param String given answer
+     * @return boolean rturns false if question was answered wrong
      */
     public boolean evaluate(String givenAnswer){
         if(givenAnswer.equals(thisQuestion.getAnswer())){//answered correctly since input equals answer string

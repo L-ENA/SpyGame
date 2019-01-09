@@ -18,7 +18,7 @@ public class ColleagueTester
     
     private ColleagueManager colleagueMan; // for access to the colleagues
     /**
-     * Default constructor for test class ColleagueTester
+     * Default constructor for test class ColleagueTester. Sets up the colleagueManager object for testing.
      */
     public ColleagueTester()
     {
@@ -27,7 +27,7 @@ public class ColleagueTester
     }
     
     /**
-     * Performs the encounter test: 20 encounters with colleagues are simulated to see if the colleagues are random.
+     * Performs the encounter test: 100 encounters with colleagues are simulated to see if the colleagues are random. Results are printed to the console
      */
     @Test
     public void doEncounterTest(){
@@ -51,7 +51,7 @@ public class ColleagueTester
     
      /**
       *
-     * Performs a quiz test: a random question is printed to the terminal. An answer is given and it is tested
+     * Performs a quiz test: a random question is printed to the terminal. An answer is given automatically and it is tested
      * if the evaluate function returns a boolean and if the reaction to the answer is appropriate.
      */
     @Test
@@ -73,6 +73,7 @@ public class ColleagueTester
     public void doEndTest(){
         colleagueMan.endGame();//test if statement is printed properly
     }
+    
     /**
      * Sets up the test fixture.
      *

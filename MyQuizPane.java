@@ -14,7 +14,7 @@ import java.awt.event.*;
  */
 public class MyQuizPane extends JPanel
 {
-    GridBagConstraints c;
+    private GridBagConstraints c;
     private Border standardBorder;
     private Border contentBorder;
     private JButton quizButton;
@@ -26,7 +26,11 @@ public class MyQuizPane extends JPanel
     private JFrame mainFrame;
 
     /**
-     * Constructor for objects of class MyQuizPane
+     * Constructor for objects of class MyQuizPane. The basic layout and style is set up and methods to create sub-panels are called.
+     * 
+     * @param  Border  the border for the panels
+     * @param  Border  the border for the contents
+     * @param  ActionListener  the listener instance to connect actions from the quiz panel to the main class
      */
     public MyQuizPane(Border standardBorder, Border contentBorder, ActionListener listener)
     {
@@ -46,8 +50,8 @@ public class MyQuizPane extends JPanel
     /**
      * Method to create the question space of this panel.
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  none
+     * @return    void
      */
     private void makeQuestionPanel()
     {
@@ -72,8 +76,8 @@ public class MyQuizPane extends JPanel
     /**
      * Method to create the answer space of this panel.
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  none
+     * @return    void
      */
     private void makeAnswerPanel()
     {
@@ -106,16 +110,16 @@ public class MyQuizPane extends JPanel
     }
     
     /**
-     * 
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Method to update this panel.
+     * @param  String  the String describing the encounter.
+     * @param  String  the question.
+     * @return    void
      */
     protected void updateQuiz(String encounterWith, String quest){
-        //picLabel.setIcon(new ImageIcon(img));//updating the room image by using image of the current room
         questionLabel.setText(quest);//updating the question and the title below.
         questionLabel.setBorder(new TitledBorder(contentBorder, encounterWith, TitledBorder.RIGHT,TitledBorder.ABOVE_TOP, font, Color.black));//updating border title to indicate current location
         
-        questionPanel.revalidate();
+        questionPanel.revalidate();//finalising the changes
         questionPanel.repaint();
     }
     

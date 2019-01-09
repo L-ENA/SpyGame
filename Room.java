@@ -19,7 +19,7 @@ import java.io.IOException;
 
 public class Room 
 {
-    //Add some compiled image as attribute by giving path as constructor argument
+    
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
     private Doors doors;
@@ -27,8 +27,9 @@ public class Room
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
-     * "an open court yard".
-     * @param description The room's description.
+     * "an open court yard". It adds some buffered image as attribute by giving a path as constructor argument.
+     * @param String the room's description.
+     * @param String a path to the room picture.
      */
     public Room(String description, String pathToPic) 
     {
@@ -46,27 +47,9 @@ public class Room
     }
     
     /**
-     * Accessor for the image.
-     * @param none
-     * @return BufferedImage The image describing this room.
-     */
-    public BufferedImage getImg(){
-        return img;
-    }
-    
-    /**
-     * Accessor for doors attribute
-     * @param none
-     * @return The doors hashmap for access to locked status
-     */
-    public Doors getDoors(){
-        return doors;
-    }
-
-    /**
      * Define an exit from this room.
-     * @param direction The direction of the exit.
-     * @param neighbor  The room to which the exit leads.
+     * @param String the direction of the exit.
+     * @param Room  the room to which the exit leads.
      * @return void
      */
     public void setExit(String direction, Room neighbor) 
@@ -116,7 +99,7 @@ public class Room
     /**
      * Return the room that is reached if we go from this room in direction
      * "direction". If there is no room in that direction, return null.
-     * @param direction The exit's direction.
+     * @param String The exit's direction.
      * @return The room in the given direction.
      */
     public Room getExit(String direction) 
@@ -124,16 +107,33 @@ public class Room
         return exits.get(direction);
     }
     
-    ////////////////////////////////////////////////for gui methods
+     /**
+     * Accessor for the image.
+     * @param none
+     * @return BufferedImage the image describing this room.
+     */
+    public BufferedImage getImg(){
+        return img;
+    }
+    
+    /**
+     * Accessor for doors attribute.
+     * @param none
+     * @return The doors hashmap for access to locked status
+     */
+    public Doors getDoors(){
+        return doors;
+    }
+
     /**
      * Return a string set for all exits of this room
      * @param void
-     * @return Set<String>.
+     * @return Set<String> the names of the neighbouring rooms.
      */
     public Set<String> getExitSet()
     {
         return exits.keySet();
     }
 }
-///////////////////////////////////////////
+
 

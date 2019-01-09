@@ -6,20 +6,20 @@
  * A String to store the question,
  * a String to store the answer,
  * a String comment if answer given is right,
- * a String comment if anser given is wrong.
+ * a String comment if anser given is wrong. 
+ * 
+ * It implements Cloneable in order to give the ability to copy questions in a way that a completely new instance with its own pointer is created.
  *
  * @205232
  * @08.01.2019
  */
 public class Question implements Cloneable
 {
-    
     private String question;
     private String answer;
     private String posComment;
     private String negComment;
-
-    /**
+/**
      * Constructor for objects of class Question. Assigning the parameters to the attributes of this class.
      * 
      * @param String question
@@ -37,7 +37,7 @@ public class Question implements Cloneable
     }
     
     /**
-     * prints the question String with its options
+     * Prints the question String with its options
      * @return void
      * @param none
      */
@@ -99,22 +99,21 @@ public class Question implements Cloneable
     }
 
     /**
-     * 
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Overriding the clone() method of the interface to return the question object correctly.
+     * @param  none
+     * @return    Question the clone
      */
     @Override
     protected Question clone() {
         Question clone = null;
         try{
-            clone = (Question) super.clone();//casting question and using objects clone method in it
+            clone = (Question) super.clone();//casting question and using objects clone method on it
            
         }catch(CloneNotSupportedException e){// catching related exception
+            System.out.println("Something went wrong with the question cloning.");
             throw new RuntimeException(e); 
         }
-       
-        return clone;
-       
+       return clone;
     }
 
 

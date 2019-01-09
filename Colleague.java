@@ -1,6 +1,6 @@
 
 /**
- * Colleagues are the enemies in this game. They present challenges in form of quiz questions, and the game
+ * Colleagues are the enemies in this game. They are used in the challenges by 'asking' quiz questions, and the game
  * is ended if too many answers are wrong.
  * 
  * Its attributes are:
@@ -21,8 +21,8 @@ public class Colleague
     
     /**
      * Constructor for objects of class Colleague. Assigns parameters to attributes.
-     * @param name - a String object representing this colleague's name
-     * @param female - represents the colleague's gender -> true for femle, false for male
+     * @param String  a String object representing this colleague's name
+     * @param boolean represents the colleague's gender -> true for femle, false for male
      */
     public Colleague(String name, boolean gender)
     {

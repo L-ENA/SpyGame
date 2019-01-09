@@ -21,7 +21,7 @@ import java.awt.event.*;
  */
 public class MyMainPane extends JPanel
 {
-    GridBagConstraints c;
+    private GridBagConstraints c;
     private JPanel statsPanel;
     private JPanel picturePanel;
     private JPanel navigationPanel;
@@ -126,6 +126,7 @@ public class MyMainPane extends JPanel
         c.anchor = GridBagConstraints.PAGE_START;
         add(picturePanel, c);
     }
+    
     /**
      * This method is responsible for the initial design and layout of the navigation panel. 
      *
@@ -161,7 +162,6 @@ public class MyMainPane extends JPanel
     protected void updating(int[] stats, BufferedImage img, Set<String> exits, String currentShort, String roomMsg)
     //public void updateGUI(BufferedImage roomPicture, int[] stats)
     {
-        
         picLabel.setIcon(new ImageIcon(img));//updating the room image by using image of the current room
         picLabel.setBorder(new TitledBorder(contentBorder, "You are " + currentShort, TitledBorder.RIGHT,TitledBorder.ABOVE_TOP, font, Color.black));//updating border title to indicate current location
         if(!roomMsg.equals("")){//the room message infoboard is optional: it just appears if there is anything of interest
@@ -177,12 +177,9 @@ public class MyMainPane extends JPanel
         picturePanel.repaint();
         
         statsLabel.setText("<html><br>&nbsp;Steps: "+stats[0]+"&nbsp;<br>&nbsp;Trust: "+stats[1]+"&nbsp;<br>&nbsp;Lifes: "+stats[2]+"<br>&nbsp;</html>");//updating the stat values
-        
-        
-        navigationPanel.removeAll();//remove buttons created for the previous room
+         navigationPanel.removeAll();//remove buttons created for the previous room
         navigationPanel.revalidate();
         navigationPanel.repaint();
-        
         
         for(String exit: exits){//add button and functionalities by looping through the exit set of the current room
             navigationPanel.add(Box.createRigidArea(new Dimension(0,15)));
@@ -195,12 +192,9 @@ public class MyMainPane extends JPanel
             navigationButton.addActionListener(listener);//adds the action listener
             navigationPanel.add(navigationButton);
         }
-        
-        
         navigationPanel.revalidate();
         navigationPanel.repaint();
-        
-        
+       
     }
     
     /**
@@ -212,8 +206,6 @@ public class MyMainPane extends JPanel
      */
     protected void updateMessages(String s, int importance){
         infoLabel.setText(s);
-        
-        
         switch (importance) {
             case 1:  infoLabel.setBackground(new Color(255, 77, 77));
                      break;
