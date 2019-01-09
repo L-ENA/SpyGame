@@ -1,10 +1,11 @@
 import java.awt.image.BufferedImage;
 import java.util.Set;
 /**
- * The RoomManager class manages the room structure of the game. Here rooms are initialised and given purpose
+ * The RoomManager class manages the room structure of the game. Here rooms are initialised and given purpose. Methods in this class
+ * are called in the main Game to check or alter the status of rooms.
  *
- * @author 21821570
- * @version 0.1, 22.11.18
+ * @205232
+ * @08.01.2019
  */
 public class RoomManager
 {

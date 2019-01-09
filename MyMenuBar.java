@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.awt.event.*;
 /**
- * This class extends JMenuBar. The constructor returns a menu bar that is customized for the SpyGame.
+ * This class extends JMenuBar. The constructor returns a menu bar that is customized for the SpyGame. It contains the function to exit
+ * the game and functions to provide information to the player.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @205232
+ * @08.01.2019
  */
 public class MyMenuBar extends JMenuBar implements ActionListener
 {
@@ -12,7 +13,7 @@ public class MyMenuBar extends JMenuBar implements ActionListener
     JFrame mainFrame;
 
     /**
-     * Constructor for objects of class MyMenuBar
+     * Constructor for objects of class MyMenuBar. 
      */
     public MyMenuBar(JFrame mainFrame)
     {
@@ -42,7 +43,8 @@ public class MyMenuBar extends JMenuBar implements ActionListener
     }
 
     /**
-     * Overriding the action performed method to carry out actions related to the menu bar.
+     * Overriding the action performed method to carry out actions related to the menu bar. This method is the centralised 
+     * event handling for the menu bar.
      *
      * @param  ActionEvent e
      * @return    void

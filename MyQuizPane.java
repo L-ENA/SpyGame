@@ -6,10 +6,11 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 /**
- * Write a description of class MyQuizPane here.
+ * The quiz pane provides the GUI for the quiz functionalities of the game. If the player is interrogated, this JPanel is
+ * visible and updated with a random quiz question. The player interacts by clicking the answer buttons.  
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @205232
+ * @08.01.2019
  */
 public class MyQuizPane extends JPanel
 {
@@ -104,6 +105,11 @@ public class MyQuizPane extends JPanel
         add(answerPanel, c);
     }
     
+    /**
+     * 
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
     protected void updateQuiz(String encounterWith, String quest){
         //picLabel.setIcon(new ImageIcon(img));//updating the room image by using image of the current room
         questionLabel.setText(quest);//updating the question and the title below.

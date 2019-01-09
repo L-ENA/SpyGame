@@ -8,8 +8,8 @@ import java.io.IOException;
  *      - of type ArrayList<Colleague> to store the colleague instances. 
  *      - of type int to store amount of colleagues
  *      - of type Colleague to represent one instance of Colleague to interact
- * @author 21821570
- * @version 0.1, 22.11.18
+ * @205232
+ * @08.01.2019
  */
 public class ColleagueManager
 {
@@ -77,7 +77,7 @@ public class ColleagueManager
      * @return String The formatted question String. 
      */
     public String questionAsk(){
-        return questionMan.ask();//asks a question, returns boolean true if answered correctly, false if not
+        return questionMan.ask();//asks a question, returns question String
     }
     
     /**
@@ -101,7 +101,7 @@ public class ColleagueManager
     /**
      * Method that evaluates the given answer to a question.
      * @param none
-     * @return String The formatted question String. 
+     * @return boolean The info  if answer matches. 
      */
     public boolean evaluate(String givenAnswer){
         return questionMan.evaluate(givenAnswer);//asks a question, returns boolean true if answered correctly, false if not
@@ -139,7 +139,7 @@ public class ColleagueManager
      * @return void 
      */
     public String endGame(){
-        
+        System.out.println(">>>Player was caught. Game over");
         if (colleague.isFemale()){      //next output is depending on random colleague's gender
                 return (colleague.getName() + " looks very suspicious. She walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
             } else {

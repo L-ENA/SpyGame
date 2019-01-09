@@ -9,10 +9,15 @@ import javax.swing.Box;
 import java.util.Set;
 import java.awt.event.*;
 /**
- * Write a description of class MyMainPane here.
+ * The main pane is the main GUI element for the SpyGame. It is divided
+ * into 3 parts: The stats panel, which is showing general information such
+ * as lifes and steps. There is no user interaction in this panel. The
+ * picture panel displays the current room image and eventually some warnings
+ * .The navigation panel contains buttons with exit names and are to be clicked
+ * by the player. The main pane is updated at runtime through its update method.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @205232
+ * @08.01.2019
  */
 public class MyMainPane extends JPanel
 {
@@ -33,7 +38,11 @@ public class MyMainPane extends JPanel
     private ActionListener listener;
 
     /**
-     * Constructor for objects of class MyMainPane
+     * Constructor for objects of class MyMainPane. It sets the style parameters and initialises the three panels belonging to this class.
+     *
+     * @param  Border  the border for the panels
+     * @param  Border  the border for the contents
+     * @param  ActionListener  the listener instance to connect actions from the navigation panel to the main class
      */
     public MyMainPane(Border standardBorder, Border contentBorder, ActionListener listener) 
     {
@@ -56,10 +65,10 @@ public class MyMainPane extends JPanel
     }
     
     /**
-     * An example of a method - replace this comment with your own
+     * This method does the initial setup of the panel. It creates the content and sets designs and layout.
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  none
+     * @return    void
      */
     private void makeStats(){
         statsPanel = new JPanel();
@@ -86,10 +95,10 @@ public class MyMainPane extends JPanel
     }
     
     /**
-     * An example of a method - replace this comment with your own
+     * This method creates the picture panel and its layout/ design.
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  none
+     * @return    void
      */
     protected void makePicture(){
         c.weightx = 0.5;
@@ -118,10 +127,10 @@ public class MyMainPane extends JPanel
         add(picturePanel, c);
     }
     /**
-     * An example of a method - replace this comment with your own
+     * This method is responsible for the initial design and layout of the navigation panel. 
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  none
+     * @return    void
      */
     protected void makeNavigation()
     {
@@ -139,10 +148,15 @@ public class MyMainPane extends JPanel
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * This method is responsible for updating the content of the panels in this class. Its parameters represent the new
+     * content.
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @param  int[]  the content for the stats panel
+     * @param  BufferedImage  the room image for the picture panel
+     * @param  Set<String>  the exits for the creation of the navigation buttons
+     * @param  String  description of the current room
+     * @param  String  some message associated with the current room
+     * @return    void
      */
     protected void updating(int[] stats, BufferedImage img, Set<String> exits, String currentShort, String roomMsg)
     //public void updateGUI(BufferedImage roomPicture, int[] stats)
@@ -157,7 +171,7 @@ public class MyMainPane extends JPanel
             roomInfo.setBorder(contentBorder);
             roomInfo.setVisible(true);
         } else{
-            roomInfo.setVisible(false);
+            roomInfo.setVisible(false);//no message available
         }
         picturePanel.revalidate();
         picturePanel.repaint();
@@ -165,7 +179,7 @@ public class MyMainPane extends JPanel
         statsLabel.setText("<html><br>&nbsp;Steps: "+stats[0]+"&nbsp;<br>&nbsp;Trust: "+stats[1]+"&nbsp;<br>&nbsp;Lifes: "+stats[2]+"<br>&nbsp;</html>");//updating the stat values
         
         
-        navigationPanel.removeAll();
+        navigationPanel.removeAll();//remove buttons created for the previous room
         navigationPanel.revalidate();
         navigationPanel.repaint();
         
@@ -189,6 +203,13 @@ public class MyMainPane extends JPanel
         
     }
     
+    /**
+     * This method is responsible for displaying info messages in the stats panel. These messages come with three levels
+     * of importance and are coloured accordingly.
+     * @param  String  the message text
+     * @param  int  the message importance
+     * @return    void
+     */
     protected void updateMessages(String s, int importance){
         infoLabel.setText(s);
         

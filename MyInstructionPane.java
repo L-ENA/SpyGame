@@ -8,10 +8,11 @@ import java.awt.event.*;
 
 /**
  * This extended JPanel class is used to focus the players attention on one single piece of information. It has a
- * relatively simple design and only displays two Strings: a title and a messsage. The only possible action is a  click on the ok button. 
+ * relatively simple design and only displays two Strings: a title and a messsage. The only possible action is a  click on the ok button.
+ * It is used to display the initial objective of the game, the solution to the quiz questions and to display the final statistics
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @205232
+ * @08.01.2019
  */
 public class MyInstructionPane extends JPanel
 {
@@ -70,6 +71,11 @@ public class MyInstructionPane extends JPanel
         add(contentPanel);
     }
     
+    /**
+     * 
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
     protected void updateContent(String title, String message){//setting message and title
         contentPanel.setBorder(new TitledBorder(standardBorder, title, TitledBorder.RIGHT,TitledBorder.BELOW_TOP, font, Color.black));
         infoText.setText(message);

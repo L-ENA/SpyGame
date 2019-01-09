@@ -2,8 +2,8 @@ import javax.swing.*;
 /**
  * This is an exception designed to handle parsing errors related to the question parsing tasks specific to this game.
  *
- * @author 21821570
- * @version 0.1, 22.11.18
+ * @205232
+ * @08.01.2019
  */
 public class QuestionException extends Exception
 {

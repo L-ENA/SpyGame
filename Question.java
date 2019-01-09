@@ -8,10 +8,10 @@
  * a String comment if answer given is right,
  * a String comment if anser given is wrong.
  *
- * @author 21821570
- * @version 0.1, 22.11.18
+ * @205232
+ * @08.01.2019
  */
-public class Question
+public class Question implements Cloneable
 {
     
     private String question;
@@ -42,6 +42,7 @@ public class Question
      * @param none
      */
     public void printQuestion(){
+        System.out.println(">>>The following question was asked:");
         String [] questionParts = question.split("[+]");    //splits at + for linebreaks - 
         for(String part : questionParts){
             System.out.println(part);
@@ -97,5 +98,25 @@ public class Question
         return negComment;
     }
 
-    
+    /**
+     * 
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    @Override
+    protected Question clone() {
+        Question clone = null;
+        try{
+            clone = (Question) super.clone();//casting question and using objects clone method in it
+           
+        }catch(CloneNotSupportedException e){// catching related exception
+            throw new RuntimeException(e); 
+        }
+       
+        return clone;
+       
+    }
+
+
+
 }

@@ -8,8 +8,8 @@
  *      - boolean gender for gender
  * 
  *
- * @author 21821570
- * @version 0.1, 22.11.18
+ * @205232
+ * @08.01.2019
  * 
  * 
  */

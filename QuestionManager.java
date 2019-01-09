@@ -7,17 +7,21 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.lang.IllegalArgumentException;
+import java.util.Iterator;
 /**
  * Questions represent the challenges in this game. This class is responsible for asking questions by reading info 
- * from a text file and creating/storing question objects from that in a list.
+ * from a text file and creating/storing question objects from that in a list. It is responsible for supplying and deleting questions from
+ * the list and for re-filling the list once it has run out.
  *
- * @author 21821570
- * @version 0.1, 22.11.18
+ * @205232
+ * @08.01.2019
  */
 public class QuestionManager
 {
     // instance variables
     private ArrayList<Question> questionList;
+    private ArrayList<Question> backupList;
     private Question thisQuestion;
     
     /**
@@ -25,11 +29,35 @@ public class QuestionManager
      */
     public QuestionManager()
     {
-        
+        questionList = new ArrayList<Question>();//the ArrayList for the question objects
+        questionParsing();//parses questions from the file and stores them in the backup list
+        useQuestionBackup();//clones the question backup list and 
+    }
+    
+    /**
+     * This method accesses the questions backup list and clones all the questions into the actual question list that is used
+     * throughout the game. Since questions get deleted once they were asked there is a potential for the question list to be empty. If this
+     * happens the game can't be won in the worst case, and parsing the file again would be a clumsy solution. Therefore, this method can be used to
+     * simply re-fill the question list once it is created or reaches 0 elements.
+     * @param none
+     * @return void
+     */
+    private void useQuestionBackup(){
+        Iterator<Question> iterator = backupList.iterator();//to traverse the backuo list
+        while(iterator.hasNext()){
+            questionList.add(iterator.next().clone());//creating a clone so that changes on the clone don't affect the original List
+        }
+    }
+    /**
+     * This method parses questions from the questions file. It is called in the constructor of this class.
+     * @param none
+     * @return void
+     */
+    private void questionParsing(){
         String[] parts;//holds input line from text file after it was split in its 4 parts
         int counter = 0;//param for parsing exception
         try {
-            questionList = new ArrayList<Question>();                   //List where all parsed questions will be stored
+            backupList = new ArrayList<Question>();                   //List where all parsed questions will be stored
             File f = new File("questions.txt");                         //creates file object from the given link
             BufferedReader b = new BufferedReader(new FileReader(f));   //creates buffered reader object to access the file
             String currentLine = "";                                    //empty String that is going to store a line of the file 
@@ -41,14 +69,12 @@ public class QuestionManager
                     if(parts.length != 4){
                         throw new QuestionException(currentLine, counter);//throws potential question parsing exception and describes line with error plus line number
                     } else{
-                        questionList.add(new Question(parts[0],parts[1],parts[2],parts[3]));//builds new question and adds it to the list
+                        backupList.add(new Question(parts[0],parts[1],parts[2],parts[3]));//builds new question and adds it to the list
                     }
                     
                 } catch (QuestionException qestEx){//catches custom question exception
                     qestEx.describeError();
                 }
-                
-                
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,10 +83,10 @@ public class QuestionManager
     }
 
     /**
-     * Asking a question: random question from question list. Uses evaluate() method to determine if the answer is correct and delets the question after use
-     *
+     * Asking a question: random question from question list and removing it to avoid duplication. 
+     * If the questionList is empty, the exception is dealt with.
      * @param none
-     * @return boolean false if question was answered wrong. This is determined by the evaluate() method
+     * @return String the question
      */
     public String ask()
     {
@@ -68,17 +94,16 @@ public class QuestionManager
         try{
             int randomQuestionIndex = rand.nextInt(questionList.size());        //Create random index for questions currently in the list.
             thisQuestion = questionList.get(randomQuestionIndex);               //get random question
+            questionList.remove(randomQuestionIndex);                           //remove the question so that it can't be asked again
+        } catch(IllegalArgumentException iA){//the questionList is empty. The backup is used and a question from the refilled list is picked.
+            System.out.println("------- Exception caught: Question list is empty, old questions are re-used. Continue to play or add more questions to the question file and re-start the game.");
+            useQuestionBackup();
+            int randomQuestionIndex = rand.nextInt(questionList.size());        //Create random index for questions currently in the list.
+            thisQuestion = questionList.get(randomQuestionIndex);               //get random question
             questionList.remove(randomQuestionIndex);
-            thisQuestion.printQuestion();                                       //asks question
-            return thisQuestion.formatQuestion();//param is numbers of times that user is allowed to pass an invalid input
-            
-        } catch(NullPointerException nE){
-            System.out.println("Question list is empty. Continue to play or add more questions to the question file and re-start the game.");
-            return("Empty");//not loosing a life here
         }
-        
-        
-        
+        thisQuestion.printQuestion();                                       //asks question
+        return thisQuestion.formatQuestion();//param is numbers of times that user is allowed to pass an invalid input
     }
     
     /**

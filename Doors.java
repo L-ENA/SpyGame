@@ -3,8 +3,8 @@ import java.util.HashMap;
  * Doors represents exits of a room. It has a hashmap attribute that
  * stores a descriptive String (name of the exit) and a boolean value for the status of locking of every exit in this room. A door object is created by default when an instance of Room is created.
  *
- * @author 21821570
- * @version 0.1, 22.11.18
+ * @205232
+ * @08.01.2019
  * 
  */
 public class Doors

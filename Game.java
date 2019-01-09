@@ -11,13 +11,12 @@ import java.awt.event.ActionListener;
  *  method.
  * 
  *  This main class creates and initialises all the others: it creates all
- *  rooms, creates the parser and starts the game.  It also evaluates and
- *  executes the commands that the parser returns.
+ *  rooms, creates the GUI instance and starts the game.
  * 
  *  It is based on code from Michael Kolling and David J. Barnes
  *  
- * @author 21821570
- * @version 0.1, 22.11.18
+ * @205232
+ * @08.01.2019
  * 
  * 
  */
@@ -93,7 +92,7 @@ public class Game implements ActionListener
      */
     public void actionPerformed(ActionEvent e) {
             if(e.getActionCommand().matches("[abcd]")){//a quiz answer was given
-                questionAction(e);
+                questionAction(e);//execute quiz actions
                 
             } else if(e.getActionCommand().equals("ok")){//the instruction pane is exited
                 
@@ -112,6 +111,12 @@ public class Game implements ActionListener
         
         
     }
+    
+    /**
+     * 
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
     private void questionAction(ActionEvent e){
         if(!colleagueMan.evaluate(e.getActionCommand())){//evaluating the given answer. If wrong, lifes etc are taken. If right, trust is gained.
                 lifes--;//looses both a life and general trust
@@ -132,7 +137,7 @@ public class Game implements ActionListener
     }
     
     /**
-     *  This is the substitute of the original play loop. When the playeer chooses to go to another room, an ActionEvent is passed and its associated String 
+     *  This is the substitute of the original play loop. When the player chooses to go to another room, an ActionEvent is passed and its associated String 
      *  tells the updating methods and the GUI how to update the screen. 
      *  @param ActionEvent The event with its associated action command which represents the chosen direction.
      *  @return void

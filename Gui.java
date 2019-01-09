@@ -9,10 +9,12 @@ import javax.swing.border.BevelBorder;
 import java.awt.image.BufferedImage;
 import java.util.Set;
 /**
- * Write a description of class Gui here.
+ * The GUI class serves as a controller of the more specific parts of the GUI. Its methods are called by the GAME class and it 
+ * forwards the given parameters to each piece of the GUI that is to be updated. It owns instances of all GUI parts and has a method that 
+ * allows changing their visibility by setting them as the content pane.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @205232
+ * @08.01.2019
  */
 public class Gui
 {
@@ -55,10 +57,8 @@ public class Gui
         contentPaneQuiz = new MyQuizPane(standardBorder, contentBorder, listener);
         contentPaneInstruction = new MyInstructionPane(standardBorder, contentBorder, listener);
         
-        mainFrame.add(contentPaneMain);
-        //contentPaneMain.setVisible(true);
+        mainFrame.add(contentPaneMain);//adding the com
         mainFrame.add(contentPaneQuiz);
-        //contentPaneQuiz.setVisible(false);
         mainFrame.add(contentPaneInstruction);
         switchPanes(1);//switching to the main pane
         
@@ -67,21 +67,40 @@ public class Gui
     
     
     
-    
+    /**
+     * 
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
     protected void updateMain(int[] stats, BufferedImage img, Set<String> exits, String currentShort, String roomMsg){
         contentPaneMain.updating(stats, img, exits, currentShort, roomMsg);
         switchPanes(1);//switching to the main pane
     }
     
+    /**
+     * 
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
     protected void updateMessageBoard(String message, int importance){
         contentPaneMain.updateMessages(message, importance);
     }
     
+    /**
+     * 
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
     protected void updateQuiz(String encounterWith, String question){
         contentPaneQuiz.updateQuiz(encounterWith, question);
         switchPanes(2);//switching to the quiz pane
     }
     
+    /**
+     * 
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
     protected void switchPanes(int paneNr){
         switch (paneNr) {
             case 1:  mainFrame.setContentPane(contentPaneMain);
@@ -95,10 +114,20 @@ public class Gui
         mainFrame.setVisible(true);
     }
     
+    /**
+     * 
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
     protected void updateInstructionPane(String message, String title){
         contentPaneInstruction.updateContent(title, message);
     }
     
+    /**
+     * 
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
     protected void exitMessage(String message, String title){
         JOptionPane.showMessageDialog(mainFrame,
         message,

@@ -13,8 +13,8 @@ import java.io.IOException;
  * stores a reference to the neighboring room. It owns a door object, which stores information about locks on the room's exits.
  * Each room also has an associated picture for the GUI.
  * 
- * @author 21821570
- * @version 0.1, 22.11.18
+ * @205232
+ * @08.01.2019
  */
 
 public class Room 
