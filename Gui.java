@@ -26,7 +26,6 @@ public class Gui
     private Border contentBorder;
     private MyMenuBar menuBar;
     private ActionListener listener;
-    
     /**
      * Constructor for objects of class Gui. It sets the ActionListener parameter, which is to be forwarded to the different GUI elements and calls the setup for these elements.
      * @param ActionListener the listener for evaluating actions in the GUI.
@@ -49,20 +48,15 @@ public class Gui
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//what happens if the x is pressed: exit the game
         menuBar = new MyMenuBar(mainFrame);
         mainFrame.setJMenuBar(menuBar);
-        
         standardBorder = new LineBorder(Color.GREEN);//Customizes the line colour for the following TitledBorder instances
         contentBorder = new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.BLACK);//border for all content
-        
         contentPaneMain = new MyMainPane(standardBorder, contentBorder, listener);
         contentPaneQuiz = new MyQuizPane(standardBorder, contentBorder, listener);
         contentPaneInstruction = new MyInstructionPane(standardBorder, contentBorder, listener);
-        
         mainFrame.add(contentPaneMain);//adding the com
         mainFrame.add(contentPaneQuiz);
         mainFrame.add(contentPaneInstruction);
         switchPanes(1);//switching to the main pane
-        
-        
     }
     
      /**
@@ -137,7 +131,6 @@ public class Gui
      */
     protected boolean exitMessage(String message, String title){
         String[] options = {"Play again","Exit"};
-
         int choice = JOptionPane.showOptionDialog(mainFrame, //Component parentComponent
                message, //Object message,
                title, //String title

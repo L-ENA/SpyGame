@@ -69,6 +69,7 @@ public class ColleagueManager
             
     }
     
+    
     /**
      * Method that is called after the player answered some questions correctly
      * @param none
@@ -144,6 +145,4 @@ public class ColleagueManager
     public boolean evaluate(String givenAnswer){
         return questionMan.evaluate(givenAnswer);//asks a question, returns boolean true if answered correctly, false if not
     }
-    
-    
 }

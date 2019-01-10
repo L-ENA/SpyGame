@@ -56,8 +56,6 @@ public class GuiTest
         gui.switchPanes(2);
     }
     
-    
-    
     /**
      * Sets up the test fixture.
      *

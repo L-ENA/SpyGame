@@ -38,7 +38,7 @@ public class MyMainPane extends JPanel
     private ActionListener listener;
     
     private static final int wide = 1000;
-    private static final int high = 600;
+    private static final int high = 500;
 
     /**
      * Constructor for objects of class MyMainPane. It sets the style parameters and initialises the three panels belonging to this class.
@@ -222,7 +222,7 @@ public class MyMainPane extends JPanel
     }
     
     /**
-     * Overwriting the preferred size method.
+     * Overriding the preferred size method.
      * @param  none
      * @return    void
      */

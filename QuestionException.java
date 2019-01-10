@@ -39,7 +39,7 @@ public class QuestionException extends Exception
         "<br>Make sure this line contains exactly 3 delimiters in the form of % signs"+
         "<br>The line with the error was ignored. You can start the game anyway.</html>"
         , 
-        "Exception while parsing input pile",
+        "Exception while parsing input file",
         JOptionPane.WARNING_MESSAGE);//type warning message, could also be error message, etc.
         
         errorCounter++;//increment to print correct number for next exception

@@ -7,7 +7,7 @@ import java.awt.event.*;
  * @205232
  * @08.01.2019
  */
-public class MyMenuBar extends JMenuBar implements ActionListener
+public class MyMenuBar extends JMenuBar
 {
     private JFrame mainFrame;
      /**
@@ -21,39 +21,32 @@ public class MyMenuBar extends JMenuBar implements ActionListener
         JMenu aboutMenu = new JMenu("About");
         
         JMenuItem closeItem = new JMenuItem("Close");//create menu items and their action commands
-        closeItem.setActionCommand("close");
-        closeItem.addActionListener(this);
+        closeItem.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    int ret = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to exit? ");
+                    if(ret == JOptionPane.YES_OPTION)
+                        System.exit(0);//exits the game
+                }
+            }
+            
+        );
         
         JMenuItem helpItem = new JMenuItem("Help");//create menu items and their action commands
-        helpItem.setActionCommand("help");
-        helpItem.addActionListener(this);
+        helpItem.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    JOptionPane.showMessageDialog(mainFrame, "This is some help info. Click and do stuff.");
+                }
+            }
+            
+        );
         
         JMenuItem sourceItem = new JMenuItem("Sources");
-        sourceItem.setActionCommand("source");
-        sourceItem.addActionListener(this);
-        
-        gameMenu.add(closeItem);//adding menu item to their menu
-        gameMenu.add(helpItem);
-        aboutMenu.add(sourceItem);
-        
-        add(gameMenu);//adding the menus to the menu bar
-        add(aboutMenu);
-    }
-
-    /**
-     * Overriding the action performed method to carry out actions related to the menu bar. This method is the centralised 
-     * event handling for the menu bar.
-     *
-     * @param  ActionEvent e
-     * @return    void
-     */
-    public void actionPerformed(ActionEvent e) {
-    if (e.getActionCommand().equals("close")) {//what happens if the exit action is invoked: gives choice.
-        int ret = JOptionPane.showConfirmDialog(mainFrame, "Are you sure you want to exit? ");
-                if(ret == JOptionPane.YES_OPTION)
-                    System.exit(0);//exits the game
-    } else if (e.getActionCommand().equals("source")) {//what happens if the source action is invoked
-        JOptionPane.showMessageDialog(mainFrame, "Picture sources: "
+        sourceItem.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    JOptionPane.showMessageDialog(mainFrame, "Picture sources: "
                 + " \n https://www.freepik.com/free-photos-vectors/paper >Paper image created by Freepik"
                 + " \n https://www.freepik.com/free-photos-vectors/food >Food image created by Yanalya - Freepik.com"
                 + " \n https://www.freepik.com/free-photos-vectors/background >Background image created by Nikitabuida - Freepik.com"
@@ -62,9 +55,16 @@ public class MyMenuBar extends JMenuBar implements ActionListener
                 + " \n https://www.freepik.com/free-photo/restaurant_3563675.htm >Designed by Freepik"
                 + " \n https://www.freepik.com/free-photo/public-toilet_1278624.htm >Designed by 4045"
                 + " \n https://www.freepik.com/free-photos-vectors/business >Business image created by Katemangostar - Freepik.com");
-    } else if (e.getActionCommand().equals("help")){
-        JOptionPane.showMessageDialog(mainFrame, "This is some help info. Click and do stuff.");
-       
+                }
+            }
+            
+        );
+        
+        gameMenu.add(closeItem);//adding menu item to their menu
+        gameMenu.add(helpItem);
+        aboutMenu.add(sourceItem);
+        add(gameMenu);//adding the menus to the menu bar
+        add(aboutMenu);
     }
-}
+
 }

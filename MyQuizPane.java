@@ -26,7 +26,7 @@ public class MyQuizPane extends JPanel
     private JFrame mainFrame;
     
     private static final int wide = 1000;
-    private static final int high = 600;
+    private static final int high = 500;
 
     /**
      * Constructor for objects of class MyQuizPane. The basic layout and style is set up and methods to create sub-panels are called.
