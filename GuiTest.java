@@ -36,12 +36,34 @@ public class GuiTest
     }
     
     /**
-     * To test what the main pane looks like.
+     * To test what the updated instruction pane looks like.
+     * @param String the message
+     * @param String the title
+     * @return void
+     */
+    @Test
+    public void instructionPaneUpdateTest(){
+        gui.updateInstructionPane("Some updated message...", "someTitle");
+        gui.switchPanes(3);
+    }
+    
+    /**
+     * To test what the initial main pane looks like.
      * 
      * @return    void
      */
     @Test
     public void mainPaneTest(){
+        gui.switchPanes(1);
+    }
+    
+    /**
+     * To test what the updated main pane looks like.
+     * 
+     * @return    void
+     */
+    @Test
+    public void mainPaneUpdateTest(){
         gui.updateMain(new int[]{0,0,3}, game.getRoomMan().getCurrentRoomImg(), game.getRoomMan().getCurrentExitSet(), game.getRoomMan().getCurrentRoomShort(), "Everybody is working");
         gui.switchPanes(1);
     }
@@ -55,6 +77,31 @@ public class GuiTest
     public void quizPaneTest(){
         gui.switchPanes(2);
     }
+    
+    /**
+     *To test what the updated quiz pane looks like.
+     * @param String The colleague who asks the question
+     * @param String The question
+     * @return    void
+     */
+    @Test
+    public void quizPaneUpdateTest(){
+        gui.updateQuiz("randColleague spotted you and asks:","Random question.........");
+        gui.switchPanes(2);
+    }
+    
+    /**
+     *To test the exit message functionality. Click Play again to see if the function returns true. At this point at runtime the game would be restarted.
+     * @return    void
+     */
+    @Test
+    public void exitOrPlayAgainTest(){
+        gui.updateMain(new int[]{0,0,3}, game.getRoomMan().getCurrentRoomImg(), game.getRoomMan().getCurrentExitSet(), game.getRoomMan().getCurrentRoomShort(), "Everybody is working");//giving some nice background for the 
+        gui.switchPanes(1);//making updated pane visible
+        assertEquals(gui.exitMessage("Click Play again to make this test succeed!!!", "test", false), true);//show the jpotion pane with the choice
+    }
+    
+    
     
     /**
      * Sets up the test fixture.

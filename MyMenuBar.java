@@ -5,7 +5,7 @@ import java.awt.event.*;
  * the game and functions to provide some information to the player.
  *
  * @205232
- * @08.01.2019
+ * @11.01.2019
  */
 public class MyMenuBar extends JMenuBar
 {

@@ -14,7 +14,7 @@ import java.io.IOException;
  * Each room also has an associated picture for the GUI.
  * 
  * @205232
- * @08.01.2019
+ * @11.01.2019
  */
 
 public class Room 
@@ -40,7 +40,6 @@ public class Room
             img = ImageIO.read(new File(pathToPic));
             
         } catch (IOException ex){
-            System.out.println(pathToPic+ " is not available. Please make sure that it exists in this directory.");
             ex.printStackTrace();
         }
         

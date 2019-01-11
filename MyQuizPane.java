@@ -10,7 +10,7 @@ import java.awt.event.*;
  * visible and updated with a random quiz question. The player interacts by clicking the answer buttons.  
  *
  * @205232
- * @08.01.2019
+ * @11.01.2019
  */
 public class MyQuizPane extends JPanel
 {

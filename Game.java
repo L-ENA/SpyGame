@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  *  This main class creates and initialises all the others: it creates all
  *  rooms, creates the GUI instance and starts the game.
  * @205232
- * @08.01.2018
+ * @11.01.2019
  */
 public class Game implements ActionListener 
 {
@@ -88,11 +88,13 @@ public class Game implements ActionListener
            } else if(e.getActionCommand().equals("ok")){//the instruction pane is exited
                 if(lifes ==0){//player answered too many questions wrong, the game ends here
                     String addedInfo = ("\n\nYou survived for " + timeUntilFinished + " steps and answered "+ rightAnswers + " questions correctly. Your final trust score is "+trust + ".");
-                    boolean ret = myGui.exitMessage(colleagueMan.endGame() + addedInfo, "YOU LOST!");
+                    boolean ret = myGui.exitMessage(colleagueMan.endGame() + addedInfo, "YOU LOST!", false);
                     if(ret == true){//restart game
                     myGui.killGui();
                     setGame();
-                    } 
+                    } else{
+                        System.exit(0);//ending the game
+                    }
                 } else {
                     myGui.updateMain(new int[]{timeUntilFinished,trust,lifes}, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort(), roomMessage);
                     myGui.switchPanes(1);//switch back to the main pane
@@ -110,7 +112,6 @@ public class Game implements ActionListener
         if(!colleagueMan.evaluate(e.getActionCommand())){//evaluating the given answer. If wrong, lifes etc are taken. If right, trust is gained.
                 lifes--;//looses both a life and general trust
                 trust --;
-                System.out.println("Wrong. Player has " + lifes + " lifes left.");
                 myGui.updateInstructionPane(colleagueMan.getNeg(), "Your answer is wrong");//updating the instruction pane according to the quiz outcome
             } else {
                 trust++;//incrementing trust
@@ -134,19 +135,19 @@ public class Game implements ActionListener
             myGui.updateMain(stats, roomMan.getCurrentRoomImg(), roomMan.getCurrentExitSet(), roomMan.getCurrentRoomShort(), roomMessage);
             storyLine();//applies the storyline method. Actions are performed if the right answers attribute if this class reaches 4
             /////////////////////////////////////////winning condition
-            if(winGame() == true){//player won the game. It ends here.
+            if(winGame() == true){//player won the game. It may end here.
                 String addedInfo = ("\nYou took " + timeUntilFinished + " steps and answered "+ rightAnswers + " questions correctly. Your final trust score is "+trust + ".");
                 boolean ret = myGui.exitMessage("You take the elevator. There are no buttons...\nThe elevator takes you down and when the door opens you realise that you are in the strongroom.\nThe blueprints are on the table!\nYou grab them and leave the building without attracting any attention."
-                    +addedInfo, "YOU WON!");
+                    +addedInfo, "YOU WON!", true);
                 if(ret == true){//restart game
                     myGui.killGui();
                     setGame();
-                }    
+                }  else{
+                    System.exit(0);
+                }  
             }
             if (teabreak % 6 == 0){                        // if teabreak counter reaches 6 the user is warned
-                String s = "It's teatime soon";
-                System.out.println(s);//for the log
-                myGui.updateMessageBoard(s, 2);//changing the breaktime message board. The int stands for a colour scheme.
+                myGui.updateMessageBoard("It's teatime soon", 2);//changing the breaktime message board. The int stands for a colour scheme.
                 teabreak = 0;                              // resets teabreak counter for new cycle
             } else if (teabreak == 1 || teabreak == 2|| teabreak ==3){ //it is teatime, so there is a risk to encounter a colleague
                 myGui.updateMessageBoard("It's teatime now!", 1);
@@ -206,8 +207,10 @@ public class Game implements ActionListener
         if(task1 == false){//checks if task was given before. 
             if(trust == 3){//This is the task that unlocks the office of the boss.
             task1 = true;//indicates that the task was given
+            System.out.println("Task given");
             myGui.updateInstructionPane(colleagueMan.task(), "New mission received");//get the task to leave docs in the office of the boss.
             myGui.switchPanes(3);//switching to the info pane 
+            System.out.println("switch completed");
             roomMan.gainAccess();//unlocks the door to the office.
             trust++;//gain some trust.
             }
@@ -216,7 +219,7 @@ public class Game implements ActionListener
     /**
      * Accessor for the roomMan. This method is only used by the GUI test class in order to quickly check how the gui looks like.
      * @param none
-     * @return void
+     * @return RoomManager
      */
     protected RoomManager getRoomMan(){
         return roomMan;

@@ -17,7 +17,7 @@ import java.awt.event.*;
  * by the player. The main pane is updated at runtime through its update method.
  *
  * @205232
- * @08.01.2019
+ * @11.01.2019
  */
 public class MyMainPane extends JPanel
 {

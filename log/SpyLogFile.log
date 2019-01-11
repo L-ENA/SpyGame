@@ -1,0 +1,22 @@
+Jan 11, 2019 3:20:43 PM Gui logSetup
+INFO: Log for the SpyGame application
+Jan 11, 2019 3:20:43 PM Gui updateInstructionPane
+INFO: Player received a message titled: Welcome to the Spy Game!
+Jan 11, 2019 3:20:44 PM Gui updateMain
+INFO: Player is at the reception
+Jan 11, 2019 3:20:46 PM Gui updateMain
+INFO: Player is in the loo
+Jan 11, 2019 3:20:47 PM Gui updateMain
+INFO: Player is at the reception
+Jan 11, 2019 3:20:47 PM Gui updateMain
+INFO: Player is in the ground floor hallway
+Jan 11, 2019 3:20:47 PM Gui updateMain
+INFO: Player is in the first floor hallway
+Jan 11, 2019 3:20:48 PM Gui updateMain
+INFO: Player is in the staff kitchen
+Jan 11, 2019 3:20:49 PM Gui updateMain
+INFO: Player is in the first floor hallway
+Jan 11, 2019 3:20:50 PM Gui updateMain
+INFO: Player is in the staff kitchen
+Jan 11, 2019 3:20:51 PM Gui updateMain
+INFO: Player is in the first floor hallway

@@ -6,7 +6,7 @@ import java.io.IOException;
  * with the questions in order to present challenges in the game.
  * 
  * @205232
- * @08.01.2019
+ * @11.01.2019
  */
 public class ColleagueManager
 {
@@ -102,7 +102,6 @@ public class ColleagueManager
      * @return String some output describing how the player lost. 
      */
     public String endGame(){
-        System.out.println(">>>Player was caught. Game over");
         if (colleague.isFemale()){      //next output is depending on random colleague's gender
                 return (colleague.getName() + " looks very suspicious. She walks towards the office of your boss. Your cover is blown! Run!\nGAME OVER");
             } else {

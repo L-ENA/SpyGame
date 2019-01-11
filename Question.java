@@ -11,7 +11,7 @@
  * It implements Cloneable in order to give the ability to copy questions in a way that a completely new instance with its own pointer is created.
  *
  * @205232
- * @08.01.2019
+ * @11.01.2019
  */
 public class Question implements Cloneable
 {

@@ -3,7 +3,7 @@ import javax.swing.*;
  * This is an exception designed to handle parsing errors related to the question parsing tasks specific to this game.
  *
  * @205232
- * @08.01.2019
+ * @11.01.2019
  */
 public class QuestionException extends Exception
 {
@@ -19,7 +19,7 @@ public class QuestionException extends Exception
     public QuestionException(String line, int nr)
     {
         super();
-        this.line = line;
+        this.line = line;//storing the parameters for further usage in the describe() method
         this.nr = nr;
         
     }

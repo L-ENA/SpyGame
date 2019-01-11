@@ -11,7 +11,7 @@ import java.awt.event.*;
  * It is used to display the initial objective of the game and the solution to the quiz questions.
  *
  * @205232
- * @08.01.2019
+ * @11.01.2019
  */
 public class MyInstructionPane extends JPanel
 {

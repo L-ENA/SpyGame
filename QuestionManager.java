@@ -15,7 +15,7 @@ import java.util.Iterator;
  * the list and for re-filling the list once it has run out.
  *
  * @205232
- * @08.01.2019
+ * @11.01.2019
  */
 public class QuestionManager
 {
@@ -67,7 +67,7 @@ public class QuestionManager
                     parts = currentLine.split("%");                         //make a question from each line by first splitting info in 4 parts (% is used in txt file to divide)
                     
                     if(parts.length != 4){
-                        throw new QuestionException(currentLine, counter);//throws potential question parsing exception and describes line with error plus line number
+                        throw new QuestionException(currentLine, counter);//throws potential question parsing exception and describes line number with error plus the content of the line
                     } else{
                         backupList.add(new Question(parts[0],parts[1],parts[2],parts[3]));//builds new question and adds it to the list
                     }
@@ -114,10 +114,8 @@ public class QuestionManager
      */
     public boolean evaluate(String givenAnswer){
         if(givenAnswer.equals(thisQuestion.getAnswer())){//answered correctly since input equals answer string
-            System.out.println("Player answered right");
             return true;
         } else{//answered wrongly: false is returned to subtract a life
-            System.out.println("Player answered wrong");
             return false;
         }
     } 

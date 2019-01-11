@@ -5,7 +5,7 @@ import java.util.Set;
  * are called in the main Game to check or alter the status of rooms.
  *
  * @205232
- * @08.01.2019
+ * @11.01.2019
  */
 public class RoomManager
 {
@@ -81,21 +81,18 @@ public class RoomManager
      */
     private void createRooms()
     {
-        
         // create the rooms with a descriptive String as parameter
-        reception = new Room("at the reception", "reception.jpg");
-        loo = new Room("in the loo", "loo.jpg");
-        cafe = new Room("in the cafe", "cafe.jpg");
-        groundHallway = new Room("in the ground floor hallway", "hallway.jpg");
-        firstHallway = new Room("in the first floor hallway", "hallway.jpg");
-        office1 = new Room("in Jack's office", "office.jpg");
-        office2 = new Room("in Bill's office", "office.jpg");
-        officeBoss = new Room("in the office of your boss","officeBoss.jpg");
-        kitchen = new Room("in the staff kitchen", "kitchen.jpg");
-        lab = new Room("in the secret screwdriver lab", "lab.jpg");
-        safeRoom = new Room("in the strongroom where they store all sorts of secret items.", "safe.jpg");
-        
-        
+        reception = new Room("at the reception", "img/reception.jpg");
+        loo = new Room("in the loo", "img/loo.jpg");
+        cafe = new Room("in the cafe", "img/cafe.jpg");
+        groundHallway = new Room("in the ground floor hallway", "img/hallway.jpg");
+        firstHallway = new Room("in the first floor hallway", "img/hallway.jpg");
+        office1 = new Room("in Jack's office", "img/office.jpg");
+        office2 = new Room("in Bill's office", "img/office.jpg");
+        officeBoss = new Room("in the office of your boss","img/officeBoss.jpg");
+        kitchen = new Room("in the staff kitchen", "img/kitchen.jpg");
+        lab = new Room("in the secret screwdriver lab", "img/lab.jpg");
+        safeRoom = new Room("in the strongroom where they store all sorts of secret items.", "img/safe.jpg");
     }
     
      /** 
@@ -124,13 +121,11 @@ public class RoomManager
         Room nextRoom = currentRoom.getExit(direction);//the room that is attempted.
         if (nextRoom!=null){//if there is an actual room for the specified exit
             if(direction.equals("office")){//check if this room is an office. If it is, the user gets some message, but can't enter
-                System.out.println(">>>Access to office denied");
                 return "Looks like there is somebody working "+nextRoom.getShortDescription()+". It won't be smart to disturb them...";
             } else{
                 return enterRoom(direction);
             } 
         } else {//some mistake was made when entering the room
-            System.out.println("No door found!");
             return "There is no door!";
             
         }
@@ -153,7 +148,6 @@ public class RoomManager
             if(currentRoom.equals(safeRoom)){//unless the player is in the final room the description is displayed in the log
                 return("");
             } else {
-                System.out.println(currentRoom.getLongDescription());
                 return("");
             }    
         }

@@ -4,7 +4,7 @@ import java.util.HashMap;
  * stores a descriptive String (name of the exit) and a boolean value for the status of locking of every exit in this room. A door object is created by default when an instance of Room is created.
  *
  * @205232
- * @08.01.2019
+ * @11.01.2019
  * 
  */
 public class Doors
